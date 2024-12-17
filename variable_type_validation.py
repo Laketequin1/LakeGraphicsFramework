@@ -13,7 +13,6 @@ Coordinate = NewType('Coordinate', tuple[int, int])
 Size = NewType('Size', tuple[PositiveInt, PositiveInt])
 AnyString = (str, bytes, bytearray)
 
-@staticmethod
 def validate_types(expected_types: list[tuple[str, Any, type]]) -> None | NoReturn:
     """
     Validates a list with the type of a variable against the expected type.
@@ -33,7 +32,6 @@ def validate_types(expected_types: list[tuple[str, Any, type]]) -> None | NoRetu
         validate_type(*expected_type)
     # Validation success
     
-@staticmethod
 def validate_type(name: str, var: Any, expected_type: type) -> None | NoReturn:
     """
     Validates the type of a variable against the expected type.
@@ -63,7 +61,6 @@ def validate_type(name: str, var: Any, expected_type: type) -> None | NoReturn:
         raise TypeError(f"Invalid type for {name}. Expected {expected_type}, got {type(var)}.")
     # Validation success
 
-@staticmethod
 def _validate_PositiveInt(name: str, var: Any) -> None | NoReturn:
     """
     [Private]
@@ -83,7 +80,6 @@ def _validate_PositiveInt(name: str, var: Any) -> None | NoReturn:
     if var < 0:
         raise ValueError(f"Invalid value for {name}. Size numbers must be positive.")   
 
-@staticmethod
 def _validate_Coordinate(name: str, var: Any) -> None | NoReturn:
     """
     [Private]
@@ -107,7 +103,6 @@ def _validate_Coordinate(name: str, var: Any) -> None | NoReturn:
         if not isinstance(var[i], Real):
             raise TypeError(f"Invalid type for Coordinate[{i}] '{name}'. Expected {Real}, got {type(var[i])}.")
 
-@staticmethod
 def _validate_Size(name: str, var: Any) -> None | NoReturn:
     """
     [Private]
