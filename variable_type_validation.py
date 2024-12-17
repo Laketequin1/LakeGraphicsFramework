@@ -51,22 +51,22 @@ def validate_type(name: str, var: Any, expected_type: type) -> None | NoReturn:
         NoReturn: If the function raises an error, it does not return any value.
     """
     if expected_type is PositiveInt:
-        _validate_PositiveInt(name, var)
+        _validate_positiveint(name, var)
         return # Validation success
     
     if expected_type is Coordinate:
-        _validate_Coordinate(name, var)
+        _validate_coordinate(name, var)
         return # Validation success
     
     if expected_type is Size:
-        _validate_Size(name, var)
+        _validate_size(name, var)
         return # Validation success
     
     if not isinstance(var, expected_type):
         raise TypeError(f"Invalid type for {name}. Expected {expected_type}, got {type(var)}.")
     # Validation success
 
-def _validate_PositiveInt(name: str, var: Any) -> None | NoReturn:
+def _validate_positiveint(name: str, var: Any) -> None | NoReturn:
     """
     [Private]
     Validates that the variable is a positive integer.
@@ -85,7 +85,7 @@ def _validate_PositiveInt(name: str, var: Any) -> None | NoReturn:
     if var < 0:
         raise ValueError(f"Invalid value for {name}. Size numbers must be positive.")   
 
-def _validate_Coordinate(name: str, var: Any) -> None | NoReturn:
+def _validate_coordinate(name: str, var: Any) -> None | NoReturn:
     """
     [Private]
     Validates that the variable is a sequence of two numbers representing coordinates.
@@ -108,7 +108,7 @@ def _validate_Coordinate(name: str, var: Any) -> None | NoReturn:
         if not isinstance(var[i], Real):
             raise TypeError(f"Invalid type for Coordinate[{i}] '{name}'. Expected {Real}, got {type(var[i])}.")
 
-def _validate_Size(name: str, var: Any) -> None | NoReturn:
+def _validate_size(name: str, var: Any) -> None | NoReturn:
     """
     [Private]
     Validates that the variable is a sequence of two positive numbers representing size.
