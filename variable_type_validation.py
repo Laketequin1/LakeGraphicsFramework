@@ -1,7 +1,7 @@
 """
 Validates variable types for the project GraphicsFramework.
 
-Used to validate user parameters being passed into the GraphicsFramework functions.
+Used to validate user parameters being passed into GraphicsFramework functions.
 """
 
 from typing import NewType, Tuple, Any, NoReturn
@@ -129,3 +129,28 @@ def _validate_Size(name: str, var: Any) -> None | NoReturn:
     for i in [0, 1]:
         if var[i] < 0:
             raise ValueError(f"Invalid value for Size[{i}] '{name}'. Size numbers must be positive.")
+        
+
+# Example code
+def main():
+    size = (0, 0)
+    caption = "Title"
+    max_fps = 100
+    print_gl_errors = True
+    validate_types([('size', size, Size),
+                    ('caption', caption, str),
+                    ('max_fps', max_fps, int),
+                    ('print_gl_errors', print_gl_errors, bool)]) # OK
+    
+    vsync = False
+    validate_type('vsync', vsync, bool) # OK
+    
+    size = (0, -20)
+    validate_types([('size', size, Size),
+                    ('caption', caption, str),
+                    ('max_fps', max_fps, int),
+                    ('print_gl_errors', print_gl_errors, bool)]) # Fails type check, raises error
+
+# Entry point
+if __name__ == "__main__":
+    main()
