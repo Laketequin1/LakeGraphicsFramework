@@ -31,7 +31,7 @@ def validate_types(expected_types: list[tuple[str, Any, type]]) -> None | NoRetu
 
     Returns:
         None: If validation passes, the function returns nothing.
-        NoReturn: If the function raises an error, it does not return any value.
+        The function will raise an error if valitadion statement is invalid.
     """
     for expected_type in expected_types:
         validate_type(*expected_type)
@@ -48,7 +48,7 @@ def validate_type(name: str, var: Any, expected_type: type) -> None | NoReturn:
 
     Returns:
         None: If validation passes, the function returns nothing.
-        NoReturn: If the function raises an error, it does not return any value.
+        The function will raise an error if valitadion statement is invalid.
     """
     if expected_type is PositiveInt:
         _validate_positiveint(name, var)
@@ -77,7 +77,7 @@ def _validate_positiveint(name: str, var: Any) -> None | NoReturn:
 
     Returns:
         None: If validation passes, the function returns nothing.
-        NoReturn: If the function raises an error, it does not return any value.
+        The function will raise an error if valitadion statement is invalid.
     """
     if not isinstance(var, Real):
         raise TypeError(f"Invalid type for {name}. Expected {Real}, got {type(var)}.")
@@ -96,7 +96,7 @@ def _validate_coordinate(name: str, var: Any) -> None | NoReturn:
 
     Returns:
         None: If validation passes, the function returns nothing.
-        NoReturn: If the function raises an error, it does not return any value.
+        The function will raise an error if valitadion statement is invalid.
     """
     if not isinstance(var, Sequence) or isinstance(var, AnyString):
         raise TypeError(f"Invalid type for Coordinate '{name}'. Expected {Sequence}, got {type(var)}.")
@@ -119,7 +119,7 @@ def _validate_size(name: str, var: Any) -> None | NoReturn:
 
     Returns:
         None: If validation passes, the function returns nothing.
-        NoReturn: If the function raises an error, it does not return any value.
+        The function will raise an error if valitadion statement is invalid.
     """
     if not isinstance(var, Sequence) or isinstance(var, AnyString):
         raise TypeError(f"Invalid type for Size '{name}'. Expected {Sequence}, got {type(var)}.")
