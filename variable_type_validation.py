@@ -4,15 +4,20 @@ Validates variable types for the project GraphicsFramework.
 Used to validate user parameters being passed into GraphicsFramework functions.
 """
 
+### Imports ###
 from typing import NewType, Tuple, Any, NoReturn
 from numbers import Real
 from collections.abc import Sequence
 
+
+### Types ###
 PositiveInt = NewType('PositiveInt', int)
 Coordinate = NewType('Coordinate', tuple[int, int])
 Size = NewType('Size', tuple[PositiveInt, PositiveInt])
 AnyString = (str, bytes, bytearray)
 
+
+### Functions ###
 def validate_types(expected_types: list[tuple[str, Any, type]]) -> None | NoReturn:
     """
     Validates a list with the type of a variable against the expected type.
@@ -131,7 +136,7 @@ def _validate_Size(name: str, var: Any) -> None | NoReturn:
             raise ValueError(f"Invalid value for Size[{i}] '{name}'. Size numbers must be positive.")
         
 
-# Example code
+### Example code ###
 def main():
     size = (0, 0)
     caption = "Title"

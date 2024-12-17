@@ -1,10 +1,16 @@
+### Imports ###
 import glfw
 from variable_type_validation import *
 
+### Constants ###
+VSYNC = 1
+
+### Classes ###
 class Window:
     def __init__(self, size: Size = (0, 0), caption: str = "", fullscreen: bool = False, vsync: bool = True, max_fps: int = 0, print_gl_errors: bool = True):
         """
         fullscreen: [Overrides size]
+        max_fps: [0 means uncapped]
         """
         # Validate parameters
         validate_types([('size', size, Size),
@@ -34,7 +40,7 @@ class Window:
             self.aspect_ratio = self.display_size[0] / self.display_size[1]
 
         # Window init
-        self._init_window(self.monitor, self.size, self.caption, self.fullscreen, self.vsync, self.max_fps)
+        self.window = self._init_window(self.monitor, self.size, self.caption, self.vsync, self.max_fps)
 
         # Set variables
         self.active = True
@@ -61,19 +67,24 @@ class Window:
         
         return monitor, video_mode
 
-    def _init_window(self, monitor: glfw._GLFWmonitor, size: Size, caption: str, fullscreen: bool, vsync: bool, max_fps: int) -> glfw._GLFWwindow:
+    @staticmethod
+    def _init_window(monitor: glfw._GLFWmonitor, size: Size, caption: str, vsync: bool, max_fps: int) -> glfw._GLFWwindow:
         """
         Initilize GLFW
         """
-        window = glfw.create_window(*size, caption, self.monitor, None)
+        window = glfw.create_window(*size, caption, monitor, None)
         if not window:
             glfw.terminate()
             raise Exception("GLFW window can't be created")
 
-        glfw.make_context_current(self.window)
+        glfw.make_context_current(window)
 
         # Max FPS (Disable VSYNC)
+        if vsync:
+            fps_value = 1 # 
         glfw.swap_interval(max_fps)
+
+        return window
 
 
 class GraphicsEngine:
