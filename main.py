@@ -9,14 +9,16 @@ AnyString = (str, bytes, bytearray)
 
 class Validate:
     """
-    A class containing static methods to validate variable types and values.
+    A class which validates variable types for the project GraphicsFramework.
+
+    Used to validate user parameters being passed into the GraphicsFramework functions.
     """
     @staticmethod
     def validate_types(expected_types: list[tuple[str, Any, type]]) -> None | NoReturn:
         """
         Validates a list with the type of a variable against the expected type.
 
-        Args:
+        Parameters:
             expected_types (list):
                 expected_type (tuple):
                     name (str): The name of the variable being validated.
@@ -35,7 +37,7 @@ class Validate:
         """
         Validates the type of a variable against the expected type.
 
-        Args:
+        Parameters:
             name (str): The name of the variable being validated.
             var (Any): The variable to be validated.
             expected_type (type): The expected type for the variable.
@@ -46,25 +48,27 @@ class Validate:
         """
         if expected_type is PositiveInt:
             Validate._validate_PositiveInt()
-            return
+            return # Validation success
         
         if expected_type is Coordinate:
             Validate._validate_Coordinate()
-            return
+            return # Validation success
         
         if expected_type is Size:
             Validate._validate_Size()
-            return
+            return # Validation success
         
         if not isinstance(var, expected_type):
             raise TypeError(f"Invalid type for {name}. Expected {expected_type}, got {type(var)}.")
+        # Validation success
 
     @staticmethod
     def _validate_PositiveInt(name: str, var: Any) -> None | NoReturn:
         """
+        [Private]
         Validates that the variable is a positive integer.
 
-        Args:
+        Parameters:
             name (str): The name of the variable being validated.
             var (Any): The variable to be validated.
 
@@ -76,14 +80,15 @@ class Validate:
             raise TypeError(f"Invalid type for {name}. Expected {Real}, got {type(var)}.")
 
         if var < 0:
-            raise ValueError(f"Invalid value for {name}. Size numbers must be positive.")
+            raise ValueError(f"Invalid value for {name}. Size numbers must be positive.")   
 
     @staticmethod
     def _validate_Coordinate(var: Any) -> None | NoReturn:
         """
+        [Private]
         Validates that the variable is a sequence of two numbers representing coordinates.
 
-        Args:
+        Parameters:
             var (Any): The variable to be validated, expected to be a sequence of two numbers.
 
         Returns:
@@ -103,9 +108,10 @@ class Validate:
     @staticmethod
     def _validate_Size(var: Any) -> None | NoReturn:
         """
+        [Private]
         Validates that the variable is a sequence of two positive numbers representing size.
 
-        Args:
+        Parameters:
             var (Any): The variable to be validated, expected to be a sequence of two real numbers.
 
         Returns:
@@ -129,23 +135,25 @@ class Validate:
 
 class Window:
     def __init__(self, size: Size, caption: str = "", fullscreen: bool = False, vsync: bool = True, max_fps: int = 0):
+        # Validate parameters
         Validate.validate_types([('size', size, Size),
                                  ('caption', caption, str),
                                  ('fullscreen', fullscreen, bool),
                                  ('vsync', vsync, bool),
                                  ('max_fps', max_fps, int)])
         
+        # Set parameters
         self.size = size
         self.caption = caption
         self.fullscreen = fullscreen
         self.vsync = vsync
         self.max_fps = max_fps
 
-        
+        # Set variables
+        self.active = True
+        self.graphics_engine = GraphicsEngine()
 
-
-
-    
+     
 
 class GraphicsEngine:
     pass
