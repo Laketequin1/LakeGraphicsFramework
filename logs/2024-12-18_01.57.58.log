@@ -1,0 +1,11 @@
+Logfile created with verbose level 5 on 18/12/2024 at 01:57:58. Have fun <3
+
+[01:57:58] ERROR   : This is an error message.
+[01:57:58] WARNING : This is a warning message.
+[01:57:58] CRUCIAL : This is a crucial message.
+[01:57:58] INFO    : This is an info message.
+[01:57:58] INFO    : MessageLogger verbose type updating from INFO to WARNING
+[01:57:58] INFO    : MessageLogger verbose type updated from INFO to WARNING
+[01:57:58] INFO    : This info message should not be printed, but will appear in the log file.
+[01:57:58] ERROR   : This error message should still appear.
+[01:57:58] INFO    : MessageLogger verbose type updating from WARNING to NONE
