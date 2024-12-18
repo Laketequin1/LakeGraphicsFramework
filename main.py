@@ -137,9 +137,6 @@ def catch_main():
         main()
     except Exception as e:
         error_message = f"Fatal termination error:\n\n{traceback.format_exc()}"
-        print("\n\n\n-------------")
-        print(type(e))
-        print("-------------\n\n\n")
         MessageLogger.error(error_message, e)
 
 
