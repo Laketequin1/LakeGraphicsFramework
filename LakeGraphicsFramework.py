@@ -2,8 +2,11 @@
 import glfw
 import OpenGL.GL as gl
 from variable_type_validation import *
-from MessageLogger import MessageLogger
+from MessageLogger import MessageLogger as log
 from threading import Lock
+
+### Type hints ###
+Color = Tuple[float, float, float, float]
 
 ### Constants ###
 VSYNC_VALUE = 1
@@ -77,7 +80,7 @@ class Window:
             gl.glFlush() # Wait for pipeline
 
             with self.lock:
-                pass
+                self._gl_check_error()
 
     ### Init helpers ####
     @staticmethod
@@ -153,13 +156,16 @@ class Window:
             if glfw.raw_mouse_motion_supported():
                 glfw.set_input_mode(window, glfw.RAW_MOUSE_MOTION, glfw.TRUE)
             else:
-                if MessageLogger.check_init_completed():
-                    MessageLogger.warn("Raw mouse motion unsupported.")
+                log.warn("Raw mouse motion unsupported.")
     
     ### Private ###
     def _gl_check_error(self):
-        
+        error = gl.glGetError()
+
+        if error != gl.GL_NO_ERROR:
+            log.warn(f"OpenGL error: {error}")
 
 
 class GraphicsEngine:
-    pass
+    def __init__(self, aspect: float, background_color: Color) -> None:
+        pass
