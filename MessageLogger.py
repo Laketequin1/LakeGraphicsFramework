@@ -45,6 +45,8 @@ class MessageLogger:
     SETUP_MESSAGE_FORMAT = "Logfile created with verbose level {verbose_level} on {date_time}. Have fun <3\n"
     PREFIX_SPACE_PADDING = 7
 
+    THROW_ERROR_IF_NOT_INITIATED = False
+
     # Verbose unset
     verbose_level = None
     
@@ -105,7 +107,11 @@ class MessageLogger:
         Parameters:
             message (str): The error message to be logged and/or printed.
         """
-        cls._check_init_completed()
+        if cls.THROW_ERROR_IF_NOT_INITIATED:
+            cls._check_init_completed()
+        elif not cls.check_init_completed():
+            return
+            
         cls._log("ERROR", str(message))
 
         if raise_exception is not None:
@@ -119,7 +125,11 @@ class MessageLogger:
         Parameters:
             message (str): The warning message to be logged and/or printed.
         """
-        cls._check_init_completed()
+        if cls.THROW_ERROR_IF_NOT_INITIATED:
+            cls._check_init_completed()
+        elif not cls.check_init_completed():
+            return
+        
         cls._log("WARNING", str(message))
 
     @classmethod
@@ -130,7 +140,11 @@ class MessageLogger:
         Parameters:
             message (str): The warning message to be logged and/or printed.
         """
-        cls._check_init_completed()
+        if cls.THROW_ERROR_IF_NOT_INITIATED:
+            cls._check_init_completed()
+        elif not cls.check_init_completed():
+            return
+        
         cls._log("CRUCIAL", str(message))
 
     @classmethod
@@ -141,7 +155,11 @@ class MessageLogger:
         Parameters:
             message (str): The warning message to be logged and/or printed.
         """
-        cls._check_init_completed()
+        if cls.THROW_ERROR_IF_NOT_INITIATED:
+            cls._check_init_completed()
+        elif not cls.check_init_completed():
+            return
+        
         cls._log("INFO", str(message))
 
     @classmethod
