@@ -1,0 +1,10 @@
+Logfile created with verbose level CRUCIAL on 18/12/2024 at 16:32:47. Have fun <3
+
+[16:32:47] CRUCIAL : {'Hey': 2}
+[16:32:47] INFO    : Started main setup
+[16:32:47] INFO    : MessageLogger verbose type updating from CRUCIAL to INFO
+[16:32:47] INFO    : MessageLogger verbose type updated from CRUCIAL to INFO
+[16:32:47] WARNING : oooh!
+[16:32:47] CRUCIAL : TESTTT
+[16:32:47] ERROR   : Heheh!~
+[16:32:47] INFO    : Program terminating

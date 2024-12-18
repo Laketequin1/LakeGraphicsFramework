@@ -1,0 +1,18 @@
+Logfile created with verbose level LOG_ONLY on 18/12/2024 at 16:00:08. Have fun <3
+
+[16:00:08] INFO    : Started main setup
+[16:00:08] INFO    : MessageLogger verbose type updating from LOG_ONLY to INFO
+[16:00:08] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[16:00:08] WARNING : oooh!
+[16:00:08] CRUCIAL : TESTTT
+[16:00:08] ERROR   : Heheh!~
+[16:00:08] ERROR   : Fatal termination error:
+
+Traceback (most recent call last):
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\main.py", line 147, in catch_main
+    main()
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\main.py", line 161, in main
+    raise Exception("TEST")
+Exception: TEST
+
+[16:00:08] INFO    : Program terminating

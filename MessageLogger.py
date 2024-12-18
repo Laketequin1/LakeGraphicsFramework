@@ -35,10 +35,10 @@ class MessageLogger:
     VerboseLiteral = Literal["NONE", "LOG_ONLY", "ERROR", "WARNING", "CRUCIAL", "INFO"]
     
     TEXT_STYLES = {
-                    "ERROR":   "\033[31m",  # Bold Red
-                    "WARNING": "\033[33m",  # Bold Yellow
-                    "CRUCIAL": "\033[32m",  # Bold Green
-                    "INFO":    "\033[90m",  # Bold Green
+                    "ERROR":   "\033[31m",  # Red
+                    "WARNING": "\033[33m",  # Yellow
+                    "CRUCIAL": "\033[97m",  # White
+                    "INFO":    "\033[90m",  # Light Grey
                     "CLEAR":   "\033[0m"    # Reset
                   }
     
@@ -86,7 +86,7 @@ class MessageLogger:
             log_file.write(setup_message + "\n")
 
     @classmethod
-    def error(cls, message: str) -> None:
+    def error(cls, message: str, raise_exception: Exception = None) -> None:
         """
         Logs an error message to the file and prints it to the terminal based on the verbose level.
 
@@ -94,7 +94,10 @@ class MessageLogger:
             message (str): The error message to be logged and/or printed.
         """
         cls._check_init_completed()
-        cls._log("ERROR", message)
+        cls._log("ERROR", str(message))
+
+        if raise_exception is not None:
+            raise raise_exception
 
     @classmethod
     def warn(cls, message: str) -> None:
@@ -105,7 +108,7 @@ class MessageLogger:
             message (str): The warning message to be logged and/or printed.
         """
         cls._check_init_completed()
-        cls._log("WARNING", message)
+        cls._log("WARNING", str(message))
 
     @classmethod
     def crucial(cls, message: str) -> None:
@@ -116,7 +119,7 @@ class MessageLogger:
             message (str): The warning message to be logged and/or printed.
         """
         cls._check_init_completed()
-        cls._log("CRUCIAL", message)
+        cls._log("CRUCIAL", str(message))
 
     @classmethod
     def info(cls, message: str) -> None:
@@ -127,7 +130,7 @@ class MessageLogger:
             message (str): The warning message to be logged and/or printed.
         """
         cls._check_init_completed()
-        cls._log("INFO", message)
+        cls._log("INFO", str(message))
 
     @classmethod
     def set_verbose_type(cls, verbose_type: VerboseLiteral) -> None:

@@ -1,0 +1,25 @@
+{
+    "_comment0": "Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]",
+    "verbose_type": "INFO",
+
+    "_comment1": "window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution",
+    "window_resolution": [0, 0],
+    "fullscreen": true,
+
+    "_comment2": "setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps",
+    "max_fps": 0,
+    "vsync": true,
+
+    "_comment3": "raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)",
+    "raw_mouse_input": true,
+    "mouse_sensitivity": 1,
+
+    "_comment4": "Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)",
+    "key_binds": {
+        "jump": "SPACE",
+        "forward": "W",
+        "back": "S",
+        "left": "A",
+        "right": "D"
+    }
+}

@@ -1,0 +1,19 @@
+Logfile created with verbose level LOG_ONLY on 18/12/2024 at 17:39:12. Have fun <3
+
+[17:39:12] INFO    : MessageLogger verbose type updating from LOG_ONLY to INFO
+[17:39:12] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[17:39:12] INFO    : Imported settings: {'_comment0': 'Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]', 'verbose_type': 'INFO', '_comment1': 'window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution', 'window_resolution': [0, 0], 'fullscreen': True, '_comment2': 'setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps', 'max_fps': 0, 'vsync': True, '_comment3': 'raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)', 'raw_mouse_input': True, 'mouse_sensitivity': 1, '_comment4': "Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)", 'key_binds': {'jump': 'SPACE', 'forward': 'W', 'back': 'S', 'left': 'A', 'right': 'D'}}
+[17:39:12] ERROR   : Fatal termination error:
+
+Traceback (most recent call last):
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\main.py", line 134, in catch_main
+    main()
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\main.py", line 149, in main
+    window = Window(settings["window_resolution"], CAPTION, settings["fullscreen"], settings["vsync"], settings["max_fps"], settings["raw_mouse_input"], True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\main.py", line 56, in __init__
+    self.size = self.display_size
+                ^^^^^^^^^^^^^^^^^
+AttributeError: 'Window' object has no attribute 'display_size'
+
+[17:39:12] INFO    : Program terminating

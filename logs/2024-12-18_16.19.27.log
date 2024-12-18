@@ -1,0 +1,13 @@
+Logfile created with verbose level LOG_ONLY on 18/12/2024 at 16:19:27. Have fun <3
+
+[16:19:27] ERROR   : Fatal termination error:
+
+Traceback (most recent call last):
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\main.py", line 151, in catch_main
+    main()
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\main.py", line 159, in main
+    settings = read_json_data()
+               ^^^^^^^^^^^^^^^^
+TypeError: read_json_data() missing 1 required positional argument: 'file'
+
+[16:19:27] INFO    : Program terminating
