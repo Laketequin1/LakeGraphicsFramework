@@ -1,9 +1,0 @@
-Logfile created with verbose level LOG_ONLY on 18/12/2024 at 15:44:53. Have fun <3
-
-[15:44:53] INFO    : Started main setup
-[15:44:53] INFO    : MessageLogger verbose type updating from LOG_ONLY to INFO
-[15:44:53] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
-[15:44:53] WARNING : oooh!
-[15:44:53] CRUCIAL : TESTTT
-[15:44:53] ERROR   : Heheh!~
-[15:44:53] INFO    : Program terminating
