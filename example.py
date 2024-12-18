@@ -37,7 +37,9 @@ def main():
     log.set_verbose_type(settings["verbose_type"])
     log.info(f"Imported settings: {settings}")
     
+    # Create window
     window = lgf.Window(settings["window_resolution"], CAPTION, settings["fullscreen"], settings["vsync"], settings["max_fps"], settings["raw_mouse_input"], True)
+    window.main()
 
     sys.exit(0)
 
