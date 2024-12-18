@@ -1,7 +1,9 @@
 ### Imports ###
 import glfw
+import OpenGL.GL as gl
 from variable_type_validation import *
 from MessageLogger import MessageLogger
+from threading import Lock
 
 ### Constants ###
 VSYNC_VALUE = 1
@@ -12,10 +14,19 @@ def terminate_glfw():
 
 ### Classes ###
 class Window:
-    def __init__(self, size: Size = (0, 0), caption: str = "", fullscreen: bool = False, vsync: bool = True, max_fps: int = 0, raw_mouse_input: bool = True, center_cursor: bool = True, hide_cursor: bool = True):
+    def __init__(self, size: Size = (0, 0), caption: str = "", fullscreen: bool = False, vsync: bool = True, max_fps: int = 0, raw_mouse_input: bool = True, center_cursor: bool = True, hide_cursor: bool = True) -> None:
         """
-        fullscreen: [Overrides size]
-        max_fps: [0 means uncapped]
+        Initializes a window and input system with the specified parameters.
+        
+        Parameters:
+            size (Size): The initial size of the window (width, height).
+            caption (str): The window's title.
+            fullscreen (bool): Whether the window is fullscreen. Overrides size if True.
+            vsync (bool): Whether vertical sync is enabled. Overrides max_fps if enabled.
+            max_fps (int): The maximum frames per second. 0 means uncapped.
+            raw_mouse_input (bool): Whether raw mouse input is used.
+            center_cursor (bool): Whether the cursor is centered in the window.
+            hide_cursor (bool): Whether the cursor is hidden.
         """
         # Validate parameters
         validate_types([('size', size, Size),
@@ -58,12 +69,26 @@ class Window:
 
         # Set variables
         self.active = True
+        self.lock = Lock()
         self.graphics_engine = GraphicsEngine()
     
+    def main(self):
+        while self.active:
+            gl.glFlush() # Wait for pipeline
+
+            with self.lock:
+                pass
+
+    ### Init helpers ####
     @staticmethod
     def _init_display() -> tuple[glfw._GLFWmonitor, glfw._GLFWvidmode]:
         """
-        Initilize GLFW display
+        [Private]
+        Initializes the GLFW display by setting up the primary monitor and video mode.
+        It ensures that GLFW can be initialized, the primary monitor can be found, and a valid video mode is available. An exception is raised if anything fails.
+        
+        Returns:
+            tuple[glfw._GLFWmonitor, glfw._GLFWvidmode]: The primary monitor and its video mode.
         """
         # Init GLFW and display
         if not glfw.init():
@@ -82,7 +107,20 @@ class Window:
     @staticmethod
     def _init_window(monitor: glfw._GLFWmonitor, size: Size, caption: str, vsync: bool, max_fps: int) -> glfw._GLFWwindow:
         """
-        Initilize GLFW window
+        [Private]
+        Initializes the GLFW window associates it with the primary monitor.
+        Sets the frame rate limit based on the 'vsync' and 'max_fps' parameters.
+        If the window creation fails, GLFW is terminated and an exception is raised.
+        
+        Parameters:
+            monitor (glfw._GLFWmonitor): The primary monitor to use for fullscreen.
+            size (Size): The desired size of the window (width, height).
+            caption (str): The title of the window.
+            vsync (bool): Whether vertical synchronization should be enabled.
+            max_fps (int): The maximum frames per second. 0 means uncapped.
+
+        Returns:
+            glfw._GLFWwindow: The created window.
         """
         window = glfw.create_window(*size, caption, monitor, None)
         if not window:
@@ -98,9 +136,15 @@ class Window:
         return window
     
     @staticmethod
-    def _init_input(window: glfw._GLFWwindow, raw_mouse_input: bool, hide_cursor: bool) -> glfw._GLFWwindow:
+    def _init_input(window: glfw._GLFWwindow, raw_mouse_input: bool, hide_cursor: bool) -> None:
         """
-        Initilize window input
+        [Private]
+        Initializes input settings for the window. Configures the cursor visibility and raw mouse input mode.
+        
+        Parameters:
+            window (glfw._GLFWwindow): The window for which input settings should be configured.
+            raw_mouse_input (bool): Whether to enable raw mouse input.
+            hide_cursor (bool): Whether to hide the cursor in the window.
         """
         if hide_cursor:
             glfw.set_input_mode(window, glfw.CURSOR, glfw.CURSOR_HIDDEN)
@@ -111,6 +155,10 @@ class Window:
             else:
                 if MessageLogger.check_init_completed():
                     MessageLogger.warn("Raw mouse motion unsupported.")
+    
+    ### Private ###
+    def _gl_check_error(self):
+        
 
 
 class GraphicsEngine:
