@@ -10,7 +10,7 @@ from numbers import Real
 from collections.abc import Sequence
 
 
-### Types ###
+### Type Hints ###
 PositiveInt = NewType('PositiveInt', int)
 Coordinate = NewType('Coordinate', tuple[int, int])
 Size = NewType('Size', tuple[PositiveInt, PositiveInt])
