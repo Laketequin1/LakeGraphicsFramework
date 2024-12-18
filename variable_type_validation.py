@@ -20,18 +20,14 @@ AnyString = (str, bytes, bytearray)
 ### Functions ###
 def validate_types(expected_types: list[tuple[str, Any, type]]) -> None | NoReturn:
     """
-    Validates a list with the type of a variable against the expected type.
+    Validates a list with the type of a variable against the expected type. The function will raise an error if valitadion statement is invalid, otherwise continues.
 
     Parameters:
         expected_types (list):
             expected_type (tuple):
                 name (str): The name of the variable being validated.
                 var (Any): The variable to be validated.
-                expected_type (type): The expected type for the variable.
-
-    Returns:
-        None: If validation passes, the function returns nothing.
-        The function will raise an error if valitadion statement is invalid.
+                expected_type (type): The expected type for the variable.        
     """
     for expected_type in expected_types:
         validate_type(*expected_type)
@@ -39,16 +35,12 @@ def validate_types(expected_types: list[tuple[str, Any, type]]) -> None | NoRetu
     
 def validate_type(name: str, var: Any, expected_type: type) -> None | NoReturn:
     """
-    Validates the type of a variable against the expected type.
+    Validates the type of a variable against the expected type. The function will raise an error if valitadion statement is invalid, otherwise continues.
 
     Parameters:
         name (str): The name of the variable being validated.
         var (Any): The variable to be validated.
         expected_type (type): The expected type for the variable.
-
-    Returns:
-        None: If validation passes, the function returns nothing.
-        The function will raise an error if valitadion statement is invalid.
     """
     if expected_type is PositiveInt:
         _validate_positiveint(name, var)
@@ -69,15 +61,11 @@ def validate_type(name: str, var: Any, expected_type: type) -> None | NoReturn:
 def _validate_positiveint(name: str, var: Any) -> None | NoReturn:
     """
     [Private]
-    Validates that the variable is a positive integer.
+    Validates that the variable is a positive integer. The function will raise an error if valitadion statement is invalid, otherwise continues.
 
     Parameters:
         name (str): The name of the variable being validated.
         var (Any): The variable to be validated.
-
-    Returns:
-        None: If validation passes, the function returns nothing.
-        The function will raise an error if valitadion statement is invalid.
     """
     if not isinstance(var, Real):
         raise TypeError(f"Invalid type for {name}. Expected {Real}, got {type(var)}.")
@@ -88,15 +76,11 @@ def _validate_positiveint(name: str, var: Any) -> None | NoReturn:
 def _validate_coordinate(name: str, var: Any) -> None | NoReturn:
     """
     [Private]
-    Validates that the variable is a sequence of two numbers representing coordinates.
+    Validates that the variable is a sequence of two numbers representing coordinates. The function will raise an error if valitadion statement is invalid, otherwise continues.
 
     Parameters:
         name (str): The name of the variable being validated.
         var (Any): The variable to be validated, expected to be a sequence of two numbers.
-
-    Returns:
-        None: If validation passes, the function returns nothing.
-        The function will raise an error if valitadion statement is invalid.
     """
     if not isinstance(var, Sequence) or isinstance(var, AnyString):
         raise TypeError(f"Invalid type for Coordinate '{name}'. Expected {Sequence}, got {type(var)}.")
@@ -111,15 +95,11 @@ def _validate_coordinate(name: str, var: Any) -> None | NoReturn:
 def _validate_size(name: str, var: Any) -> None | NoReturn:
     """
     [Private]
-    Validates that the variable is a sequence of two positive numbers representing size.
+    Validates that the variable is a sequence of two positive numbers representing size. The function will raise an error if valitadion statement is invalid, otherwise continues.
 
     Parameters:
         name (str): The name of the variable being validated.
         var (Any): The variable to be validated, expected to be a sequence of two real numbers.
-
-    Returns:
-        None: If validation passes, the function returns nothing.
-        The function will raise an error if valitadion statement is invalid.
     """
     if not isinstance(var, Sequence) or isinstance(var, AnyString):
         raise TypeError(f"Invalid type for Size '{name}'. Expected {Sequence}, got {type(var)}.")
