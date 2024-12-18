@@ -1,28 +1,14 @@
 ### Imports ###
 import glfw
-import sys
-import atexit
-import traceback
-import json
 from variable_type_validation import *
 from MessageLogger import MessageLogger
-from get_json_data import *
 
 ### Constants ###
-JSON_SETTINGS_FILEPATH = "settings/settings.json"
 VSYNC_VALUE = 1
-CAPTION = "Into Havoc"
 
-### Exit Handling ###
-def exit_handler() -> None:
-    """
-    Runs before main threads terminates.
-    """
-    #events["exit"].set()
-    MessageLogger.info("Program terminating")
+### Functions ###
+def terminate_glfw():
     glfw.terminate()
-
-atexit.register(exit_handler)
 
 ### Classes ###
 class Window:
@@ -128,27 +114,3 @@ class Window:
 
 class GraphicsEngine:
     pass
-
-
-def catch_main():
-    MessageLogger.init("LOG_ONLY")
-
-    try:
-        main()
-    except Exception as e:
-        error_message = f"Fatal termination error:\n\n{traceback.format_exc()}"
-        MessageLogger.error(error_message, e)
-
-
-def main():
-    # Import settings
-    settings = read_json_data(JSON_SETTINGS_FILEPATH)
-    MessageLogger.set_verbose_type(settings["verbose_type"])
-    MessageLogger.info(f"Imported settings: {settings}")
-    
-    window = Window(settings["window_resolution"], CAPTION, settings["fullscreen"], settings["vsync"], settings["max_fps"], settings["raw_mouse_input"], True)
-
-    sys.exit(0)
-
-if __name__ == "__main__":
-    catch_main()
