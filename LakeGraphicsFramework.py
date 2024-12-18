@@ -109,7 +109,8 @@ class Window:
             if glfw.raw_mouse_motion_supported():
                 glfw.set_input_mode(window, glfw.RAW_MOUSE_MOTION, glfw.TRUE)
             else:
-                MessageLogger.warn("Raw mouse motion unsupported.")
+                if MessageLogger.check_init_completed():
+                    MessageLogger.warn("Raw mouse motion unsupported.")
 
 
 class GraphicsEngine:
