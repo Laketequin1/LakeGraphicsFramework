@@ -1,7 +1,7 @@
 ### Imports ###
 import os
 from datetime import datetime
-from typing import Literal
+from typing import Literal, NoReturn
 
 ### Functions ###
 class MessageLogger:
@@ -84,6 +84,18 @@ class MessageLogger:
 
         with open(cls.LOG_FILEPATH, "w") as log_file:
             log_file.write(setup_message + "\n")
+
+    @classmethod
+    def check_init_completed(cls) -> bool:
+        """
+        Returns if the class has been initiated.
+
+        Returns:
+            bool: If ClassLogger initiation has been completed.
+        """
+        if cls.verbose_level is None:
+            return False
+        return True
 
     @classmethod
     def error(cls, message: str, raise_exception: Exception = None) -> None:
@@ -222,7 +234,7 @@ class MessageLogger:
         return formatted_message
 
     @classmethod
-    def _append_to_log_file(cls, message):
+    def _append_to_log_file(cls, message) -> None:
         """
         [Private]
         Appends a formatted message to the log file.
@@ -234,8 +246,11 @@ class MessageLogger:
             log_file.write(str(message) + "\n")
     
     @classmethod
-    def _check_init_completed(cls):
-        if cls.verbose_level is None:
+    def _check_init_completed(cls) -> None | NoReturn:
+        """
+        Private implementation to check if ClassLogger has been initiated. Raises error if not initiated, otherwise continues.
+        """
+        if not cls.check_init_completed():
             raise RuntimeError("MessageLogger has not been initialized. Make sure to call MessageLogger.init(verbose_type)")
         
 
