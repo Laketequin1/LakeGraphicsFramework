@@ -1,5 +1,7 @@
 ### Imports ###
 import glfw
+import numpy as np
+import pyrr
 import OpenGL.GL as gl
 from variable_type_validation import *
 from MessageLogger import MessageLogger as log
@@ -167,5 +169,22 @@ class Window:
 
 
 class GraphicsEngine:
-    def __init__(self, aspect: float, background_color: Color) -> None:
-        pass
+    def __init__(self, aspect: float, skybox_color: Color) -> None:
+        self.aspect = aspect
+        self.skybox_color = skybox_color
+
+        self._init_opengl(skybox_color)
+
+    @staticmethod
+    def _init_opengl(skybox_color):
+        # Initilize OpenGL
+        gl.glClearColor(skybox_color, 1)
+        gl.glEnable(gl.GL_DEPTH_TEST)
+        gl.glEnable(gl.GL_BLEND)
+        gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
+
+    @staticmethod
+    def _init_perspective_projection(fovy, aspect, near, far):
+        projection_handle = None # Its a shader thing? TODO?
+        projection_transform = pyrr.matrix44.create_perspective_projection(fovy = fovy, aspect = aspect, near = near, far = far, dtype = np.float32)
+        gl.glUniformMatrix4fv(projection_handle, 1, gl.GL_FALSE, projection_transform)

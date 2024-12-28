@@ -1,0 +1,19 @@
+Logfile created with verbose level LOG_ONLY on 28/12/2024 at 14:21:51. Have fun <3
+
+[14:21:51] INFO    : MessageLogger verbose type updating from LOG_ONLY to INFO
+[14:21:51] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[14:21:51] INFO    : Imported settings: {'_comment0': 'Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]', 'verbose_type': 'INFO', '_comment1': 'window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution', 'window_resolution': [0, 0], 'fullscreen': True, '_comment2': 'setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps', 'max_fps': 0, 'vsync': True, '_comment3': 'raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)', 'raw_mouse_input': True, 'mouse_sensitivity': 1, '_comment4': "Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)", 'key_binds': {'jump': 'SPACE', 'forward': 'W', 'back': 'S', 'left': 'A', 'right': 'D'}}
+[14:21:52] ERROR   : Fatal termination error:
+
+Traceback (most recent call last):
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\example.py", line 29, in catch_main
+    main()
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\example.py", line 41, in main
+    window = lgf.Window(settings["window_resolution"], CAPTION, settings["fullscreen"], settings["vsync"], settings["max_fps"], settings["raw_mouse_input"], True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\LakeGraphicsFramework.py", line 76, in __init__
+    self.graphics_engine = GraphicsEngine()
+                           ^^^^^^^^^^^^^^^^
+TypeError: GraphicsEngine.__init__() missing 2 required positional arguments: 'aspect' and 'background_color'
+
+[14:21:52] INFO    : Program terminating
