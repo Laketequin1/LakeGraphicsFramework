@@ -3,15 +3,27 @@ import glfw
 import numpy as np
 import pyrr
 import OpenGL.GL as gl
+import OpenGL.GL.shaders as gls
 from variable_type_validation import *
 from MessageLogger import MessageLogger as log
 from threading import Lock
+from safe_file_readlines import safe_file_readlines
 
 ### Type hints ###
 Color = Tuple[float, float, float, float]
 
 ### Constants ###
 VSYNC_VALUE = 1
+SHADERS_PATH = "shaders/"
+MODELS_PATH = "models/"
+DEFAULT_FRAG_SHADER = "default.frag"
+DEFAULT_VERT_SHADER = "default.vert"
+DEFAULT_UNIFORM_NAMES = {
+    "projection": "projection",
+    "model": "model",
+    "view": "view",
+    "color": "objectColor",
+}
 
 ### Functions ###
 def terminate_glfw():
@@ -170,11 +182,22 @@ class Window:
 
 class GraphicsEngine:
     def __init__(self, aspect: float, skybox_color: Color) -> None:
+        log.info("Setting up Graphics Engine")
         self.aspect = aspect
         self.skybox_color = skybox_color
 
+        self.shaders = {}
+
         self._init_opengl(skybox_color)
 
+        # Initilize shader
+        self.shaders["default"] = self._create_shader(SHADERS_PATH + DEFAULT_VERT_SHADER, SHADERS_PATH + DEFAULT_FRAG_SHADER)
+        gl.glUseProgram(self.shaders["default"])
+
+        # Initilize shader handles
+        self._get_uniform_handles()
+
+        
     @staticmethod
     def _init_opengl(skybox_color):
         # Initilize OpenGL
@@ -182,6 +205,26 @@ class GraphicsEngine:
         gl.glEnable(gl.GL_DEPTH_TEST)
         gl.glEnable(gl.GL_BLEND)
         gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
+
+    @staticmethod
+    def _create_shader(vertex_path, fragment_path):        
+        vertex_src = safe_file_readlines(vertex_path)
+        fragment_src = safe_file_readlines(fragment_path)
+        
+        shader = gls.compileProgram(
+            gls.compileShader(vertex_src, gl.GL_VERTEX_SHADER),
+            gls.compileShader(fragment_src, gl.GL_FRAGMENT_SHADER)
+        )
+        
+        return shader
+    
+    @staticmethod
+    def _get_uniform_handles(shader: gls.ShaderProgram, model_name: str, view_name: str, projection_name: str, texture_name: str = None, color_name: str = None):
+        uniform_handles = {}
+
+        uniform_handles["model"] = gl.glGetUniformLocation(shader, model_name)
+        uniform_handles["model"] = gl.glGetUniformLocation(shader, view_name)
+        
 
     @staticmethod
     def _init_perspective_projection(fovy, aspect, near, far):
