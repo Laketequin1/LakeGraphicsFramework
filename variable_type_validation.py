@@ -117,7 +117,7 @@ def _validate_size(name: str, var: Any) -> None | NoReturn:
             raise TypeError(f"Invalid type for Size[{i}] '{name}'. Expected {Real}, got {type(var[i])}.")
     
     for i in [0, 1]:
-        if var[i] <= 0:
+        if var[i] < 0:
             raise ValueError(f"Invalid value for Size[{i}] '{name}'. Size numbers must be positive, but the value was {var[i]}.")
         
 def _validate_color_rgba(name: str, var: Any) -> None | NoReturn:
@@ -140,7 +140,7 @@ def _validate_color_rgba(name: str, var: Any) -> None | NoReturn:
             raise TypeError(f"Invalid type for the Color[{i}] '{name}'. Expected {Real}, got {type(var[i])}.")
     
     for i in range(4):
-        if var[i] <= 0 or var[i] >= 0:
+        if var[i] < 0 or var[i] > 1:
             raise ValueError(f"Invalid value for the Color[{i}] '{name}'. Color numbers must be between 0 and 1 inclusive, but the value was {var[i]}.")
         
 

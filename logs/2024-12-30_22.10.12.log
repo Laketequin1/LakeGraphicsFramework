@@ -1,0 +1,24 @@
+Logfile created with verbose level LOG_ONLY on 30/12/2024 at 22:10:12. Have fun <3
+
+[22:10:12] INFO    : MessageLogger verbose type updating from LOG_ONLY to INFO
+[22:10:12] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[22:10:12] INFO    : Imported settings: {'_comment0': 'Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]', 'verbose_type': 'INFO', '_comment1': 'window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution', 'window_resolution': [0, 0], 'fullscreen': True, '_comment2': 'setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps', 'max_fps': 0, 'vsync': True, '_comment3': 'raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)', 'raw_mouse_input': True, 'mouse_sensitivity': 1, '_comment4': "Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)", 'key_binds': {'jump': 'SPACE', 'forward': 'W', 'back': 'S', 'left': 'A', 'right': 'D'}}
+[22:10:12] ERROR   : Fatal termination error:
+
+Traceback (most recent call last):
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\example.py", line 30, in catch_main
+    main()
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\example.py", line 42, in main
+    window = lgf.Window(settings["window_resolution"], CAPTION, settings["fullscreen"], settings["vsync"], settings["max_fps"], settings["raw_mouse_input"], True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\LakeGraphicsFramework.py", line 70, in __init__
+    validate_types([('size', size, Size),
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\variable_type_validation.py", line 34, in validate_types
+    validate_type(*expected_type)
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\variable_type_validation.py", line 59, in validate_type
+    _validate_color_rgba(name, var)
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\variable_type_validation.py", line 144, in _validate_color_rgba
+    raise ValueError(f"Invalid value for the Color[{i}] '{name}'. Color numbers must be between 0 and 1 inclusive, but the value was {var[i]}.")
+ValueError: Invalid value for the Color[3] 'skybox_color'. Color numbers must be between 0 and 1 inclusive, but the value was 1.
+
+[22:10:12] INFO    : Program terminating

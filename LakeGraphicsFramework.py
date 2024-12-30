@@ -7,13 +7,14 @@ import OpenGL.GL.shaders as gls
 from variable_type_validation import *
 from MessageLogger import MessageLogger as log
 from threading import Lock
+from typing import Callable
 import copy
 from safe_file_readlines import safe_file_readlines
 
 
 ### Type hints ###
 ColorRGBA = Tuple[float, float, float, float]
-ToDecide = Any[Any, Any, Any] # TODO
+ToDecide = Any # TODO
 
 
 ### Constants ###
@@ -45,7 +46,7 @@ def terminate_glfw():
 
 ### Classes ###
 class Window:
-    def __init__(self, size: Size = (0, 0), caption: str = "", fullscreen: bool = False, vsync: bool = True, max_fps: int = 0, raw_mouse_input: bool = True, center_cursor: bool = True, hide_cursor: bool = True, fovy: float = DEFAULT_FOVY, near: float = DEFAULT_NEAR, far: float = DEFAULT_FAR, skybox_color: ColorRGBA = DEFAULT_SKYBOX_COLOR) -> None:
+    def __init__(self, size: Size = (0, 0), caption: str = "", fullscreen: bool = False, windowed: bool = True, vsync: bool = True, max_fps: int = 0, raw_mouse_input: bool = True, center_cursor: bool = True, hide_cursor: bool = True, fovy: float = DEFAULT_FOVY, near: float = DEFAULT_NEAR, far: float = DEFAULT_FAR, skybox_color: ColorRGBA = DEFAULT_SKYBOX_COLOR) -> None:
         """
         Initializes a window, input system, and graphics engine with the specified parameters.
         
@@ -53,6 +54,7 @@ class Window:
             size (Size): The initial size of the window (width, height).
             caption (str): The window's title.
             fullscreen (bool): Whether the window is fullscreen. Overrides size if True.
+            windowed (bool): Whether the window is in fullscreen or windowed mode. Overrides fullscreen to True if windowed is False.
             vsync (bool): Whether vertical sync is enabled. Overrides max_fps if enabled.
             max_fps (int): The maximum frames per second. 0 means uncapped.
 
@@ -69,6 +71,7 @@ class Window:
         validate_types([('size', size, Size),
                         ('caption', caption, str),
                         ('fullscreen', fullscreen, bool),
+                        ('windowed', windowed, bool),
                         ('vsync', vsync, bool),
                         ('max_fps', max_fps, int),
                         ('raw_mouse_input', raw_mouse_input, bool),
@@ -82,17 +85,21 @@ class Window:
         if not far > near:
             raise ValueError(f"The value for far '{far}' is not greater than near '{near}'.")
         
-        log.info(f"Window variable validation passed. Variables: {self.__dict__}")
-        
         # Set parameters
         self.size = size
         self.caption = str(caption)
-        self.fullscreen = fullscreen
+        self.fullscreen = fullscreen or not windowed
+        self.windowed = windowed
         self.vsync = vsync
         self.max_fps = int(max_fps)
         self.raw_mouse_input = raw_mouse_input
         self.center_cursor = center_cursor
         self.hide_cursor = hide_cursor
+
+        if self.fullscreen != fullscreen:
+            log.warn(f"Window was requested in non-windowed mode. Fullscreen forced to from {fullscreen} to {self.fullscreen}.")
+
+        log.info(f"Window variable validation passed. Variables: {self.__dict__}")
 
         # Display init
         self.monitor, self.video_mode = self._init_display()
@@ -100,6 +107,7 @@ class Window:
 
         # Update screen size if fullscreen
         if self.fullscreen:
+            log.info("Window fullscreen.")
             self.size = self.display_size
         
         if self.size[1] != 0:
@@ -108,7 +116,7 @@ class Window:
             self.aspect_ratio = 1
 
         # Window init
-        self.window = self._init_window(self.monitor, self.size, self.caption, self.vsync, self.max_fps)
+        self.window = self._init_window(self.monitor, self.size, self.caption, self.windowed, self.vsync, self.max_fps)
 
         # Input mode init
         self._init_input(self.window, self.raw_mouse_input, self.hide_cursor)
@@ -124,8 +132,11 @@ class Window:
         while self.active:
             gl.glFlush() # Wait for pipeline
 
-            with self.lock:
-                self._gl_check_error()
+            self._gl_check_error()
+            glfw.poll_events()
+
+            self.graphics_engine._render()
+            glfw.swap_buffers(self.window)
 
     ### Init helpers ####
     @staticmethod
@@ -153,7 +164,7 @@ class Window:
         return monitor, video_mode
 
     @staticmethod
-    def _init_window(monitor: glfw._GLFWmonitor, size: Size, caption: str, vsync: bool, max_fps: int) -> glfw._GLFWwindow:
+    def _init_window(monitor: glfw._GLFWmonitor, size: Size, caption: str, windowed: bool, vsync: bool, max_fps: int) -> glfw._GLFWwindow:
         """
         [Private]
         Initializes the GLFW window associates it with the primary monitor.
@@ -170,7 +181,9 @@ class Window:
         Returns:
             glfw._GLFWwindow: The created window.
         """
-        window = glfw.create_window(*size, caption, monitor, None)
+        screen_monitor = monitor if not windowed else None
+
+        window = glfw.create_window(*size, caption, screen_monitor, None)
         if not window:
             glfw.terminate()
             raise Exception("GLFW window can't be created")
@@ -212,7 +225,7 @@ class Window:
 
 
 class Shader:
-    def __init__(self, name: str, vertex_path: str, fragment_path: str, fovy: float, aspect: float, near: float, far: float, compile_time_config: dict = {}):
+    def __init__(self, name: str, vertex_path: str, fragment_path: str, fovy: float, aspect: float, near: float, far: float, model_name: str = DEFAULT_UNIFORM_NAMES["model"], view_name: str = DEFAULT_UNIFORM_NAMES["view"], projection_name: str = DEFAULT_UNIFORM_NAMES["projection"], texture_name: str = None, color_name: str = DEFAULT_UNIFORM_NAMES["color"], custom_uniform_names: dict = {}, compile_time_config: dict = {}):
         self.name = name
         log.info(f"Creating shader {name}")
 
@@ -220,11 +233,13 @@ class Shader:
         self.shader = self._create_shader(vertex_path, fragment_path, compile_time_config)
 
         # Get shader handles
-        self.uniform_handles = self._get_uniform_handles()
-        self.custom_uniform_handles = self._get_custom_uniform_handles()
+        self.uniform_handles = self._get_uniform_handles(self.shader, model_name, view_name, projection_name, texture_name, color_name)
+        self.custom_uniform_handles = self._get_custom_uniform_handles(self.shader, custom_uniform_names)
+
+        self.use()
 
         # Initilize shader handles
-        self._init_handles()
+        self._init_handles(self.uniform_handles)
         self._init_perspective_projection(self.uniform_handles["projection"], fovy, aspect, near, far)
 
         log.info(f"Shader creation passed for {name}. Variables: {self.__dict__}")
@@ -277,7 +292,7 @@ class Shader:
         if "texture" in handles:
             gl.glUniform1i(handles["texture"], 0)
         else:
-            log.info("No texture in this shader.")
+            log.info(f"No texture handle for the shader {self.name}.")
 
     @staticmethod
     def _init_perspective_projection(projection_handle, fovy: float, aspect: float, near: float, far: float):
@@ -286,6 +301,9 @@ class Shader:
     
     def use(self):
         gl.glUseProgram(self.shader)
+
+    def set_view(self, view_transform):
+        gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform)
 
 
 class GraphicsEngine:
@@ -298,7 +316,7 @@ class GraphicsEngine:
         self.skybox_color = skybox_color
 
         self.shaders = {}
-        self.active_shader = None
+        self.active_shader_name = None
 
         self._init_opengl(skybox_color)
 
@@ -324,7 +342,7 @@ class GraphicsEngine:
     @staticmethod
     def _init_opengl(skybox_color: ColorRGBA):
         # Initilize OpenGL
-        gl.glClearColor(skybox_color)
+        gl.glClearColor(*skybox_color)
         gl.glEnable(gl.GL_DEPTH_TEST)
         gl.glEnable(gl.GL_BLEND)
         gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
@@ -398,19 +416,27 @@ class GraphicsEngine:
             raise Exception("Shader '{shader_name}' does not exist in shaders.")
 
         self.shaders[shader_name].use()
-        self.active_shader = shader_name
+        self.active_shader_name = shader_name
 
-    def _add_draw_instruction(self, function, args):
-        self.pending_draw_instructions.append((function, args))
+    def _add_draw_instruction(self, draw_function: Callable, args: tuple):
+        self.pending_draw_instructions.append((draw_function, args))
 
     def _set_view(self, pos: Coordinate, rotation: ToDecide):
-        pass
+        view_transform = pyrr.matrix44.create_look_at(
+            eye = np.zeros(3, dtype = np.float32),
+            target = np.array([1, 0, 0], dtype = np.float32),
+            up = np.array([0, 1, 0], dtype = np.float32),
+            dtype = np.float32
+        )
 
-    def _update_skybox_color(self, skybox_color: ColorRGBA):
+        self.shaders[self.active_shader_name].set_view(view_transform)
+
+    @staticmethod
+    def _update_skybox_color(skybox_color: ColorRGBA):
         """Set the clear color"""
-        if self.new_skybox_color is not None:
-            log.info("Updating skybox color")
-            gl.glClearColor(skybox_color)
+        if skybox_color is not None:
+            log.info(f"Updating skybox color to {skybox_color}")
+            gl.glClearColor(*skybox_color)
 
     @staticmethod
     def _clear_screen():

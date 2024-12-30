@@ -1,0 +1,29 @@
+Logfile created with verbose level LOG_ONLY on 30/12/2024 at 22:10:57. Have fun <3
+
+[22:10:57] INFO    : MessageLogger verbose type updating from LOG_ONLY to INFO
+[22:10:57] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[22:10:57] INFO    : Imported settings: {'_comment0': 'Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]', 'verbose_type': 'INFO', '_comment1': 'window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution', 'window_resolution': [0, 0], 'fullscreen': True, '_comment2': 'setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps', 'max_fps': 0, 'vsync': True, '_comment3': 'raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)', 'raw_mouse_input': True, 'mouse_sensitivity': 1, '_comment4': "Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)", 'key_binds': {'jump': 'SPACE', 'forward': 'W', 'back': 'S', 'left': 'A', 'right': 'D'}}
+[22:10:57] INFO    : Window variable validation passed. Variables: {}
+[22:10:57] INFO    : Window creation passed. Variables: {'size': Size(width=1920, height=1080), 'caption': 'Into Havoc', 'fullscreen': True, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor': True, 'hide_cursor': True, 'monitor': <glfw.LP__GLFWmonitor object at 0x000001CAC4765ED0>, 'video_mode': GLFWvidmode(size=Size(width=1920, height=1080), bits=Bits(red=8, green=8, blue=8), refresh_rate=60), 'display_size': Size(width=1920, height=1080), 'aspect_ratio': 1.7777777777777777, 'window': <glfw.LP__GLFWwindow object at 0x000001CAC4765E50>}
+[22:10:57] INFO    : Setting up Graphics Engine
+[22:10:57] ERROR   : Fatal termination error:
+
+Traceback (most recent call last):
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\example.py", line 30, in catch_main
+    main()
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\example.py", line 42, in main
+    window = lgf.Window(settings["window_resolution"], CAPTION, settings["fullscreen"], settings["vsync"], settings["max_fps"], settings["raw_mouse_input"], True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\LakeGraphicsFramework.py", line 122, in __init__
+    self.graphics_engine = GraphicsEngine(fovy, self.aspect_ratio, near, far, skybox_color)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\LakeGraphicsFramework.py", line 309, in __init__
+    self._init_opengl(skybox_color)
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\LakeGraphicsFramework.py", line 333, in _init_opengl
+    gl.glClearColor(skybox_color)
+  File "C:\Users\laket\AppData\Local\Programs\Python\Python311\Lib\site-packages\OpenGL\platform\baseplatform.py", line 415, in __call__
+    return self( *args, **named )
+           ^^^^^^^^^^^^^^^^^^^^^^
+TypeError: this function takes 4 arguments (1 given)
+
+[22:10:57] INFO    : Program terminating

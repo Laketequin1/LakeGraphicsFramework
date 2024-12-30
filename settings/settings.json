@@ -2,9 +2,10 @@
     "_comment0": "Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]",
     "verbose_type": "INFO",
 
-    "_comment1": "window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution",
-    "window_resolution": [0, 0],
-    "fullscreen": true,
+    "_comment1": "window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution; windowed false will overwrite fullscreen to true",
+    "window_resolution": [600, 400],
+    "fullscreen": false,
+    "windowed": true,
 
     "_comment2": "setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps",
     "max_fps": 0,
