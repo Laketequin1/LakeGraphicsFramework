@@ -3,7 +3,7 @@
     "verbose_type": "INFO",
 
     "_comment1": "window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution; windowed false will overwrite fullscreen to true",
-    "window_resolution": [600, 400],
+    "window_resolution": [500, 200],
     "fullscreen": false,
     "windowed": true,
 

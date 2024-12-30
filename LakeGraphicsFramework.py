@@ -163,8 +163,7 @@ class Window:
         
         return monitor, video_mode
 
-    @staticmethod
-    def _init_window(monitor: glfw._GLFWmonitor, size: Size, caption: str, windowed: bool, vsync: bool, max_fps: int) -> glfw._GLFWwindow:
+    def _init_window(self, monitor: glfw._GLFWmonitor, size: Size, caption: str, windowed: bool, vsync: bool, max_fps: int) -> glfw._GLFWwindow:
         """
         [Private]
         Initializes the GLFW window associates it with the primary monitor.
@@ -189,12 +188,22 @@ class Window:
             raise Exception("GLFW window can't be created")
 
         glfw.make_context_current(window)
+        self._center_window(window, monitor, size)
 
         # Set vsync if enabled
         fps_value = VSYNC_VALUE if vsync else max_fps
         glfw.swap_interval(fps_value)
 
         return window
+    
+    @staticmethod
+    def _center_window(window: glfw._GLFWwindow, monitor: glfw._GLFWmonitor, size: Size):
+        monitor_x, monitor_y, monitor_width, monitor_height = glfw.get_monitor_workarea(monitor)
+
+        pos_x = monitor_x + (monitor_width - size[0]) // 2
+        pos_y = monitor_y + (monitor_height - size[1]) // 2
+
+        glfw.set_window_pos(window, pos_x, pos_y)
     
     @staticmethod
     def _init_input(window: glfw._GLFWwindow, raw_mouse_input: bool, hide_cursor: bool) -> None:
