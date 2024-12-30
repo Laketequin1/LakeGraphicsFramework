@@ -128,15 +128,16 @@ class Window:
         self.lock = Lock()
         self.graphics_engine = GraphicsEngine(fovy, self.aspect_ratio, near, far, skybox_color)
     
-    def main(self):
+    def main(self) -> None:
         while self.active:
             gl.glFlush() # Wait for pipeline
 
             self._gl_check_error()
-            glfw.poll_events()
 
             self.graphics_engine._render()
             glfw.swap_buffers(self.window)
+
+            self._tick()
 
     ### Init helpers ####
     @staticmethod
@@ -235,6 +236,27 @@ class Window:
         if error != gl.GL_NO_ERROR:
             log.warn(f"OpenGL error: {error}")
 
+    def _tick(self):
+        glfw.poll_events()
+
+        self._handle_window_events()
+
+    def _handle_window_events(self) -> None:
+        """
+        Handle GLFW events and closing the window.
+        """
+        if glfw.window_should_close(self.window) or glfw.get_key(self.window, glfw.KEY_ESCAPE) == glfw.PRESS:
+            self.close()
+            return
+    
+    def close(self) -> None:
+        """
+        Close the GLFW window and terminate.
+        """
+        self.active = False
+        self.graphics_engine.destroy()
+        glfw.terminate()
+
 
 class Shader:
     def __init__(self, name: str, vertex_path: str, fragment_path: str, fovy: float, aspect: float, near: float, far: float, model_name: str = DEFAULT_UNIFORM_NAMES["model"], view_name: str = DEFAULT_UNIFORM_NAMES["view"], projection_name: str = DEFAULT_UNIFORM_NAMES["projection"], texture_name: str = None, color_name: str = DEFAULT_UNIFORM_NAMES["color"], custom_uniform_names: dict = {}, compile_time_config: dict = {}):
@@ -316,6 +338,9 @@ class Shader:
 
     def set_view(self, view_transform):
         gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform)
+
+    def destroy(self):
+        gl.glDeleteProgram(self.shader)
 
 
 class GraphicsEngine:
@@ -416,6 +441,10 @@ class GraphicsEngine:
             self.new_skybox_color = self.pending_skybox_color
 
             self.active_draw_instructions = self.pending_draw_instructions
+
+    def destroy(self):
+        for shader in self.shaders.values():
+            shader.destroy()
 
     # Private functions #
     def _create_shaders(self, new_shader_creations: list[tuple[str, str, str, float, float, float, float, dict]]):
