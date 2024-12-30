@@ -15,6 +15,7 @@ PositiveInt = NewType('PositiveInt', int)
 Coordinate = NewType('Coordinate', tuple[int, int])
 Size = NewType('Size', tuple[PositiveInt, PositiveInt])
 AnyString = (str, bytes, bytearray)
+ColorRGBA = Tuple[float, float, float, float]
 
 
 ### Functions ###
@@ -52,6 +53,10 @@ def validate_type(name: str, var: Any, expected_type: type) -> None | NoReturn:
     
     if expected_type is Size:
         _validate_size(name, var)
+        return # Validation success
+    
+    if expected_type is ColorRGBA:
+        _validate_color_rgba(name, var)
         return # Validation success
     
     if not isinstance(var, expected_type):
@@ -112,8 +117,31 @@ def _validate_size(name: str, var: Any) -> None | NoReturn:
             raise TypeError(f"Invalid type for Size[{i}] '{name}'. Expected {Real}, got {type(var[i])}.")
     
     for i in [0, 1]:
-        if var[i] < 0:
-            raise ValueError(f"Invalid value for Size[{i}] '{name}'. Size numbers must be positive.")
+        if var[i] <= 0:
+            raise ValueError(f"Invalid value for Size[{i}] '{name}'. Size numbers must be positive, but the value was {var[i]}.")
+        
+def _validate_color_rgba(name: str, var: Any) -> None | NoReturn:
+    """
+    [Private]
+    Validates that the variable is a sequence of 4 positive floats ranging from 0 to 1 representing nomalised rgba: Red, Green, Blue, Alpha. The function will raise an error if valitadion statement is invalid, otherwise continues.
+
+    Parameters:
+        name (str): The name of the variable being validated.
+        var (Any): The variable to be validated, expected to be a sequence of 4 real positive floats.
+    """
+    if not isinstance(var, Sequence) or isinstance(var, AnyString):
+        raise TypeError(f"Invalid type for the Color '{name}'. Expected {Sequence}, got {type(var)}.")
+    
+    if len(var) != 4:
+        raise TypeError(f"Invalid length for the Color '{name}'. Color must be contain four channels: Red, Green, Blue, Alpha.")
+    
+    for i in range(4):
+        if not isinstance(var[i], Real):
+            raise TypeError(f"Invalid type for the Color[{i}] '{name}'. Expected {Real}, got {type(var[i])}.")
+    
+    for i in range(4):
+        if var[i] <= 0 or var[i] >= 0:
+            raise ValueError(f"Invalid value for the Color[{i}] '{name}'. Color numbers must be between 0 and 1 inclusive, but the value was {var[i]}.")
         
 
 ### Example code ###

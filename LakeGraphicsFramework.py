@@ -7,17 +7,24 @@ import OpenGL.GL.shaders as gls
 from variable_type_validation import *
 from MessageLogger import MessageLogger as log
 from threading import Lock
+import copy
 from safe_file_readlines import safe_file_readlines
 
+
 ### Type hints ###
-Color = Tuple[float, float, float, float]
+ColorRGBA = Tuple[float, float, float, float]
+ToDecide = Any[Any, Any, Any] # TODO
+
 
 ### Constants ###
 VSYNC_VALUE = 1
+
 SHADERS_PATH = "shaders/"
 MODELS_PATH = "models/"
+
 DEFAULT_FRAG_SHADER = "default.frag"
 DEFAULT_VERT_SHADER = "default.vert"
+
 DEFAULT_UNIFORM_NAMES = {
     "projection": "projection",
     "model": "model",
@@ -25,15 +32,22 @@ DEFAULT_UNIFORM_NAMES = {
     "color": "objectColor",
 }
 
+DEFAULT_FOVY = 100
+DEFAULT_NEAR = 0.1
+DEFAULT_FAR = 200
+DEFAULT_SKYBOX_COLOR = (0, 0, 0, 1)
+
+
 ### Functions ###
 def terminate_glfw():
     glfw.terminate()
 
+
 ### Classes ###
 class Window:
-    def __init__(self, size: Size = (0, 0), caption: str = "", fullscreen: bool = False, vsync: bool = True, max_fps: int = 0, raw_mouse_input: bool = True, center_cursor: bool = True, hide_cursor: bool = True) -> None:
+    def __init__(self, size: Size = (0, 0), caption: str = "", fullscreen: bool = False, vsync: bool = True, max_fps: int = 0, raw_mouse_input: bool = True, center_cursor: bool = True, hide_cursor: bool = True, fovy: float = DEFAULT_FOVY, near: float = DEFAULT_NEAR, far: float = DEFAULT_FAR, skybox_color: ColorRGBA = DEFAULT_SKYBOX_COLOR) -> None:
         """
-        Initializes a window and input system with the specified parameters.
+        Initializes a window, input system, and graphics engine with the specified parameters.
         
         Parameters:
             size (Size): The initial size of the window (width, height).
@@ -41,9 +55,15 @@ class Window:
             fullscreen (bool): Whether the window is fullscreen. Overrides size if True.
             vsync (bool): Whether vertical sync is enabled. Overrides max_fps if enabled.
             max_fps (int): The maximum frames per second. 0 means uncapped.
+
             raw_mouse_input (bool): Whether raw mouse input is used.
             center_cursor (bool): Whether the cursor is centered in the window.
             hide_cursor (bool): Whether the cursor is hidden.
+
+            fovy (float): The view FOV.
+            near (float): The closest distance to the camera which will be rendered. Should be a low number, greater than 0.
+            far (float): The furthers distance to the camera which will be rendered. Must be a higher than 'near'. A number too large may hinder performance.
+            skybox_color (float): Color of the background in normalised rgba. Color channels range from 0 to 1.
         """
         # Validate parameters
         validate_types([('size', size, Size),
@@ -53,7 +73,16 @@ class Window:
                         ('max_fps', max_fps, int),
                         ('raw_mouse_input', raw_mouse_input, bool),
                         ('center_cursor', center_cursor, bool),
-                        ('hide_cursor', hide_cursor, bool)])
+                        ('hide_cursor', hide_cursor, bool),
+                        ('fovy', fovy, Real),
+                        ('near', near, Real),
+                        ('far', far, Real),
+                        ('skybox_color', skybox_color, ColorRGBA)])
+        
+        if not far > near:
+            raise ValueError(f"The value for far '{far}' is not greater than near '{near}'.")
+        
+        log.info(f"Window variable validation passed. Variables: {self.__dict__}")
         
         # Set parameters
         self.size = size
@@ -84,10 +113,12 @@ class Window:
         # Input mode init
         self._init_input(self.window, self.raw_mouse_input, self.hide_cursor)
 
+        log.info(f"Window creation passed. Variables: {self.__dict__}")
+
         # Set variables
         self.active = True
         self.lock = Lock()
-        self.graphics_engine = GraphicsEngine()
+        self.graphics_engine = GraphicsEngine(fovy, self.aspect_ratio, near, far, skybox_color)
     
     def main(self):
         while self.active:
@@ -180,54 +211,231 @@ class Window:
             log.warn(f"OpenGL error: {error}")
 
 
-class GraphicsEngine:
-    def __init__(self, aspect: float, skybox_color: Color) -> None:
-        log.info("Setting up Graphics Engine")
-        self.aspect = aspect
-        self.skybox_color = skybox_color
+class Shader:
+    def __init__(self, name: str, vertex_path: str, fragment_path: str, fovy: float, aspect: float, near: float, far: float, compile_time_config: dict = {}):
+        self.name = name
+        log.info(f"Creating shader {name}")
 
-        self.shaders = {}
+        # Create shader
+        self.shader = self._create_shader(vertex_path, fragment_path, compile_time_config)
 
-        self._init_opengl(skybox_color)
-
-        # Initilize shader
-        self.shaders["default"] = self._create_shader(SHADERS_PATH + DEFAULT_VERT_SHADER, SHADERS_PATH + DEFAULT_FRAG_SHADER)
-        gl.glUseProgram(self.shaders["default"])
+        # Get shader handles
+        self.uniform_handles = self._get_uniform_handles()
+        self.custom_uniform_handles = self._get_custom_uniform_handles()
 
         # Initilize shader handles
-        self._get_uniform_handles()
+        self._init_handles()
+        self._init_perspective_projection(self.uniform_handles["projection"], fovy, aspect, near, far)
 
-        
-    @staticmethod
-    def _init_opengl(skybox_color):
-        # Initilize OpenGL
-        gl.glClearColor(skybox_color, 1)
-        gl.glEnable(gl.GL_DEPTH_TEST)
-        gl.glEnable(gl.GL_BLEND)
-        gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
+        log.info(f"Shader creation passed for {name}. Variables: {self.__dict__}")
 
-    @staticmethod
-    def _create_shader(vertex_path, fragment_path):        
+    def _create_shader(self, vertex_path, fragment_path, compile_time_config) -> gls.ShaderProgram:
         vertex_src = safe_file_readlines(vertex_path)
         fragment_src = safe_file_readlines(fragment_path)
+
+        vertex_program = self._update_file_config(vertex_src, compile_time_config)
+        fragment_program = self._update_file_config(fragment_src, compile_time_config)
         
         shader = gls.compileProgram(
-            gls.compileShader(vertex_src, gl.GL_VERTEX_SHADER),
-            gls.compileShader(fragment_src, gl.GL_FRAGMENT_SHADER)
+            gls.compileShader(vertex_program, gl.GL_VERTEX_SHADER),
+            gls.compileShader(fragment_program, gl.GL_FRAGMENT_SHADER)
         )
         
         return shader
     
     @staticmethod
-    def _get_uniform_handles(shader: gls.ShaderProgram, model_name: str, view_name: str, projection_name: str, texture_name: str = None, color_name: str = None):
-        uniform_handles = {}
+    def _update_file_config(file_src: str, compile_time_config: dict) -> str:
+        for placeholder, value, in compile_time_config:
+            file_src = file_src.replace(placeholder, value)
 
-        uniform_handles["model"] = gl.glGetUniformLocation(shader, model_name)
-        uniform_handles["model"] = gl.glGetUniformLocation(shader, view_name)
-        
+        return file_src
+    
+    @staticmethod
+    def _get_uniform_handles(shader: gls.ShaderProgram, model_name: str, view_name: str, projection_name: str, texture_name: str = None, color_name: str = None) -> dict:
+        uniforms = {
+            "model": model_name,
+            "view": view_name,
+            "projection": projection_name
+        }
+
+        if texture_name:
+            uniforms["texture"] = texture_name
+        if color_name:
+            uniforms["color"] = color_name
+
+        uniform_handles = {uniform_handle_name: gl.glGetUniformLocation(shader, uniform_name) for uniform_handle_name, uniform_name in uniforms.items()}
+
+        return uniform_handles
+    
+    @staticmethod
+    def _get_custom_uniform_handles(shader: gls.ShaderProgram, uniforms: dict) -> dict:
+        custom_uniform_handles = {uniform_handle_name: gl.glGetUniformLocation(shader, uniform_name) for uniform_handle_name, uniform_name in uniforms.items()}
+
+        return custom_uniform_handles
+    
+    def _init_handles(self, handles):
+        if "texture" in handles:
+            gl.glUniform1i(handles["texture"], 0)
+        else:
+            log.info("No texture in this shader.")
 
     @staticmethod
-    def _init_perspective_projection(fovy, aspect, near, far):
-        projection_handle = None # Its a shader thing? TODO?
+    def _init_perspective_projection(projection_handle, fovy: float, aspect: float, near: float, far: float):
         projection_transform = pyrr.matrix44.create_perspective_projection(fovy = fovy, aspect = aspect, near = near, far = far, dtype = np.float32)
         gl.glUniformMatrix4fv(projection_handle, 1, gl.GL_FALSE, projection_transform)
+    
+    def use(self):
+        gl.glUseProgram(self.shader)
+
+
+class GraphicsEngine:
+    def __init__(self, fovy: float, aspect: float, near: float, far: float, skybox_color: ColorRGBA) -> None:
+        log.info("Setting up Graphics Engine")
+        self.fovy = fovy
+        self.aspect = aspect
+        self.near = near
+        self.far = far
+        self.skybox_color = skybox_color
+
+        self.shaders = {}
+        self.active_shader = None
+
+        self._init_opengl(skybox_color)
+
+        # Initilize shader
+        self.shaders["default"] = Shader("default", SHADERS_PATH + DEFAULT_VERT_SHADER, SHADERS_PATH + DEFAULT_FRAG_SHADER, fovy, aspect, near, far)
+        # Use default shader
+        self._use_shader("default")
+
+        # Pre-draw instructions
+        self.pending_skybox_color = None
+        self.new_skybox_color = None
+
+        self.pending_shader_creations = []
+        self.new_shader_creations = []
+
+        # Draw lists
+        self.pending_draw_instructions = []
+        self.active_draw_instructions = []
+
+        self.lock = Lock()
+    
+    # Init helper functions #
+    @staticmethod
+    def _init_opengl(skybox_color: ColorRGBA):
+        # Initilize OpenGL
+        gl.glClearColor(skybox_color)
+        gl.glEnable(gl.GL_DEPTH_TEST)
+        gl.glEnable(gl.GL_BLEND)
+        gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
+
+    # Public functions #
+    def create_shader(self, name: str, vertex_path: str, fragment_path: str, fovy: float = None, aspect: float = None, near: float = None, far: float = None, compile_time_config: dict = {}):
+        if fovy is None:
+            fovy = self.fovy
+        if aspect is None:
+            aspect = self.aspect
+        if near is None:
+            near = self.near
+        if far is None:
+            far = self.far
+
+       # Validate parameters
+        validate_types([('fovy', fovy, Real),
+                        ('aspect', aspect, Real),
+                        ('near', near, Real),
+                        ('far', far, Real)])
+        
+        if not far > near:
+            raise ValueError(f"The value for far '{far}' is not greater than near '{near}'.")
+        
+        if name in self.shaders:
+            log.warn(f"Create shader called for '{name}', but the shader '{name}' already exists. The old shader will be overridden.")
+        
+        log.info(f"Shader creation for '{name}' pass variable validation.")
+
+        self.pending_shader_creations.append((name, vertex_path, fragment_path, fovy, aspect, near, far, compile_time_config))
+
+    def clear(self):
+        """Clears pending draw list"""
+        self.pending_draw_instructions = []
+
+    def use_shader(self, shader_name: str):
+        validate_type("shader_name", shader_name, str)
+
+        instruction_args = (shader_name)
+        self._add_draw_instruction(self._use_shader, instruction_args)
+
+    def set_view(self, pos: Coordinate = None, rotation: ToDecide = None):
+        """Set camera position and rotation relative to world"""
+        validate_type("pos", pos, Coordinate)
+        #validate_type("rotation", rotation, ToDecide) TODO
+
+        instruction_args = (pos, rotation)
+        self._add_draw_instruction(self._set_view, instruction_args)
+
+    def set_skybox_color(self, skybox_color: ColorRGBA):
+        """Set the clear color in normalised RGBA"""
+        validate_type("skybox_color", skybox_color, ColorRGBA)
+
+        self.pending_skybox_color = skybox_color
+    
+    def update(self):
+        with self.lock:
+            self.new_shader_creations = self.pending_shader_creations
+            self.new_skybox_color = self.pending_skybox_color
+
+            self.active_draw_instructions = self.pending_draw_instructions
+
+    # Private functions #
+    def _create_shaders(self, new_shader_creations: list[tuple[str, str, str, float, float, float, float, dict]]):
+        for new_shader in new_shader_creations:
+            name, vertex_path, fragment_path, fovy, aspect, near, far, compile_time_config = new_shader
+            self.shaders[name] = Shader(name, vertex_path, fragment_path, fovy, aspect, near, far, compile_time_config)
+
+    def _use_shader(self, shader_name: str):
+        if shader_name not in self.shaders:
+            raise Exception("Shader '{shader_name}' does not exist in shaders.")
+
+        self.shaders[shader_name].use()
+        self.active_shader = shader_name
+
+    def _add_draw_instruction(self, function, args):
+        self.pending_draw_instructions.append((function, args))
+
+    def _set_view(self, pos: Coordinate, rotation: ToDecide):
+        pass
+
+    def _update_skybox_color(self, skybox_color: ColorRGBA):
+        """Set the clear color"""
+        if self.new_skybox_color is not None:
+            log.info("Updating skybox color")
+            gl.glClearColor(skybox_color)
+
+    @staticmethod
+    def _clear_screen():
+        gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
+
+    def _complete_draw_instructions(self, draw_instructions):
+        for draw_instruction in draw_instructions:
+            draw_function, args = draw_instruction
+
+            draw_function(*args)
+    
+    def _render(self):
+        with self.lock:
+            # Get render instructions
+            new_shader_creations = copy.deepcopy(self.new_shader_creations)
+            new_skybox_color = copy.deepcopy(self.new_skybox_color)
+            active_draw_instructions = copy.deepcopy(self.active_draw_instructions)
+
+            # Reset one-time functions
+            self.new_shader_creations = []
+            self.new_skybox_color = None
+
+        self._create_shaders(new_shader_creations)
+        self._update_skybox_color(new_skybox_color)
+
+        self._clear_screen()
+        self._use_shader("default")
+        self._complete_draw_instructions(active_draw_instructions)
