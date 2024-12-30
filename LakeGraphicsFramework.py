@@ -188,7 +188,8 @@ class Window:
             raise Exception("GLFW window can't be created")
 
         glfw.make_context_current(window)
-        self._center_window(window, monitor, size)
+        if windowed:
+            self._center_window(window, monitor, size)
 
         # Set vsync if enabled
         fps_value = VSYNC_VALUE if vsync else max_fps
@@ -198,6 +199,8 @@ class Window:
     
     @staticmethod
     def _center_window(window: glfw._GLFWwindow, monitor: glfw._GLFWmonitor, size: Size):
+        log.info("Centering window.")
+
         monitor_x, monitor_y, monitor_width, monitor_height = glfw.get_monitor_workarea(monitor)
 
         pos_x = monitor_x + (monitor_width - size[0]) // 2
