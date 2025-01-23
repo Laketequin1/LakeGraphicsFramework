@@ -33,16 +33,6 @@ def catch_main():
         error_message = f"Fatal termination error:\n\n{traceback.format_exc()}"
         log.error(error_message, e)
 
-def main(window: lgf.Window):
-    for x in range(254):
-        window.graphics_engine.clear()
-        window.graphics_engine.set_skybox_color((x/255, 0, 0, 1))
-        window.graphics_engine.update()
-        time.sleep(0.1)
-    window.active = False
-    log.crucial("Exit main thread")
-    sys.exit(0)
-
 def setup():
     # Import settings
     settings = read_json_data(JSON_SETTINGS_FILEPATH)
@@ -58,7 +48,16 @@ def setup():
     window.main()
 
     main_thread.join()
+    sys.exit(0)
 
+def main(window: lgf.Window):
+    for x in range(254):
+        window.graphics_engine.clear()
+        window.graphics_engine.set_skybox_color((x/255, 0, 0, 1))
+        window.graphics_engine.update()
+        time.sleep(0.1)
+    window.active = False
+    log.crucial("Exit main thread")
     sys.exit(0)
 
 if __name__ == "__main__":

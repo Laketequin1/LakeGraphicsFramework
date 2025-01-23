@@ -5,7 +5,7 @@
     "_comment1": "window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution; windowed false will overwrite fullscreen to true",
     "window_resolution": [200, 500],
     "fullscreen": true,
-    "windowed": true,
+    "windowed": false,
 
     "_comment2": "setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps",
     "max_fps": 0,
