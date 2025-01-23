@@ -125,6 +125,7 @@ class Window:
 
         # Set variables
         self.active = True
+        self.should_close = False
         self.lock = Lock()
         self.graphics_engine = GraphicsEngine(fovy, self.aspect_ratio, near, far, skybox_color)
     
@@ -138,6 +139,9 @@ class Window:
             glfw.swap_buffers(self.window)
 
             self._tick()
+
+    def close(self) -> None:
+        self.should_close = True
 
     ### Init helpers ####
     @staticmethod
@@ -256,6 +260,10 @@ class Window:
         """
         glfw.poll_events()
 
+        if self.should_close:
+            self._close()
+            return
+        
         self._handle_window_events()
 
     def _handle_window_events(self) -> None:
@@ -264,10 +272,10 @@ class Window:
         Handle GLFW events and closing the window.
         """
         if glfw.window_should_close(self.window) or glfw.get_key(self.window, glfw.KEY_ESCAPE) == glfw.PRESS:
-            self.close()
+            self._close()
             return
     
-    def close(self) -> None:
+    def _close(self) -> None:
         """
         [Private]
         Close the GLFW window and terminate glfw.
@@ -276,16 +284,17 @@ class Window:
         self.graphics_engine.destroy()
         glfw.terminate()
 
+    
+
 
 class Shader:
-    def __init__(self, name: str, vertex_path: str, fragment_path: str, fovy: float, aspect: float, near: float, far: float, model_name: str = DEFAULT_UNIFORM_NAMES["model"], view_name: str = DEFAULT_UNIFORM_NAMES["view"], projection_name: str = DEFAULT_UNIFORM_NAMES["projection"], texture_name: str = None, color_name: str = DEFAULT_UNIFORM_NAMES["color"], custom_uniform_names: dict = {}, compile_time_config: dict = {}) -> None:
+    def __init__(self, vertex_path: str, fragment_path: str, fovy: float, aspect: float, near: float, far: float, model_name: str = DEFAULT_UNIFORM_NAMES["model"], view_name: str = DEFAULT_UNIFORM_NAMES["view"], projection_name: str = DEFAULT_UNIFORM_NAMES["projection"], texture_name: str = None, color_name: str = DEFAULT_UNIFORM_NAMES["color"], custom_uniform_names: dict = {}, compile_time_config: dict = {}) -> None:
         """
         [Private]
         Initializes the shader with the specified vertex and fragment shader paths, along with projection and model settings.
         Sets up uniform handles and initializes perspective projection.
 
         Parameters:
-            name (str): The name of the shader.
             vertex_path (str): Path to the vertex shader file.
             fragment_path (str): Path to the fragment shader file.
             fovy (float): Field of view for the perspective projection.
@@ -300,8 +309,7 @@ class Shader:
             custom_uniform_names (dict): Optional custom uniform names to be handled (default is empty dictionary).
             compile_time_config (dict): Optional configuration settings for shader compilation (default is empty dictionary).
         """
-        self.name = name
-        log.info(f"Creating shader {name}")
+        log.info(f"Creating shader")
 
         # Create shader
         self.shader = self._create_shader(vertex_path, fragment_path, compile_time_config)
@@ -316,7 +324,7 @@ class Shader:
         self._init_handles(self.uniform_handles)
         self._init_perspective_projection(self.uniform_handles["projection"], fovy, aspect, near, far)
 
-        log.info(f"Shader creation passed for {name}. Variables: {self.__dict__}")
+        log.info(f"Shader creation passed. Variables: {self.__dict__}")
 
     def _create_shader(self, vertex_path, fragment_path, compile_time_config) -> gls.ShaderProgram:
         """
@@ -337,10 +345,14 @@ class Shader:
         vertex_program = self._update_file_config(vertex_src, compile_time_config)
         fragment_program = self._update_file_config(fragment_src, compile_time_config)
         
-        shader = gls.compileProgram(
-            gls.compileShader(vertex_program, gl.GL_VERTEX_SHADER),
-            gls.compileShader(fragment_program, gl.GL_FRAGMENT_SHADER)
-        )
+        try:
+            shader = gls.compileProgram(
+                gls.compileShader(vertex_program, gl.GL_VERTEX_SHADER),
+                gls.compileShader(fragment_program, gl.GL_FRAGMENT_SHADER)
+            )
+        except Exception as e:
+            log.error(f"Failed to compile shader.")
+            raise e
         
         return shader
     
@@ -423,7 +435,7 @@ class Shader:
         if "texture" in handles:
             gl.glUniform1i(handles["texture"], 0)
         else:
-            log.info(f"No texture handle for the shader {self.name}.")
+            log.info(f"No texture handle for this shader.")
 
     @staticmethod
     def _init_perspective_projection(projection_handle, fovy: float, aspect: float, near: float, far: float) -> None:
@@ -480,14 +492,15 @@ class GraphicsEngine:
         self.skybox_color = skybox_color
 
         self.shaders = {}
-        self.active_shader_name = None
+        self.active_shader_id = None
 
         self._init_opengl(skybox_color)
 
         # Initilize shader
-        self.shaders["default"] = Shader("default", SHADERS_PATH + DEFAULT_VERT_SHADER, SHADERS_PATH + DEFAULT_FRAG_SHADER, fovy, aspect, near, far)
+        self.default_shader = 0
+        self.shaders[self.default_shader] = Shader(SHADERS_PATH + DEFAULT_VERT_SHADER, SHADERS_PATH + DEFAULT_FRAG_SHADER, fovy, aspect, near, far)
         # Use default shader
-        self._use_shader("default")
+        self._use_shader(self.default_shader)
 
         # Pre-draw instructions
         self.pending_skybox_color = None
@@ -518,19 +531,27 @@ class GraphicsEngine:
         gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
 
     # Public functions #
-    def create_shader(self, name: str, vertex_path: str, fragment_path: str, fovy: float = None, aspect: float = None, near: float = None, far: float = None, compile_time_config: dict = {}) -> None:
+    def create_shader(self, vertex_path: str, fragment_path: str, fovy: float = None, aspect: float = None, near: float = None, far: float = None, model_name: str = DEFAULT_UNIFORM_NAMES["model"], view_name: str = DEFAULT_UNIFORM_NAMES["view"], projection_name: str = DEFAULT_UNIFORM_NAMES["projection"], texture_name: str = None, color_name: str = DEFAULT_UNIFORM_NAMES["color"], custom_uniform_names: dict = {}, compile_time_config: dict = {}) -> int:
         """
         Creates a new shader and validates its parameters before adding it to the pending shader creation list.
 
         Parameters:
-            name (str): The name of the shader.
             vertex_path (str): The file path to the vertex shader source.
             fragment_path (str): The file path to the fragment shader source.
             fovy (float, optional): The field of view angle for the perspective projection. Defaults to the instance's fovy if not provided.
             aspect (float, optional): The aspect ratio for the perspective projection. Defaults to the instance's aspect if not provided.
             near (float, optional): The near clipping plane distance. Defaults to the instance's near if not provided.
             far (float, optional): The far clipping plane distance. Defaults to the instance's far if not provided.
-            compile_time_config (dict, optional): A dictionary of configuration values to apply during shader compilation. Defaults to an empty dictionary.
+            model_name (str): The name for the model matrix uniform (default is "model").
+            view_name (str): The name for the view matrix uniform (default is "view").
+            projection_name (str): The name for the projection matrix uniform (default is "projection").
+            texture_name (str): The name for the texture uniform (default is None).
+            color_name (str): The name for the color uniform (default is "color").
+            custom_uniform_names (dict): Optional custom uniform names to be handled (default is empty dictionary).
+            compile_time_config (dict): Optional configuration settings for shader compilation (default is empty dictionary).
+            
+        Returns:
+            int: The id of the created shader object.        
         """
         if fovy is None:
             fovy = self.fovy
@@ -542,47 +563,64 @@ class GraphicsEngine:
             far = self.far
 
        # Validate parameters
-        validate_types([('name', name, str),
-                        ('vertex_path', vertex_path, str),
+        validate_types([('vertex_path', vertex_path, str),
                         ('fragment_path', fragment_path, str),
                         ('fovy', fovy, Real),
                         ('aspect', aspect, Real),
                         ('near', near, Real),
                         ('far', far, Real),
+                        ('custom_uniform_names', custom_uniform_names, dict),
                         ('compile_time_config', compile_time_config, dict)])
         
+        if model_name:
+            validate_type(model_name, 'model_name', str)
+        if view_name:
+            validate_type(view_name, 'view_name', str)
+        if projection_name:
+            validate_type(projection_name, 'projection_name', str)
+        if texture_name:
+            validate_type(texture_name, 'texture_name', str)
+        if color_name:
+            validate_type(color_name, 'color_name', str)
+                
         if not far > near:
             raise ValueError(f"The value for far '{far}' is not greater than near '{near}'.")
         
-        shader_warn_count = 0        
-        if name in self.shaders:
-            log.warn(f"Create shader called for '{name}', but the shader '{name}' already exists. The old shader will be overridden.")
-            shader_warn_count += 1
+        log.info(f"Shader creation passed variable validation.")
 
-        if name in self.pending_shader_creations:
-            log.warn(f"Create shader called for '{name}', but creation of the shader '{name}' is already pending. The old shader will be overridden.")
-            shader_warn_count += 1
-        
-        log.info(f"Shader creation for '{name}' passed variable validation with {shader_warn_count} warn{"s" if shader_warn_count != 1 else ""}.")
+        shader_id = len(self.shaders)
 
-        self.pending_shader_creations.append((name, vertex_path, fragment_path, fovy, aspect, near, far, compile_time_config))
+        self.pending_shader_creations.append((shader_id, vertex_path, fragment_path, fovy, aspect, near, far, model_name, view_name, projection_name, texture_name, color_name, custom_uniform_names, compile_time_config))
+        return shader_id
 
     def clear(self) -> None:
         """
-        Clears pending draw list
+        Clears pending draw lists.
         """
         self.pending_draw_instructions = []
 
-    def use_shader(self, shader_name: str) -> None:
+    def fill(self, fill_color: ColorRGBA) -> None:
+        """
+        Clears the screen by filling everything with the specified color, in normalized RGBA.
+
+        Parameters:
+            fill_color (ColorRGBA): The color to fill the screen in normalized RGBA format.
+        """
+        validate_type("fill_color", fill_color, ColorRGBA)
+
+        instruction_args = (fill_color,)
+        self._add_draw_instruction(self._fill, instruction_args)
+
+    def use_shader(self, shader_id: int) -> None:
         """
         Uses the specified shader for subsequent draw calls.
 
         Parameters:
-            shader_name (str): The name of the shader to use.
+            shader_id (int): The id of the shader to use.
         """
-        validate_type("shader_name", shader_name, str)
+        validate_type("shader_id", shader_id, int)
 
-        instruction_args = (shader_name)
+        instruction_args = (shader_id,)
         self._add_draw_instruction(self._use_shader, instruction_args)
 
     def set_view(self, pos: Coordinate = None, rotation: ToDecide = None) -> None:
@@ -614,8 +652,13 @@ class GraphicsEngine:
         This method ensures that changes to shader creation, skybox color, and draw instructions are applied safely using a lock to avoid race conditions.
         """
         with self.lock:
-            self.new_shader_creations = self.pending_shader_creations
-            self.new_skybox_color = self.pending_skybox_color
+            if len(self.pending_shader_creations) > 0:
+                self.new_shader_creations.append(*self.pending_shader_creations)
+                self.pending_shader_creations = []
+            
+            if self.pending_skybox_color is not None:
+                self.new_skybox_color = self.pending_skybox_color
+                self.pending_skybox_color = None
 
             self.active_draw_instructions = self.pending_draw_instructions
 
@@ -627,7 +670,7 @@ class GraphicsEngine:
             shader.destroy()
 
     # Private functions #
-    def _create_shaders(self, new_shader_creations: list[tuple[str, str, str, float, float, float, float, dict]]) -> None:
+    def _create_shaders(self, new_shader_creations: list[tuple[int, str, str, float, float, float, float, str, str, str, str, str, dict, dict]]) -> None:
         """
         [Private]
         Creates and stores new shaders based on the provided shader creation data.
@@ -636,33 +679,39 @@ class GraphicsEngine:
         Parameters:
             new_shader_creations (list): A list of tuples containing the shader creation details.
                 Each tuple contains the following:
-                - name (str): The name of the shader.
+                - shader_id (int): The id of the shader.
                 - vertex_path (str): The path to the vertex shader file.
                 - fragment_path (str): The path to the fragment shader file.
                 - fovy (float): The field of view for the shader.
                 - aspect (float): The aspect ratio for the shader.
                 - near (float): The near clipping plane for the shader.
                 - far (float): The far clipping plane for the shader.
+                - model_name (str): The name for the model matrix uniform.
+                - view_name (str): The name for the view matrix uniform.
+                - projection_name (str): The name for the projection matrix uniform.
+                - texture_name (str): The name for the texture uniform.
+                - color_name (str): The name for the color uniform.
+                - custom_uniform_names (dict): A dictionary containing extra uniform names for the shader.
                 - compile_time_config (dict): A dictionary containing compile-time configuration for the shader.
         """
         for new_shader in new_shader_creations:
-            name, vertex_path, fragment_path, fovy, aspect, near, far, compile_time_config = new_shader
-            self.shaders[name] = Shader(name, vertex_path, fragment_path, fovy, aspect, near, far, compile_time_config)
+            shader_id, vertex_path, fragment_path, fovy, aspect, near, far, model_name, view_name, projection_name, texture_name, color_name, custom_uniform_names, compile_time_config = new_shader
+            self.shaders[shader_id] = Shader(vertex_path, fragment_path, fovy, aspect, near, far, model_name, view_name, projection_name, texture_name, color_name, custom_uniform_names, compile_time_config)
 
-    def _use_shader(self, shader_name: str) -> None:
+    def _use_shader(self, shader_id: int) -> None:
         """
         [Private]
-        Activates the shader by name and sets it as the active shader.
+        Activates the shader by id and sets it as the active shader.
         Raises an error if the shader does not exist.
 
         Parameters:
-            shader_name (str): The name of the shader to be activated.
+            shader_id (int): The id of the shader to be activated.
         """
-        if shader_name not in self.shaders:
-            raise Exception("Shader '{shader_name}' does not exist in shaders.")
+        if shader_id not in self.shaders:
+            raise Exception(f"Shader '{shader_id}' does not exist in shaders.")
 
-        self.shaders[shader_name].use()
-        self.active_shader_name = shader_name
+        self.shaders[shader_id].use()
+        self.active_shader_id = shader_id
 
     def _add_draw_instruction(self, draw_function: Callable, args: tuple) -> None:
         """
@@ -674,7 +723,17 @@ class GraphicsEngine:
             draw_function (Callable): The function to be called for drawing.
             args (tuple): The arguments to be passed to the drawing function.
         """
-        self.pending_draw_instructions.append((draw_function, args))
+        self.pending_draw_instructions.append((draw_function, tuple(args)))
+
+    def _fill(self, fill_color: ColorRGBA) -> None:
+        """
+        [Private]
+        Clears the screen by filling everything with the specified color, in normalized RGBA.
+
+        Parameters:
+            fill_color (ColorRGBA): The color to fill the screen in normalized RGBA format.
+        """
+        gl.glClearColor(*fill_color)
 
     def _set_view(self, pos: Coordinate, rotation: ToDecide) -> None:
         """
@@ -693,7 +752,7 @@ class GraphicsEngine:
             dtype = np.float32
         )
 
-        self.shaders[self.active_shader_name].set_view(view_transform)
+        self.shaders[self.active_shader_id].set_view(view_transform)
 
     def _set_global_view(self, pos: Coordinate, rotation: ToDecide) -> None:
         """
@@ -758,7 +817,7 @@ class GraphicsEngine:
             # Get render instructions
             new_shader_creations = copy.deepcopy(self.new_shader_creations)
             new_skybox_color = copy.deepcopy(self.new_skybox_color)
-            active_draw_instructions = copy.deepcopy(self.active_draw_instructions)
+            active_draw_instructions = copy.copy(self.active_draw_instructions)
 
             # Reset one-time functions
             self.new_shader_creations = []
@@ -768,5 +827,5 @@ class GraphicsEngine:
         self._update_skybox_color(new_skybox_color)
 
         self._clear_screen()
-        self._use_shader("default")
+        self._use_shader(self.default_shader)
         self._complete_draw_instructions(active_draw_instructions)

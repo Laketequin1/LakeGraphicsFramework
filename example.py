@@ -51,12 +51,19 @@ def setup():
     sys.exit(0)
 
 def main(window: lgf.Window):
+    graphics = window.graphics_engine
+    shader_id = graphics.create_shader("shaders/" + "example.vert", "shaders/" + "example.frag", 100, None, 0.1, 200)
+    graphics.set_skybox_color((0, 0, 0, 1))
+
     for x in range(254):
-        window.graphics_engine.clear()
-        window.graphics_engine.set_skybox_color((x/255, 0, 0, 1))
-        window.graphics_engine.update()
-        time.sleep(0.1)
-    window.active = False
+        graphics.clear()
+        graphics.use_shader(shader_id)
+        graphics.fill((0, 1, 0, 1))
+        #graphics.set_skybox_color((x/255, x/1000, x/1000, 1))
+        graphics.update()
+        time.sleep(0.04)
+
+    window.close()
     log.crucial("Exit main thread")
     sys.exit(0)
 
