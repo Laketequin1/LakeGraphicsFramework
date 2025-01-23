@@ -1,0 +1,19 @@
+Logfile created with verbose level LOG_ONLY on 23/01/2025 at 19:43:39. Have fun <3
+
+[19:43:39] INFO    : MessageLogger verbose type updating from LOG_ONLY to INFO
+[19:43:39] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[19:43:39] INFO    : Imported settings: {'_comment0': 'Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]', 'verbose_type': 'INFO', '_comment1': 'window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution; windowed false will overwrite fullscreen to true', 'window_resolution': [200, 500], 'fullscreen': True, 'windowed': False, '_comment2': 'setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps', 'max_fps': 0, 'vsync': True, '_comment3': 'raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)', 'raw_mouse_input': True, 'mouse_sensitivity': 1, '_comment4': "Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)", 'key_binds': {'jump': 'SPACE', 'forward': 'W', 'back': 'S', 'left': 'A', 'right': 'D'}}
+[19:43:39] INFO    : Window variable validation passed. Variables: {'size': [200, 500], 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor': True, 'hide_cursor': True}
+[19:43:39] INFO    : Window fullscreen.
+[19:43:39] INFO    : Window creation passed. Variables: {'size': Size(width=1920, height=1080), 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor': True, 'hide_cursor': True, 'monitor': <glfw.LP__GLFWmonitor object at 0x00000239E6A6C150>, 'video_mode': GLFWvidmode(size=Size(width=1920, height=1080), bits=Bits(red=8, green=8, blue=8), refresh_rate=60), 'display_size': Size(width=1920, height=1080), 'aspect_ratio': 1.7777777777777777, 'window': <glfw.LP__GLFWwindow object at 0x00000239E6A6C1D0>}
+[19:43:39] INFO    : Setting up Graphics Engine
+[19:43:39] INFO    : Creating shader
+[19:43:39] INFO    : No texture handle for this shader.
+[19:43:39] INFO    : Shader creation passed. Variables: {'shader': 3, 'uniform_handles': {'model': 0, 'view': 3, 'projection': 2, 'color': 1}, 'custom_uniform_handles': {}}
+[19:43:39] INFO    : Shader creation passed variable validation.
+[19:43:40] INFO    : Creating shader
+[19:43:40] INFO    : No texture handle for this shader.
+[19:43:40] INFO    : Shader creation passed. Variables: {'shader': 6, 'uniform_handles': {'model': 0, 'view': 2, 'projection': 1, 'color': -1}, 'custom_uniform_handles': {}}
+[19:43:40] INFO    : Updating skybox color to (0, 0, 0, 1)
+[19:43:50] CRUCIAL : Exit main thread
+[19:43:50] INFO    : Program terminating

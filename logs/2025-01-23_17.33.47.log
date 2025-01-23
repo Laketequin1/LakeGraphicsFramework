@@ -1,0 +1,63 @@
+Logfile created with verbose level LOG_ONLY on 23/01/2025 at 17:33:47. Have fun <3
+
+[17:33:47] INFO    : MessageLogger verbose type updating from LOG_ONLY to INFO
+[17:33:47] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[17:33:47] INFO    : Imported settings: {'_comment0': 'Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]', 'verbose_type': 'INFO', '_comment1': 'window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution; windowed false will overwrite fullscreen to true', 'window_resolution': [200, 500], 'fullscreen': True, 'windowed': False, '_comment2': 'setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps', 'max_fps': 0, 'vsync': True, '_comment3': 'raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)', 'raw_mouse_input': True, 'mouse_sensitivity': 1, '_comment4': "Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)", 'key_binds': {'jump': 'SPACE', 'forward': 'W', 'back': 'S', 'left': 'A', 'right': 'D'}}
+[17:33:47] INFO    : Window variable validation passed. Variables: {'size': [200, 500], 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor': True, 'hide_cursor': True}
+[17:33:47] INFO    : Window fullscreen.
+[17:33:48] INFO    : Window creation passed. Variables: {'size': Size(width=1920, height=1080), 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor': True, 'hide_cursor': True, 'monitor': <glfw.LP__GLFWmonitor object at 0x000001BE1BDF4350>, 'video_mode': GLFWvidmode(size=Size(width=1920, height=1080), bits=Bits(red=8, green=8, blue=8), refresh_rate=60), 'display_size': Size(width=1920, height=1080), 'aspect_ratio': 1.7777777777777777, 'window': <glfw.LP__GLFWwindow object at 0x000001BE1BDF43D0>}
+[17:33:48] INFO    : Setting up Graphics Engine
+[17:33:48] INFO    : Creating shader default
+[17:33:48] INFO    : No texture handle for the shader default.
+[17:33:48] INFO    : Shader creation passed for default. Variables: {'name': 'default', 'shader': 3, 'uniform_handles': {'model': 0, 'view': 3, 'projection': 2, 'color': 1}, 'custom_uniform_handles': {}}
+[17:33:48] INFO    : Shader creation for 'example' passed variable validation with 0 warns.
+[17:33:48] INFO    : Updating skybox color to (0.00392156862745098, 0.002, 0.002, 1)
+[17:33:48] INFO    : Updating skybox color to (0.00784313725490196, 0.004, 0.004, 1)
+[17:33:48] INFO    : Updating skybox color to (0.011764705882352941, 0.006, 0.006, 1)
+[17:33:48] INFO    : Updating skybox color to (0.01568627450980392, 0.008, 0.008, 1)
+[17:33:49] INFO    : Updating skybox color to (0.0196078431372549, 0.01, 0.01, 1)
+[17:33:49] INFO    : Updating skybox color to (0.023529411764705882, 0.012, 0.012, 1)
+[17:33:49] INFO    : Updating skybox color to (0.027450980392156862, 0.014, 0.014, 1)
+[17:33:49] INFO    : Updating skybox color to (0.03137254901960784, 0.016, 0.016, 1)
+[17:33:49] INFO    : Updating skybox color to (0.03529411764705882, 0.018, 0.018, 1)
+[17:33:49] INFO    : Updating skybox color to (0.0392156862745098, 0.02, 0.02, 1)
+[17:33:49] INFO    : Updating skybox color to (0.043137254901960784, 0.022, 0.022, 1)
+[17:33:49] INFO    : Updating skybox color to (0.047058823529411764, 0.024, 0.024, 1)
+[17:33:49] INFO    : Updating skybox color to (0.050980392156862744, 0.026, 0.026, 1)
+[17:33:49] INFO    : Updating skybox color to (0.054901960784313725, 0.028, 0.028, 1)
+[17:33:50] INFO    : Updating skybox color to (0.058823529411764705, 0.03, 0.03, 1)
+[17:33:50] INFO    : Updating skybox color to (0.06274509803921569, 0.032, 0.032, 1)
+[17:33:50] INFO    : Updating skybox color to (0.06666666666666667, 0.034, 0.034, 1)
+[17:33:50] INFO    : Updating skybox color to (0.07058823529411765, 0.036, 0.036, 1)
+[17:33:50] INFO    : Updating skybox color to (0.07450980392156863, 0.038, 0.038, 1)
+[17:33:50] INFO    : Updating skybox color to (0.0784313725490196, 0.04, 0.04, 1)
+[17:33:50] INFO    : Updating skybox color to (0.08235294117647059, 0.042, 0.042, 1)
+[17:33:50] INFO    : Updating skybox color to (0.08627450980392157, 0.044, 0.044, 1)
+[17:33:50] INFO    : Updating skybox color to (0.09019607843137255, 0.046, 0.046, 1)
+[17:33:50] INFO    : Updating skybox color to (0.09411764705882353, 0.048, 0.048, 1)
+[17:33:51] INFO    : Updating skybox color to (0.09803921568627451, 0.05, 0.05, 1)
+[17:33:51] INFO    : Updating skybox color to (0.10196078431372549, 0.052, 0.052, 1)
+[17:33:51] INFO    : Updating skybox color to (0.10588235294117647, 0.054, 0.054, 1)
+[17:33:51] INFO    : Updating skybox color to (0.10980392156862745, 0.056, 0.056, 1)
+[17:33:51] INFO    : Updating skybox color to (0.11372549019607843, 0.058, 0.058, 1)
+[17:33:51] INFO    : Updating skybox color to (0.11764705882352941, 0.06, 0.06, 1)
+[17:33:51] INFO    : Updating skybox color to (0.12156862745098039, 0.062, 0.062, 1)
+[17:33:51] INFO    : Updating skybox color to (0.12549019607843137, 0.064, 0.064, 1)
+[17:33:51] INFO    : Updating skybox color to (0.12941176470588237, 0.066, 0.066, 1)
+[17:33:51] INFO    : Updating skybox color to (0.13333333333333333, 0.068, 0.068, 1)
+[17:33:52] INFO    : Updating skybox color to (0.13725490196078433, 0.07, 0.07, 1)
+[17:33:52] INFO    : Updating skybox color to (0.1411764705882353, 0.072, 0.072, 1)
+[17:33:52] INFO    : Updating skybox color to (0.1450980392156863, 0.074, 0.074, 1)
+[17:33:52] INFO    : Updating skybox color to (0.14901960784313725, 0.076, 0.076, 1)
+[17:33:52] INFO    : Updating skybox color to (0.15294117647058825, 0.078, 0.078, 1)
+[17:33:52] INFO    : Updating skybox color to (0.1568627450980392, 0.08, 0.08, 1)
+[17:33:52] INFO    : Updating skybox color to (0.1607843137254902, 0.082, 0.082, 1)
+[17:33:52] INFO    : Updating skybox color to (0.16470588235294117, 0.084, 0.084, 1)
+[17:33:52] INFO    : Updating skybox color to (0.16862745098039217, 0.086, 0.086, 1)
+[17:33:52] INFO    : Updating skybox color to (0.17254901960784313, 0.088, 0.088, 1)
+[17:33:53] INFO    : Updating skybox color to (0.17647058823529413, 0.09, 0.09, 1)
+[17:33:53] INFO    : Updating skybox color to (0.1803921568627451, 0.092, 0.092, 1)
+[17:33:53] INFO    : Updating skybox color to (0.1843137254901961, 0.094, 0.094, 1)
+[17:33:53] INFO    : Updating skybox color to (0.18823529411764706, 0.096, 0.096, 1)
+[17:34:14] CRUCIAL : Exit main thread
+[17:34:14] INFO    : Program terminating
