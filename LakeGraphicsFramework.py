@@ -370,8 +370,9 @@ class Shader:
         Returns:
             str: The updated shader source code with placeholders replaced.
         """
-        for placeholder, value, in compile_time_config:
-            file_src = file_src.replace(placeholder, value)
+        for placeholder, value in compile_time_config.items():
+            for i in range(len(file_src)):
+                file_src[i] = file_src[i].replace(placeholder, value)
 
         return file_src
     
