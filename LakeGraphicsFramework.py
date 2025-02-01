@@ -645,10 +645,13 @@ class GraphicsEngine:
 
         self.pending_skybox_color = skybox_color
     
-    def update(self) -> None:
+    def update(self, preserve_draw_instructions: bool = False) -> None:
         """
-        Updates the internal state by transferring pending shader creations, skybox color, and draw instructions.
+        Updates the internal state by transferring pending shader creations, skybox color, and draw instructions. By default clears draw instruction.
         This method ensures that changes to shader creation, skybox color, and draw instructions are applied safely using a lock to avoid race conditions.
+
+        Parameters:
+            preserve_draw_instructions (bool): When true won't clear draw instructions. Future update calls will append to existing draw instructions.
         """
         with self.lock:
             if len(self.pending_shader_creations) > 0:
@@ -660,6 +663,9 @@ class GraphicsEngine:
                 self.pending_skybox_color = None
 
             self.active_draw_instructions = self.pending_draw_instructions
+
+            if not preserve_draw_instructions:
+                self.clear()
 
     def destroy(self) -> None:
         """
