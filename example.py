@@ -53,12 +53,14 @@ def setup():
 def main(window: lgf.Window):
     graphics = window.graphics_engine
     shader_id = graphics.create_shader("shaders/" + "example.vert", "shaders/" + "example.frag", 100, None, 0.1, 200, compile_time_config={"SOMECOLOUR": "1, 0, 1, 1"})
-    graphics.set_skybox_color((0, 0, 0, 1))
+
+    graphics.fill((0, 1, 0, 1))
+    graphics.update()
 
     for x in range(254):
         graphics.clear()
         graphics.use_shader(shader_id)
-        graphics.fill((0, 1, 0, 1))
+        #graphics.fill((0, 1, 0, 1))
         #graphics.set_skybox_color((x/255, x/1000, x/1000, 1))
         graphics.update()
         time.sleep(0.04)

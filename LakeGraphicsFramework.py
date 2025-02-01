@@ -284,8 +284,6 @@ class Window:
         self.graphics_engine.destroy()
         glfw.terminate()
 
-    
-
 
 class Shader:
     def __init__(self, vertex_path: str, fragment_path: str, fovy: float, aspect: float, near: float, far: float, model_name: str = DEFAULT_UNIFORM_NAMES["model"], view_name: str = DEFAULT_UNIFORM_NAMES["view"], projection_name: str = DEFAULT_UNIFORM_NAMES["projection"], texture_name: str = None, color_name: str = DEFAULT_UNIFORM_NAMES["color"], custom_uniform_names: dict = {}, compile_time_config: dict = {}) -> None:
@@ -726,7 +724,8 @@ class GraphicsEngine:
         """
         self.pending_draw_instructions.append((draw_function, tuple(args)))
 
-    def _fill(self, fill_color: ColorRGBA) -> None:
+    @staticmethod
+    def _fill(fill_color: ColorRGBA) -> None:
         """
         [Private]
         Clears the screen by filling everything with the specified color, in normalized RGBA.
@@ -768,19 +767,6 @@ class GraphicsEngine:
         pass
 
     @staticmethod
-    def _update_skybox_color(skybox_color: ColorRGBA) -> None:
-        """
-        [Private]
-        Updates the OpenGL clear color for the skybox.
-
-        Parameters:
-            skybox_color (ColorRGBA): The new color to be used for the skybox in normalised RGBA format.
-        """
-        if skybox_color is not None:
-            log.info(f"Updating skybox color to {skybox_color}")
-            gl.glClearColor(*skybox_color)
-
-    @staticmethod
     def _clear_screen() -> None:
         """
         [Private]
@@ -817,15 +803,12 @@ class GraphicsEngine:
         with self.lock:
             # Get render instructions
             new_shader_creations = copy.deepcopy(self.new_shader_creations)
-            new_skybox_color = copy.deepcopy(self.new_skybox_color)
             active_draw_instructions = copy.copy(self.active_draw_instructions)
 
             # Reset one-time functions
             self.new_shader_creations = []
-            self.new_skybox_color = None
 
         self._create_shaders(new_shader_creations)
-        self._update_skybox_color(new_skybox_color)
 
         self._clear_screen()
         self._use_shader(self.default_shader)
