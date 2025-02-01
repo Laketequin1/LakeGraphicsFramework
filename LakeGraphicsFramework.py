@@ -283,6 +283,7 @@ class Window:
         self.active = False
         self.graphics_engine.destroy()
         glfw.terminate()
+        log.info("Window closed.")
 
 
 class Shader:
@@ -671,6 +672,7 @@ class GraphicsEngine:
         """
         Destroys all shaders in the engine, releasing any associated resources.
         """
+        log.info("Destroying shaders in GraphicsEngine.")
         for shader in self.shaders.values():
             shader.destroy()
 
