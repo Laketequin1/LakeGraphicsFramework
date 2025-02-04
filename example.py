@@ -56,6 +56,7 @@ def main(window: lgf.Window):
 
     for x in range(254):
         graphics.use_shader(shader_id)
+        #graphics.set_()
         graphics.fill((0, 1, 0, 1))
         #graphics.set_skybox_color((x/255, x/1000, x/1000, 1))
         graphics.update()

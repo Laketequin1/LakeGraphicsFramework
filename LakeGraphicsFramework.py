@@ -7,7 +7,7 @@ import OpenGL.GL.shaders as gls
 from variable_type_validation import *
 from MessageLogger import MessageLogger as log
 from threading import Lock
-from typing import Callable
+from typing import Callable, Literal
 import copy
 from safe_file_readlines import safe_file_readlines
 
@@ -15,6 +15,41 @@ from safe_file_readlines import safe_file_readlines
 ### Type hints ###
 ColorRGBA = Tuple[float, float, float, float]
 ToDecide = Any # TODO
+GLUniformFunction = Literal[
+    "glUniform1f",
+    "glUniform2f",
+    "glUniform3f",
+    "glUniform4f",
+    "glUniform1i",
+    "glUniform2i",
+    "glUniform3i",
+    "glUniform4i",
+    "glUniform1ui",
+    "glUniform2ui",
+    "glUniform3ui",
+    "glUniform4ui",
+    "glUniform1fv",
+    "glUniform2fv",
+    "glUniform3fv",
+    "glUniform4fv",
+    "glUniform1iv",
+    "glUniform2iv",
+    "glUniform3iv",
+    "glUniform4iv",
+    "glUniform1uiv",
+    "glUniform2uiv",
+    "glUniform3uiv",
+    "glUniform4uiv",
+    "glUniformMatrix2fv",
+    "glUniformMatrix3fv",
+    "glUniformMatrix4fv",
+    "glUniformMatrix2x3fv",
+    "glUniformMatrix3x2fv",
+    "glUniformMatrix2x4fv",
+    "glUniformMatrix4x2fv",
+    "glUniformMatrix3x4fv",
+    "glUniformMatrix4x3fv"
+]
 
 
 ### Constants ###
@@ -321,7 +356,8 @@ class Shader:
 
         # Initilize shader handles
         self._init_handles(self.uniform_handles)
-        self._init_perspective_projection(self.uniform_handles["projection"], fovy, aspect, near, far)
+        if "projection" in self.uniform_handles:
+            self._init_perspective_projection(self.uniform_handles["projection"], fovy, aspect, near, far)
 
         log.info(f"Shader creation passed. Variables: {self.__dict__}")
 
@@ -376,18 +412,19 @@ class Shader:
         return file_src
     
     @staticmethod
-    def _get_uniform_handles(shader: gls.ShaderProgram, model_name: str, view_name: str, projection_name: str, texture_name: str = None, color_name: str = None) -> dict:
+    def _get_uniform_handles(shader: gls.ShaderProgram, model_name: str | None, view_name: str, projection_name: str, texture_name: str, color_name: str) -> dict:
         """
         [Private]
         Retrieves the locations of the specified uniforms in the provided shader program.
+        Uniform names are optional, but will not be initilised if None.
 
         Parameters:
             shader (gls.ShaderProgram): The compiled shader program to query for uniform locations.
-            model_name (str): The name of the model matrix uniform.
-            view_name (str): The name of the view matrix uniform.
-            projection_name (str): The name of the projection matrix uniform.
-            texture_name (str, optional): The name of the texture uniform (default is None).
-            color_name (str, optional): The name of the color uniform (default is None).
+            model_name (str | None): The name of the model matrix uniform.
+            view_name (str | None): The name of the view matrix uniform.
+            projection_name (str | None): The name of the projection matrix uniform.
+            texture_name (str | None): The name of the texture uniform.
+            color_name (str | None): The name of the color uniform.
 
         Returns:
             dict: A dictionary mapping uniform names to their respective locations in the shader.
@@ -395,15 +432,12 @@ class Shader:
         uniforms = {
             "model": model_name,
             "view": view_name,
-            "projection": projection_name
+            "projection": projection_name,
+            "texture": texture_name,
+            "color": color_name
         }
 
-        if texture_name:
-            uniforms["texture"] = texture_name
-        if color_name:
-            uniforms["color"] = color_name
-
-        uniform_handles = {uniform_handle_name: gl.glGetUniformLocation(shader, uniform_name) for uniform_handle_name, uniform_name in uniforms.items()}
+        uniform_handles = {uniform_handle_name: gl.glGetUniformLocation(shader, uniform_name) for uniform_handle_name, uniform_name in uniforms.items() if uniform_name is not None}
 
         return uniform_handles
     
@@ -458,11 +492,61 @@ class Shader:
         Activates the shader program for use.
         """
         gl.glUseProgram(self.shader)
+        self.set_custom_handle()
 
     def set_view(self, view_transform) -> None:
         """
         Sets the view matrix uniform in the shader.
         """
+        log.warn("TODO validation")
+        gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform)
+
+    def set_custom_handle(self, gl_uniform_func: GLUniformFunction, handle_name: str, args: tuple) -> None:
+        """
+        Sets a custom handle value.
+
+        Parameters:
+            gl_uniform_func (GLUniformFunction): The function which will be called with the shader handle. Options below.
+            handle_name (str): Name of the custom handle.
+            args (tuple): Tuple of all arguments to be passed after the uniform handle.
+            
+        GLUniformFunction = Literal[
+            "glUniform1f",
+            "glUniform2f",
+            "glUniform3f",
+            "glUniform4f",
+            "glUniform1i",
+            "glUniform2i",
+            "glUniform3i",
+            "glUniform4i",
+            "glUniform1ui",
+            "glUniform2ui",
+            "glUniform3ui",
+            "glUniform4ui",
+            "glUniform1fv",
+            "glUniform2fv",
+            "glUniform3fv",
+            "glUniform4fv",
+            "glUniform1iv",
+            "glUniform2iv",
+            "glUniform3iv",
+            "glUniform4iv",
+            "glUniform1uiv",
+            "glUniform2uiv",
+            "glUniform3uiv",
+            "glUniform4uiv",
+            "glUniformMatrix2fv",
+            "glUniformMatrix3fv",
+            "glUniformMatrix4fv",
+            "glUniformMatrix2x3fv",
+            "glUniformMatrix3x2fv",
+            "glUniformMatrix2x4fv",
+            "glUniformMatrix4x2fv",
+            "glUniformMatrix3x4fv",
+            "glUniformMatrix4x3fv"
+        ]
+        """
+        gl_uniform_func(self.uniform_handles["view"], )
         gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform)
 
     def destroy(self) -> None:
