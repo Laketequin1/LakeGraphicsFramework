@@ -81,7 +81,7 @@ def terminate_glfw():
 
 ### Classes ###
 class Window:
-    def __init__(self, size: Size = (0, 0), caption: str = "", fullscreen: bool = False, windowed: bool = True, vsync: bool = True, max_fps: int = 0, raw_mouse_input: bool = True, center_cursor: bool = True, hide_cursor: bool = True, fovy: float = DEFAULT_FOVY, near: float = DEFAULT_NEAR, far: float = DEFAULT_FAR, skybox_color: ColorRGBA = DEFAULT_SKYBOX_COLOR) -> None:
+    def __init__(self, size: Size = (0, 0), caption: str = "", fullscreen: bool = False, windowed: bool = True, vsync: bool = True, max_fps: int = 0, raw_mouse_input: bool = True, center_cursor_on_creation: bool = True, hide_cursor: bool = False, fovy: float = DEFAULT_FOVY, near: float = DEFAULT_NEAR, far: float = DEFAULT_FAR, skybox_color: ColorRGBA = DEFAULT_SKYBOX_COLOR) -> None:
         """
         Initializes a window, input system, and graphics engine with the specified parameters.
         
@@ -94,7 +94,7 @@ class Window:
             max_fps (int): The maximum frames per second. 0 means uncapped.
 
             raw_mouse_input (bool): Whether raw mouse input is used.
-            center_cursor (bool): Whether the cursor is centered in the window.
+            center_cursor_on_creation (bool): Whether the cursor is centered in the window.
             hide_cursor (bool): Whether the cursor is hidden.
 
             fovy (float): The view FOV.
@@ -110,7 +110,7 @@ class Window:
                         ('vsync', vsync, bool),
                         ('max_fps', max_fps, int),
                         ('raw_mouse_input', raw_mouse_input, bool),
-                        ('center_cursor', center_cursor, bool),
+                        ('center_cursor_on_creation', center_cursor_on_creation, bool),
                         ('hide_cursor', hide_cursor, bool),
                         ('fovy', fovy, Real),
                         ('near', near, Real),
@@ -128,7 +128,7 @@ class Window:
         self.vsync = vsync
         self.max_fps = int(max_fps)
         self.raw_mouse_input = raw_mouse_input
-        self.center_cursor = center_cursor
+        self.center_cursor_on_creation = center_cursor_on_creation
         self.hide_cursor = hide_cursor
 
         if self.fullscreen != fullscreen:
@@ -315,10 +315,15 @@ class Window:
         [Private]
         Close the GLFW window and terminate glfw.
         """
+        log.info("Closing window...")
         self.active = False
         self.graphics_engine.destroy()
         glfw.terminate()
         log.info("Window closed.")
+
+
+class Object:
+    pass # TODO (possibly new file as import)
 
 
 class Shader:
@@ -492,7 +497,7 @@ class Shader:
         Activates the shader program for use.
         """
         gl.glUseProgram(self.shader)
-        self.set_custom_handle()
+        #self.set_custom_handle()
 
     def set_view(self, view_transform) -> None:
         """
@@ -501,12 +506,12 @@ class Shader:
         log.warn("TODO validation")
         gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform)
 
-    def set_custom_handle(self, gl_uniform_func: GLUniformFunction, handle_name: str, args: tuple) -> None:
+    def set_custom_handle(self, gl_uniform_func_name: GLUniformFunction, handle_name: str, args: tuple) -> None:
         """
         Sets a custom handle value.
 
         Parameters:
-            gl_uniform_func (GLUniformFunction): The function which will be called with the shader handle. Options below.
+            gl_uniform_func_name (GLUniformFunction): The function which will be called with the shader handle. Options below.
             handle_name (str): Name of the custom handle.
             args (tuple): Tuple of all arguments to be passed after the uniform handle.
             
@@ -546,8 +551,13 @@ class Shader:
             "glUniformMatrix4x3fv"
         ]
         """
-        gl_uniform_func(self.uniform_handles["view"], )
-        gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform)
+        if not hasattr(gl, gl_uniform_func_name):
+            log.error(f"gl_uniform_func_name was not in literal type GLUniformFunction, instead: '{gl_uniform_func_name}'")
+
+        gl_uniform_func = getattr(gl, gl_uniform_func_name)
+
+        gl_uniform_func(self.uniform_handles[handle_name], *args)
+        #gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform) EXAMPLE
 
     def destroy(self) -> None:
         """
@@ -581,10 +591,10 @@ class GraphicsEngine:
         self._init_opengl(skybox_color)
 
         # Initilize shader
-        self.default_shader = 0
-        self.shaders[self.default_shader] = Shader(SHADERS_PATH + DEFAULT_VERT_SHADER, SHADERS_PATH + DEFAULT_FRAG_SHADER, fovy, aspect, near, far)
+        self.default_shader_id = 0
+        self.shaders[self.default_shader_id] = Shader(SHADERS_PATH + DEFAULT_VERT_SHADER, SHADERS_PATH + DEFAULT_FRAG_SHADER, fovy, aspect, near, far)
         # Use default shader
-        self._use_shader(self.default_shader)
+        self._use_shader(self.default_shader_id)
 
         # Pre-draw instructions
         self.pending_skybox_color = None
@@ -903,5 +913,5 @@ class GraphicsEngine:
         self._create_shaders(new_shader_creations)
 
         self._clear_screen()
-        self._use_shader(self.default_shader)
+        self._use_shader(self.default_shader_id)
         self._complete_draw_instructions(active_draw_instructions)
