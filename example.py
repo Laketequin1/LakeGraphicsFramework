@@ -40,7 +40,7 @@ def setup():
     log.info(f"Imported settings: {settings}")
     
     # Create window
-    window = lgf.Window(settings["window_resolution"], CAPTION, settings["fullscreen"], settings["windowed"], settings["vsync"], settings["max_fps"], settings["raw_mouse_input"], True)
+    window = lgf.Window(settings["window_resolution"], CAPTION, settings["fullscreen"], settings["windowed"], settings["vsync"], settings["max_fps"], settings["raw_mouse_input"], settings["center_cursor_on_creation"], settings["hide_cursor"])
 
     main_thread = threading.Thread(target=main, args=(window, ))
     main_thread.start()

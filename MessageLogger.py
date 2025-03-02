@@ -103,6 +103,7 @@ class MessageLogger:
     def error(cls, message: str, raise_exception: Exception = None) -> None:
         """
         Logs an error message to the file and prints it to the terminal based on the verbose level.
+        Raises an exception.
 
         Parameters:
             message (str): The error message to be logged and/or printed.
