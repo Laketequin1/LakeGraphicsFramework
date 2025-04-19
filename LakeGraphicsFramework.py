@@ -2,6 +2,7 @@
 import glfw
 import numpy as np
 import pyrr
+import ctypes
 import OpenGL.GL as gl
 import OpenGL.GL.shaders as gls
 from variable_type_validation import *
@@ -81,6 +82,11 @@ def terminate_glfw():
 
 ### Classes ###
 class Window:
+    """
+    Creates an application window with a rendering loop.
+
+    Handles GLFW initialization, window creation, input setup, event processing, and delegates rendering tasks to a GraphicsEngine.
+    """
     def __init__(self, size: Size = (0, 0), caption: str = "", fullscreen: bool = False, windowed: bool = True, vsync: bool = True, max_fps: int = 0, raw_mouse_input: bool = True, center_cursor_on_creation: bool = True, hide_cursor: bool = False, fovy: float = DEFAULT_FOVY, near: float = DEFAULT_NEAR, far: float = DEFAULT_FAR, skybox_color: ColorRGBA = DEFAULT_SKYBOX_COLOR) -> None:
         """
         Initializes a window, input system, and graphics engine with the specified parameters.
@@ -322,8 +328,130 @@ class Window:
         log.info("Window closed.")
 
 
+class Mesh:
+    def __init__(self, path) -> None:
+        # x, y, z, s, t, nx, ny, nz
+        self.vertices = self.load_mesh(path)
+        
+        # Each vertex consists of 3 components (x, y, z)
+        self.vertex_count = len(self.vertices) // 3
+        self.vertices = np.array(self.vertices, dtype=np.float32)
+        
+        # Vertex Array Object (vao) stores buffer attributes (defines how vertex data is laid out in memory, etc)
+        self.vao = gl.glGenVertexArrays(1)
+        # Activate Vertex Array Object
+        gl.glBindVertexArray(self.vao)
+        
+        # Vertex Buffer Object (vbo) stores raw data (vertex positions, normals, colors, etc)
+        self.vbo = gl.glGenBuffers(1)
+        gl.glBindBuffer(gl.GL_ARRAY_BUFFER, self.vbo)
+        gl.glBufferData(gl.GL_ARRAY_BUFFER, self.vertices.nbytes, self.vertices, gl.GL_STATIC_DRAW) # Upload the vertex data to the GPU
+
+        # Add attribute pointer for position location in buffer so gpu can find vertex data in memory
+        # Location 1 - Postion
+        gl.glEnableVertexAttribArray(0)
+        # Location, number of floats, format (float), gl.GL_FALSE, stride (total length of vertex, 4 bytes times number of floats), ctypes of starting position in bytes (void pointer expected)
+        gl.glVertexAttribPointer(0, 3, gl.GL_FLOAT, gl.GL_FALSE, 32, ctypes.c_void_p(0))
+        
+        # Location 2 - ST
+        gl.glEnableVertexAttribArray(1)
+        # Location, number of floats, format (float), gl.GL_FALSE, stride (total length of vertex, 4 bytes times number of floats), ctypes of starting position in bytes (void pointer expected)
+        gl.glVertexAttribPointer(1, 2, gl.GL_FLOAT, gl.GL_FALSE, 32, ctypes.c_void_p(12))
+        
+        # Location 3 - Normal
+        gl.glEnableVertexAttribArray(2)
+        # Location, number of floats, format (float), gl.GL_FALSE, stride (total length of vertex, 4 bytes times number of floats), ctypes of starting position in bytes (void pointer expected)
+        gl.glVertexAttribPointer(2, 3, gl.GL_FLOAT, gl.GL_FALSE, 32, ctypes.c_void_p(20))
+    
+    @staticmethod
+    def load_mesh(filepath):
+    
+        vertices = []
+        flags = {"v": [], "vt": [], "vn": []}
+        
+        with open(filepath, 'r') as f:
+            lines = f.readlines()
+            
+            for line in lines:
+                line.replace("\n", "")
+                
+                first_space = line.find(" ")
+                flag = line[0:first_space]
+                
+                if flag in flags.keys():
+                    line = line.replace(flag + " ", "")
+                    line = line.split(" ")
+                    flags[flag].append([float(x) for x in line])
+                elif flag == "f":
+                    line = line.replace(flag + " ", "")
+                    line = line.split(" ")
+                    
+                    face_vertices = []
+                    face_textures = []
+                    face_normals = []
+                    
+                    for vertex in line:
+                        l = vertex.split("/")
+                        face_vertices.append(flags["v"][int(l[0]) - 1])
+                        face_textures.append(flags["vt"][int(l[1]) - 1])
+                        face_normals.append(flags["vn"][int(l[2]) - 1])
+
+                    triangles_in_face = len(line) - 2
+                    vertex_order = []
+
+                    for x in range(triangles_in_face):
+                        vertex_order.extend((0, x + 1, x + 2))
+                    for x in vertex_order:
+                        vertices.extend((*face_vertices[x], *face_textures[x], *face_normals[x]))
+        
+        return vertices
+    
+    @staticmethod
+    def get_fullscreen_quad_vertices() -> list[float]:
+        """
+        Generates vertex data for a quad that covers the entire screen/viewport in NDC.
+
+        The quad is composed of two triangles. The vertex data includes positions (XYZ),
+        texture coordinates (UV), and placeholder normals (XYZ), matching the format
+        returned by `load_mesh`.
+
+        Positions span from (-1, -1) to (1, 1) in X and Y. Z is 0.
+        Texture coordinates span from (0, 0) to (1, 1).
+        Normals are set to point along the positive Z-axis (0, 0, 1).
+
+        Returns:
+            A flat list of 48 floats (6 vertices * (3 pos + 2 tex + 3 norm) components).
+            [v1_x, v1_y, v1_z, v1_u, v1_v, v1_nx, v1_ny, v1_nz, v2_x, ...]
+        """
+        # Vertices definitions: Pos (x, y, z), TexCoord (u, v), Normal (nx, ny, nz)
+        # Note: Texture coords often have Y=0 at bottom, Y=1 at top.
+        #       Normals are arbitrary for a 2D quad, setting to +Z.
+        v1_tl = [-1.0,  1.0, 0.0,  0.0, 1.0,  0.0, 0.0, 1.0] # Top-left
+        v2_bl = [-1.0, -1.0, 0.0,  0.0, 0.0,  0.0, 0.0, 1.0] # Bottom-left
+        v3_br = [ 1.0, -1.0, 0.0,  1.0, 0.0,  0.0, 0.0, 1.0] # Bottom-right
+        v4_tr = [ 1.0,  1.0, 0.0,  1.0, 1.0,  0.0, 0.0, 1.0] # Top-right
+
+        # Triangle 1: Top-left, Bottom-left, Bottom-right
+        # Triangle 2: Top-left, Bottom-right, Top-right
+        quad_vertices = []
+        quad_vertices.extend(v1_tl)
+        quad_vertices.extend(v2_bl)
+        quad_vertices.extend(v3_br)
+
+        quad_vertices.extend(v1_tl)
+        quad_vertices.extend(v3_br)
+        quad_vertices.extend(v4_tr)
+
+        return quad_vertices
+    
+    def destroy(self):
+        # Remove allocated memory
+        gl.glDeleteVertexArrays(1, (self.vao, ))
+        gl.glDeleteBuffers(1, (self.vbo, ))
+
+
 class Object:
-    pass # TODO (possibly new file as import)
+    pass # TODO (possibly new .py file as import)
 
 
 class Shader:
@@ -503,7 +631,14 @@ class Shader:
         """
         Sets the view matrix uniform in the shader.
         """
-        log.warn("TODO validation")
+        log.warn("TODO view validation")
+        gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform)
+
+    def set_model(self, model) -> None:
+        """
+        Sets the model uniform in the shader.
+        """
+        log.warn("TODO model validation")
         gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform)
 
     def set_custom_handle(self, gl_uniform_func_name: GLUniformFunction, handle_name: str, args: tuple) -> None:
@@ -557,7 +692,7 @@ class Shader:
         gl_uniform_func = getattr(gl, gl_uniform_func_name)
 
         gl_uniform_func(self.uniform_handles[handle_name], *args)
-        #gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform) EXAMPLE
+        #gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform) EXAMPLE OF ABOVE LINE IN USE
 
     def destroy(self) -> None:
         """
@@ -705,6 +840,14 @@ class GraphicsEngine:
         instruction_args = (fill_color,)
         self._add_draw_instruction(self._fill, instruction_args)
 
+    def quad_fill(self) -> None:
+        """
+        Draws a single quad that fills the entire screen / viewport.
+
+        Typically used as geometry for applying shader effects (post-processing / background generation) across the entire screen.
+        """
+        self._add_draw_instruction(self._quad_fill)
+
     def use_shader(self, shader_id: int) -> None:
         """
         Uses the specified shader for subsequent draw calls.
@@ -814,7 +957,7 @@ class GraphicsEngine:
         self.shaders[shader_id].use()
         self.active_shader_id = shader_id
 
-    def _add_draw_instruction(self, draw_function: Callable, args: tuple) -> None:
+    def _add_draw_instruction(self, draw_function: Callable, args: tuple = tuple()) -> None:
         """
         [Private]
         Adds a drawing instruction to the pending instructions list.
@@ -836,6 +979,16 @@ class GraphicsEngine:
             fill_color (ColorRGBA): The color to fill the screen in normalized RGBA format.
         """
         gl.glClearColor(*fill_color)
+
+    @staticmethod
+    def _quad_fill() -> None:
+        """
+        [Private]
+        Draws a single quad that fills the entire screen / viewport.
+
+        Typically used as geometry for applying shader effects (post-processing / background generation) across the entire screen.
+        """
+        pass
 
     def _set_view(self, pos: Coordinate, rotation: ToDecide) -> None:
         """
