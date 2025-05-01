@@ -6,7 +6,7 @@ import OpenGL.GL as gl
 import OpenGL.GL.shaders as gls
 from variable_type_validation import *
 from MessageLogger import MessageLogger as log
-from threading import Lock
+from threading import Lock, Event
 from typing import Callable, Literal
 import copy
 from safe_file_readlines import safe_file_readlines
@@ -159,13 +159,12 @@ class Window:
         log.info(f"Window creation passed. Variables: {self.__dict__}")
 
         # Set variables
-        self.active = True
-        self.should_close = False
+        self.should_close_event = Event()
         self.lock = Lock()
         self.graphics_engine = GraphicsEngine(fovy, self.aspect_ratio, near, far, skybox_color)
     
-    def main(self) -> None:
-        while self.active:
+    def _render_loop(self) -> None:
+        while not self.should_close_event.is_set():
             gl.glFlush() # Wait for pipeline
 
             self._gl_check_error()
@@ -175,8 +174,11 @@ class Window:
 
             self._tick()
 
+
     def close(self) -> None:
-        self.should_close = True
+        log.info("Window close requested.")
+        
+        self.should_close_event.set()
 
     ### Init helpers ####
     @staticmethod
