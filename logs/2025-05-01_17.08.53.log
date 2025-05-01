@@ -1,0 +1,37 @@
+Logfile created with verbose level LOG_ONLY on 01/05/2025 at 17:08:54. Have fun <3
+
+[17:08:54] INFO    : MessageLogger verbose type updating from LOG_ONLY to INFO
+[17:08:54] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[17:08:54] INFO    : Imported settings: {'_comment0': 'DEBUG             | Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]', 'verbose_type': 'INFO', '_comment1': 'SCREEN RESOLUTION | window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution; windowed false will overwrite fullscreen to true', 'window_resolution': [200, 500], 'fullscreen': True, 'windowed': False, '_comment2': 'SCREEN FPS        | setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps', 'max_fps': 0, 'vsync': True, '_comment3': 'MOUSE AND CURSOR  | raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)', 'raw_mouse_input': True, 'mouse_sensitivity': 1, 'hide_cursor': True, 'center_cursor_on_creation': True, '_comment4': "KEY BINDS         | Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)", 'key_binds': {'jump': 'SPACE', 'forward': 'W', 'back': 'S', 'left': 'A', 'right': 'D'}}
+[17:08:54] INFO    : Window variable validation passed. Variables: {'size': [200, 500], 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor_on_creation': True, 'hide_cursor': True}
+[17:08:54] INFO    : Window fullscreen.
+[17:08:54] INFO    : Window creation passed. Variables: {'size': Size(width=1920, height=1080), 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor_on_creation': True, 'hide_cursor': True, 'monitor': <glfw.LP__GLFWmonitor object at 0x000001F1DD864650>, 'video_mode': GLFWvidmode(size=Size(width=1920, height=1080), bits=Bits(red=8, green=8, blue=8), refresh_rate=75), 'display_size': Size(width=1920, height=1080), 'aspect_ratio': 1.7777777777777777, 'window': <glfw.LP__GLFWwindow object at 0x000001F1DD8646D0>}
+[17:08:54] INFO    : Setting up Graphics Engine
+[17:08:54] INFO    : Creating shader
+[17:08:54] INFO    : No texture handle for this shader.
+[17:08:54] INFO    : Shader creation passed. Variables: {'shader': 3, 'uniform_handles': {'model': 0, 'view': 3, 'projection': 2, 'color': 1}, 'custom_uniform_handles': {}}
+[17:08:54] INFO    : Shader creation passed variable validation.
+[17:08:54] INFO    : Creating shader
+[17:08:54] INFO    : No texture handle for this shader.
+[17:08:54] INFO    : Shader creation passed. Variables: {'shader': 6, 'uniform_handles': {'model': 0, 'view': 2, 'projection': 1, 'color': -1}, 'custom_uniform_handles': {}}
+[17:08:58] CRUCIAL : (17, 1, 0)
+[17:08:58] CRUCIAL : (17, 0, 0)
+[17:09:03] CRUCIAL : (54, 1, 1)
+[17:09:03] CRUCIAL : (17, 1, 1)
+[17:09:03] CRUCIAL : (17, 0, 1)
+[17:09:04] CRUCIAL : (54, 0, 0)
+[17:09:06] CRUCIAL : (17, 1, 0)
+[17:09:07] CRUCIAL : (54, 1, 1)
+[17:09:07] CRUCIAL : (17, 0, 1)
+[17:09:08] CRUCIAL : (54, 0, 0)
+[17:09:11] CRUCIAL : (54, 1, 1)
+[17:09:12] CRUCIAL : (17, 1, 1)
+[17:09:12] CRUCIAL : (54, 0, 0)
+[17:09:13] CRUCIAL : (17, 0, 0)
+[17:09:14] CRUCIAL : (1, 1, 0)
+[17:09:14] INFO    : Window close requested.
+[17:09:14] CRUCIAL : Exit main thread
+[17:09:14] INFO    : Closing window...
+[17:09:14] INFO    : Destroying shaders in GraphicsEngine.
+[17:09:14] INFO    : Window closed.
+[17:09:14] INFO    : Program terminating

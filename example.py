@@ -1,4 +1,4 @@
-import atexit
+#import atexit
 import traceback
 import sys
 import time
@@ -12,16 +12,18 @@ import LakeGraphicsFramework as lgf
 JSON_SETTINGS_FILEPATH = "settings/settings.json"
 CAPTION = "Into Havoc"
 
+"""
 ### Exit Handling ###
 def exit_handler() -> None:
-    """
-    Runs before main threads terminates.
-    """
+    
+    #Runs before main threads terminates.
+    
     #events["exit"].set()
     log.info("Program terminating")
     lgf.terminate_glfw()
 
 atexit.register(exit_handler)
+"""
 
 ### Example code ###
 def catch_main():
@@ -42,27 +44,33 @@ def setup():
     # Create window
     window = lgf.Window(settings["window_resolution"], CAPTION, settings["fullscreen"], settings["windowed"], settings["vsync"], settings["max_fps"], settings["raw_mouse_input"], settings["center_cursor_on_creation"], settings["hide_cursor"])
 
-    main_thread = threading.Thread(target=main, args=(window, ))
-    main_thread.start()
-    
-    window.main()
+    window.start()
 
-    main_thread.join()
-    sys.exit(0)
+    main(window)
+
+    #main_thread = threading.Thread(target=main, args=(window, ))
+    #main_thread.start()
+    
+    #window.main()
+
+    #main_thread.join()
+    #sys.exit(0)
 
 def main(window: lgf.Window):
     graphics = window.graphics_engine
     shader_id = graphics.create_shader("shaders/" + "example.vert", "shaders/" + "example.frag", 100, None, 0.1, 200, compile_time_config={"SOMECOLOUR": "1, 0, 1, 1"})
 
     for x in range(254):
+        if window.poll_events():
+            window.close()
+            break
         graphics.use_shader(shader_id)
         #graphics.set_()
-        graphics.fill((0, 1, 0, 1))
+        graphics.fill((0, 0, (255-x)/255, 1))
         #graphics.set_skybox_color((x/255, x/1000, x/1000, 1))
         graphics.update()
-        time.sleep(0.04)
+        time.sleep(1)
 
-    window.close()
     log.crucial("Exit main thread")
     sys.exit(0)
 

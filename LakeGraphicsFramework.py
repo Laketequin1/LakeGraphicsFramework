@@ -2,15 +2,17 @@
 import glfw
 import numpy as np
 import pyrr
+import atexit
 import ctypes
 import OpenGL.GL as gl
 import OpenGL.GL.shaders as gls
 from variable_type_validation import *
 from MessageLogger import MessageLogger as log
-from threading import Lock, Event
+from threading import Lock, Event, Thread
 from typing import Callable, Literal
 import copy
 from safe_file_readlines import safe_file_readlines
+import sys
 
 
 ### Type hints ###
@@ -75,9 +77,16 @@ DEFAULT_FAR = 200
 DEFAULT_SKYBOX_COLOR = (0, 0, 0, 1)
 
 
-### Functions ###
-def terminate_glfw():
+### Exit Handling ###
+def exit_handler() -> None:
+    """
+    Runs before main threads terminates.
+    """
+    #events["exit"].set()
+    log.info("Program terminating")
     glfw.terminate()
+
+atexit.register(exit_handler)
 
 
 ### Classes ###
@@ -167,9 +176,20 @@ class Window:
         # Set variables
         self.should_close_event = Event()
         self.lock = Lock()
+        self.key_states = []
         self.graphics_engine = GraphicsEngine(fovy, self.aspect_ratio, near, far, skybox_color)
+
+    def start(self):
+        glfw.make_context_current(None)
+        
+        self.render_thread = Thread(target=self._render_loop)
+        self.render_thread.start()
+
+        glfw.set_key_callback(self.window, self._key_callback)
     
     def _render_loop(self) -> None:
+        glfw.make_context_current(self.window)
+
         while not self.should_close_event.is_set():
             gl.glFlush() # Wait for pipeline
 
@@ -177,9 +197,17 @@ class Window:
 
             self.graphics_engine._render()
             glfw.swap_buffers(self.window)
+            #self._tick() BAD BAD BAD BAD BAD BAD
+        
+        self._close()
 
-            self._tick()
-
+    def poll_events(self) -> None:
+        """
+        Processes a single application tick by polling GLFW events and handling window-related events.
+        """
+        glfw.poll_events()
+            
+        return self._handle_window_events()
 
     def close(self) -> None:
         log.info("Window close requested.")
@@ -200,6 +228,11 @@ class Window:
         # Init GLFW and display
         if not glfw.init():
             raise Exception("GLFW can't be initialized")
+        
+        glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
+        glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
+        glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
+        glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, gl.GL_TRUE) # Necessary for macOS
         
         monitor = glfw.get_primary_monitor()
         if not monitor:
@@ -296,27 +329,20 @@ class Window:
         if error != gl.GL_NO_ERROR:
             log.warn(f"OpenGL error: {error}")
 
-    def _tick(self) -> None:
-        """
-        [Private]
-        Processes a single application tick by polling GLFW events and handling window-related events.
-        """
-        glfw.poll_events()
+    def _key_callback(self, window_, key_, scancode, action, mods) -> None:
+        log.crucial((scancode, action, mods))
+        #if action:
+        #    self.key_states.append((scancode, ))
 
-        if self.should_close:
-            self._close()
-            return
-        
-        self._handle_window_events()
-
-    def _handle_window_events(self) -> None:
+    def _handle_window_events(self) -> bool:
         """
         [Private]
         Handle GLFW events and closing the window.
         """
         if glfw.window_should_close(self.window) or glfw.get_key(self.window, glfw.KEY_ESCAPE) == glfw.PRESS:
-            self._close()
-            return
+            #self.should_close_event.set()
+            return True
+        return False
     
     def _close(self) -> None:
         """
@@ -324,10 +350,11 @@ class Window:
         Close the GLFW window and terminate glfw.
         """
         log.info("Closing window...")
-        self.active = False
         self.graphics_engine.destroy()
+        glfw.destroy_window(self.window)
         glfw.terminate()
         log.info("Window closed.")
+        sys.exit(0)
 
 
 class Mesh:

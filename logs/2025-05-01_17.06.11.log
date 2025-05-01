@@ -1,0 +1,74 @@
+Logfile created with verbose level LOG_ONLY on 01/05/2025 at 17:06:11. Have fun <3
+
+[17:06:11] INFO    : MessageLogger verbose type updating from LOG_ONLY to INFO
+[17:06:11] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[17:06:11] INFO    : Imported settings: {'_comment0': 'DEBUG             | Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]', 'verbose_type': 'INFO', '_comment1': 'SCREEN RESOLUTION | window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution; windowed false will overwrite fullscreen to true', 'window_resolution': [200, 500], 'fullscreen': True, 'windowed': False, '_comment2': 'SCREEN FPS        | setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps', 'max_fps': 0, 'vsync': True, '_comment3': 'MOUSE AND CURSOR  | raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)', 'raw_mouse_input': True, 'mouse_sensitivity': 1, 'hide_cursor': True, 'center_cursor_on_creation': True, '_comment4': "KEY BINDS         | Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)", 'key_binds': {'jump': 'SPACE', 'forward': 'W', 'back': 'S', 'left': 'A', 'right': 'D'}}
+[17:06:11] INFO    : Window variable validation passed. Variables: {'size': [200, 500], 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor_on_creation': True, 'hide_cursor': True}
+[17:06:11] INFO    : Window fullscreen.
+[17:06:11] INFO    : Window creation passed. Variables: {'size': Size(width=1920, height=1080), 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor_on_creation': True, 'hide_cursor': True, 'monitor': <glfw.LP__GLFWmonitor object at 0x000001A9FF8D4650>, 'video_mode': GLFWvidmode(size=Size(width=1920, height=1080), bits=Bits(red=8, green=8, blue=8), refresh_rate=75), 'display_size': Size(width=1920, height=1080), 'aspect_ratio': 1.7777777777777777, 'window': <glfw.LP__GLFWwindow object at 0x000001A9FF8D46D0>}
+[17:06:11] INFO    : Setting up Graphics Engine
+[17:06:11] INFO    : Creating shader
+[17:06:11] INFO    : No texture handle for this shader.
+[17:06:11] INFO    : Shader creation passed. Variables: {'shader': 3, 'uniform_handles': {'model': 0, 'view': 3, 'projection': 2, 'color': 1}, 'custom_uniform_handles': {}}
+[17:06:11] INFO    : Shader creation passed variable validation.
+[17:06:12] INFO    : Creating shader
+[17:06:12] INFO    : No texture handle for this shader.
+[17:06:12] INFO    : Shader creation passed. Variables: {'shader': 6, 'uniform_handles': {'model': 0, 'view': 2, 'projection': 1, 'color': -1}, 'custom_uniform_handles': {}}
+[17:06:14] CRUCIAL : (35, 1, 0)
+[17:06:14] CRUCIAL : (35, 0, 0)
+[17:06:14] CRUCIAL : (18, 1, 0)
+[17:06:14] CRUCIAL : (18, 0, 0)
+[17:06:14] CRUCIAL : (38, 1, 0)
+[17:06:14] CRUCIAL : (38, 0, 0)
+[17:06:14] CRUCIAL : (38, 1, 0)
+[17:06:14] CRUCIAL : (38, 0, 0)
+[17:06:15] CRUCIAL : (24, 1, 0)
+[17:06:16] CRUCIAL : (24, 0, 0)
+[17:06:17] CRUCIAL : (54, 1, 1)
+[17:06:17] CRUCIAL : (35, 1, 1)
+[17:06:17] CRUCIAL : (35, 0, 1)
+[17:06:18] CRUCIAL : (18, 1, 1)
+[17:06:18] CRUCIAL : (18, 0, 1)
+[17:06:18] CRUCIAL : (38, 1, 1)
+[17:06:18] CRUCIAL : (38, 0, 1)
+[17:06:18] CRUCIAL : (38, 1, 1)
+[17:06:18] CRUCIAL : (38, 0, 1)
+[17:06:18] CRUCIAL : (24, 1, 1)
+[17:06:19] CRUCIAL : (24, 0, 1)
+[17:06:19] CRUCIAL : (54, 0, 0)
+[17:06:20] CRUCIAL : (285, 1, 2)
+[17:06:20] CRUCIAL : (35, 1, 2)
+[17:06:20] CRUCIAL : (35, 0, 2)
+[17:06:20] CRUCIAL : (18, 1, 2)
+[17:06:20] CRUCIAL : (18, 0, 2)
+[17:06:21] CRUCIAL : (38, 1, 2)
+[17:06:21] CRUCIAL : (38, 0, 2)
+[17:06:21] CRUCIAL : (38, 1, 2)
+[17:06:21] CRUCIAL : (38, 0, 2)
+[17:06:21] CRUCIAL : (24, 1, 2)
+[17:06:21] CRUCIAL : (24, 0, 2)
+[17:06:21] CRUCIAL : (285, 0, 0)
+[17:06:22] CRUCIAL : (285, 1, 2)
+[17:06:22] CRUCIAL : (54, 1, 3)
+[17:06:23] CRUCIAL : (54, 2, 3)
+[17:06:23] CRUCIAL : (35, 1, 3)
+[17:06:23] CRUCIAL : (35, 0, 3)
+[17:06:24] CRUCIAL : (18, 1, 3)
+[17:06:24] CRUCIAL : (18, 0, 3)
+[17:06:24] CRUCIAL : (38, 1, 3)
+[17:06:24] CRUCIAL : (38, 0, 3)
+[17:06:24] CRUCIAL : (38, 1, 3)
+[17:06:24] CRUCIAL : (38, 0, 3)
+[17:06:25] CRUCIAL : (24, 1, 3)
+[17:06:25] CRUCIAL : (24, 0, 3)
+[17:06:25] CRUCIAL : (54, 0, 2)
+[17:06:25] CRUCIAL : (285, 0, 0)
+[17:06:25] CRUCIAL : (1, 1, 0)
+[17:06:25] CRUCIAL : (1, 0, 0)
+[17:06:26] CRUCIAL : (1, 1, 0)
+[17:06:26] INFO    : Window close requested.
+[17:06:26] CRUCIAL : Exit main thread
+[17:06:26] INFO    : Closing window...
+[17:06:26] INFO    : Destroying shaders in GraphicsEngine.
+[17:06:26] INFO    : Window closed.
+[17:06:26] INFO    : Program terminating
