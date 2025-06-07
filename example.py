@@ -30,12 +30,12 @@ def catch_main():
     log.init("LOG_ONLY")
     
     try:
-        setup()
+        main()
     except Exception as e:
         error_message = f"Fatal termination error:\n\n{traceback.format_exc()}"
         log.error(error_message, e)
 
-def setup():
+def main():
     # Import settings
     settings = read_json_data(JSON_SETTINGS_FILEPATH)
     log.set_verbose_type(settings["verbose_type"])
@@ -45,18 +45,7 @@ def setup():
     window = lgf.Window(settings["window_resolution"], CAPTION, settings["fullscreen"], settings["windowed"], settings["vsync"], settings["max_fps"], settings["raw_mouse_input"], settings["center_cursor_on_creation"], settings["hide_cursor"])
 
     window.start()
-
-    main(window)
-
-    #main_thread = threading.Thread(target=main, args=(window, ))
-    #main_thread.start()
     
-    #window.main()
-
-    #main_thread.join()
-    #sys.exit(0)
-
-def main(window: lgf.Window):
     graphics = window.graphics_engine
     shader_id = graphics.create_shader("shaders/" + "example.vert", "shaders/" + "example.frag", 100, None, 0.1, 200, compile_time_config={"SOMECOLOUR": "1, 0, 1, 1"})
 

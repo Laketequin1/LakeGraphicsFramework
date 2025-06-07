@@ -13,7 +13,7 @@ from typing import Callable, Literal
 import copy
 from safe_file_readlines import safe_file_readlines
 import sys
-
+from key_handler import KEY_NAMES, KEYS, get_key_name
 
 ### Type hints ###
 ColorRGBA = Tuple[float, float, float, float]
@@ -176,7 +176,7 @@ class Window:
         # Set variables
         self.should_close_event = Event()
         self.lock = Lock()
-        self.key_states = []
+        self.key_states = {}
         self.graphics_engine = GraphicsEngine(fovy, self.aspect_ratio, near, far, skybox_color)
 
     def start(self):
@@ -205,7 +205,13 @@ class Window:
         """
         Processes a single application tick by polling GLFW events and handling window-related events.
         """
+        for unique_key_name, unique_key_states in list(self.key_states.items()):
+            if unique_key_states["released"]:
+                del self.key_states[unique_key_name]
+
         glfw.poll_events()
+
+        log.info(self.key_states)
             
         return self._handle_window_events()
 
@@ -329,17 +335,43 @@ class Window:
         if error != gl.GL_NO_ERROR:
             log.warn(f"OpenGL error: {error}")
 
-    def _key_callback(self, window_, key_, scancode, action, mods) -> None:
-        log.crucial((scancode, action, mods))
-        #if action:
-        #    self.key_states.append((scancode, ))
+    def _key_callback(self, window_, key, scancode_, action, mods) -> None:
+        """
+        [Private]
+        Key callback to updates the local saved key states.
+        """
+        log.info((get_key_name(key), "KEYDOWN" if action else "KEYUP", mods))
+
+        if get_key_name(key) not in self.key_states:
+            self.key_states[get_key_name(key)] = {}
+        unique_key_states = self.key_states[get_key_name(key)]
+
+        MOD_SHIFT = 0x0001
+        MOD_CONTROL = 0x0002
+        MOD_ALT = 0x0004
+        MOD_SUPER = 0x0008
+        MOD_CAPS_LOCK = 0x0010
+        MOD_NUM_LOCK = 0x0020
+
+        if action:
+            unique_key_states["num_lock"] = (mods & MOD_NUM_LOCK) != 0
+            unique_key_states["caps_lock"] = (mods & MOD_CAPS_LOCK) != 0
+            unique_key_states["super_key"] = (mods & MOD_SUPER) != 0
+            unique_key_states["alt"] = (mods & MOD_ALT) != 0
+            unique_key_states["control"] = (mods & MOD_CONTROL) != 0
+            unique_key_states["shift"] = (mods & MOD_SHIFT) != 0
+
+            unique_key_states["pressed"] = True
+            unique_key_states["released"] = False
+        else:
+            unique_key_states["released"] = True
 
     def _handle_window_events(self) -> bool:
         """
         [Private]
         Handle GLFW events and closing the window.
         """
-        if glfw.window_should_close(self.window) or glfw.get_key(self.window, glfw.KEY_ESCAPE) == glfw.PRESS:
+        if glfw.window_should_close(self.window) or "ESCAPE" in self.key_states:
             #self.should_close_event.set()
             return True
         return False

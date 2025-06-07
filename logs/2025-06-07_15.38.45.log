@@ -1,0 +1,10 @@
+Logfile created with verbose level LOG_ONLY on 07/06/2025 at 15:38:46. Have fun <3
+
+[15:38:46] ERROR   : Fatal termination error:
+
+Traceback (most recent call last):
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\example.py", line 33, in catch_main
+    main()
+TypeError: main() missing 1 required positional argument: 'window'
+
+[15:38:46] INFO    : Program terminating

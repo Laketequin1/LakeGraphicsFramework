@@ -186,7 +186,6 @@ class MessageLogger:
         previous_verbose_level = cls.verbose_level
         if previous_verbose_level is not None: # Check this isn't the init set
             previous_verbose_type = cls.VERBOSE_KEYS[previous_verbose_level]
-            cls.info(f"MessageLogger verbose type updating from {previous_verbose_type} to {cls.verbose_type}")
 
         cls.verbose_level = cls.VERBOSE_MAP[cls.verbose_type]
 

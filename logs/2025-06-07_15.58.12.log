@@ -1,0 +1,40 @@
+Logfile created with verbose level LOG_ONLY on 07/06/2025 at 15:58:12. Have fun <3
+
+[15:58:12] INFO    : MessageLogger verbose type updating from LOG_ONLY to INFO
+[15:58:12] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[15:58:12] INFO    : Imported settings: {'_comment0': 'DEBUG             | Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]', 'verbose_type': 'INFO', '_comment1': 'SCREEN RESOLUTION | window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution; windowed false will overwrite fullscreen to true', 'window_resolution': [200, 500], 'fullscreen': True, 'windowed': False, '_comment2': 'SCREEN FPS        | setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps', 'max_fps': 0, 'vsync': True, '_comment3': 'MOUSE AND CURSOR  | raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)', 'raw_mouse_input': True, 'mouse_sensitivity': 1, 'hide_cursor': True, 'center_cursor_on_creation': True, '_comment4': "KEY BINDS         | Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)", 'key_binds': {'jump': 'SPACE', 'forward': 'W', 'back': 'S', 'left': 'A', 'right': 'D'}}
+[15:58:12] INFO    : Window variable validation passed. Variables: {'size': [200, 500], 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor_on_creation': True, 'hide_cursor': True}
+[15:58:12] INFO    : Window fullscreen.
+[15:58:12] INFO    : Window creation passed. Variables: {'size': Size(width=1920, height=1080), 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor_on_creation': True, 'hide_cursor': True, 'monitor': <glfw.LP__GLFWmonitor object at 0x000002241F17D3D0>, 'video_mode': GLFWvidmode(size=Size(width=1920, height=1080), bits=Bits(red=8, green=8, blue=8), refresh_rate=75), 'display_size': Size(width=1920, height=1080), 'aspect_ratio': 1.7777777777777777, 'window': <glfw.LP__GLFWwindow object at 0x0000022438404850>}
+[15:58:12] INFO    : Setting up Graphics Engine
+[15:58:12] INFO    : Creating shader
+[15:58:12] INFO    : No texture handle for this shader.
+[15:58:12] INFO    : Shader creation passed. Variables: {'shader': 3, 'uniform_handles': {'model': 0, 'view': 3, 'projection': 2, 'color': 1}, 'custom_uniform_handles': {}}
+[15:58:12] INFO    : Shader creation passed variable validation.
+[15:58:13] INFO    : Creating shader
+[15:58:13] INFO    : No texture handle for this shader.
+[15:58:13] INFO    : Shader creation passed. Variables: {'shader': 6, 'uniform_handles': {'model': 0, 'view': 2, 'projection': 1, 'color': -1}, 'custom_uniform_handles': {}}
+[15:58:15] ERROR   : Fatal termination error:
+
+Traceback (most recent call last):
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\example.py", line 33, in catch_main
+    main()
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\example.py", line 53, in main
+    if window.poll_events():
+       ^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\LakeGraphicsFramework.py", line 208, in poll_events
+    glfw.poll_events()
+  File "C:\Users\laket\AppData\Local\Programs\Python\Python311\Lib\site-packages\glfw\__init__.py", line 1858, in poll_events
+    _glfw.glfwPollEvents()
+  File "C:\Users\laket\AppData\Local\Programs\Python\Python311\Lib\site-packages\glfw\__init__.py", line 689, in errcheck
+    _reraise(exc[1], exc[2])
+  File "C:\Users\laket\AppData\Local\Programs\Python\Python311\Lib\site-packages\glfw\__init__.py", line 70, in _reraise
+    raise exception.with_traceback(traceback)
+  File "C:\Users\laket\AppData\Local\Programs\Python\Python311\Lib\site-packages\glfw\__init__.py", line 668, in callback_wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\laket\OneDrive\Documents\Code\GitHub\PyCode\LakeGraphicsFramework\LakeGraphicsFramework.py", line 333, in _key_callback
+    log.crucial((glfw.get_key_name(scancode), scancode, action, mods))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: get_key_name() missing 1 required positional argument: 'scancode'
+
