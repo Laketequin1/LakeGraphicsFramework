@@ -1,0 +1,44 @@
+Logfile created with verbose level LOG_ONLY on 07/06/2025 at 19:09:09. Have fun <3
+
+[19:09:09] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[19:09:09] INFO    : Imported settings: {'_comment0': 'DEBUG             | Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]', 'verbose_type': 'INFO', '_comment1': 'SCREEN RESOLUTION | window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution; windowed false will overwrite fullscreen to true', 'window_resolution': [200, 500], 'fullscreen': True, 'windowed': False, '_comment2': 'SCREEN FPS        | setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps', 'max_fps': 0, 'vsync': True, '_comment3': 'MOUSE AND CURSOR  | raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)', 'raw_mouse_input': True, 'mouse_sensitivity': 1, 'hide_cursor': True, 'center_cursor_on_creation': True, '_comment4': "KEY BINDS         | Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)", 'key_binds': {'jump': 'SPACE', 'forward': 'W', 'back': 'S', 'left': 'A', 'right': 'D'}}
+[19:09:09] INFO    : Window variable validation passed. Variables: {'size': [200, 500], 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor_on_creation': True, 'hide_cursor': True}
+[19:09:09] INFO    : Window fullscreen.
+[19:09:09] INFO    : Window creation passed. Variables: {'size': Size(width=1920, height=1080), 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor_on_creation': True, 'hide_cursor': True, 'monitor': <glfw.LP__GLFWmonitor object at 0x000002820A35F650>, 'video_mode': GLFWvidmode(size=Size(width=1920, height=1080), bits=Bits(red=8, green=8, blue=8), refresh_rate=75), 'display_size': Size(width=1920, height=1080), 'aspect_ratio': 1.7777777777777777, 'window': <glfw.LP__GLFWwindow object at 0x00000282235F8850>}
+[19:09:09] INFO    : Setting up Graphics Engine
+[19:09:09] INFO    : Creating shader
+[19:09:10] INFO    : No texture handle for this shader.
+[19:09:10] INFO    : Shader creation passed. Variables: {'shader': 3, 'uniform_handles': {'model': 0, 'view': 3, 'projection': 2, 'color': 1}, 'custom_uniform_handles': {}}
+[19:09:10] INFO    : Shader creation passed variable validation.
+[19:09:10] INFO    : {}
+[19:09:10] INFO    : Creating shader
+[19:09:10] INFO    : No texture handle for this shader.
+[19:09:10] INFO    : Shader creation passed. Variables: {'shader': 6, 'uniform_handles': {'model': 0, 'view': 2, 'projection': 1, 'color': -1}, 'custom_uniform_handles': {}}
+[19:09:11] INFO    : {}
+[19:09:12] INFO    : {}
+[19:09:13] INFO    : ('LEFT_SHIFT', 'KEYDOWN', 1)
+[19:09:13] INFO    : ('H', 'KEYDOWN', 1)
+[19:09:13] INFO    : ('H', 'KEYUP', 1)
+[19:09:13] INFO    : ('LEFT_SHIFT', 'KEYUP', 0)
+[19:09:13] INFO    : ('E', 'KEYDOWN', 0)
+[19:09:13] INFO    : ('E', 'KEYUP', 0)
+[19:09:13] INFO    : ('L', 'KEYDOWN', 0)
+[19:09:13] INFO    : ('L', 'KEYUP', 0)
+[19:09:13] INFO    : ('L', 'KEYDOWN', 0)
+[19:09:13] INFO    : ('L', 'KEYUP', 0)
+[19:09:13] INFO    : ('O', 'KEYDOWN', 0)
+[19:09:13] INFO    : ('O', 'KEYUP', 0)
+[19:09:13] INFO    : {'LEFT_SHIFT': {'pressed': True, 'released': True, 'num_lock': False, 'caps_lock': False, 'super_key': False, 'alt': False, 'control': False, 'shift': True}, 'H': {'pressed': True, 'released': True, 'num_lock': False, 'caps_lock': False, 'super_key': False, 'alt': False, 'control': False, 'shift': True}, 'E': {'pressed': True, 'released': True, 'num_lock': False, 'caps_lock': False, 'super_key': False, 'alt': False, 'control': False, 'shift': False}, 'L': {'pressed': True, 'released': True, 'num_lock': False, 'caps_lock': False, 'super_key': False, 'alt': False, 'control': False, 'shift': False}, 'O': {'pressed': True, 'released': True, 'num_lock': False, 'caps_lock': False, 'super_key': False, 'alt': False, 'control': False, 'shift': False}}
+[19:09:14] INFO    : {}
+[19:09:15] INFO    : {}
+[19:09:16] INFO    : ('ESCAPE', 'KEYDOWN', 0)
+[19:09:16] INFO    : ('GRAVE_ACCENT', 'KEYDOWN', 0)
+[19:09:16] INFO    : ('GRAVE_ACCENT', 'KEYUP', 0)
+[19:09:16] INFO    : ('ESCAPE', 'KEYUP', 0)
+[19:09:16] INFO    : {'ESCAPE': {'pressed': True, 'released': True, 'num_lock': False, 'caps_lock': False, 'super_key': False, 'alt': False, 'control': False, 'shift': False}, 'GRAVE_ACCENT': {'pressed': True, 'released': True, 'num_lock': False, 'caps_lock': False, 'super_key': False, 'alt': False, 'control': False, 'shift': False}}
+[19:09:16] INFO    : Window close requested.
+[19:09:16] CRUCIAL : Exit main thread
+[19:09:16] INFO    : Closing window...
+[19:09:16] INFO    : Destroying shaders in GraphicsEngine.
+[19:09:16] INFO    : Window closed.
+[19:09:16] INFO    : Program terminating

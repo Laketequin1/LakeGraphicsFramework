@@ -50,9 +50,14 @@ def main():
     shader_id = graphics.create_shader("shaders/" + "example.vert", "shaders/" + "example.frag", 100, None, 0.1, 200, compile_time_config={"SOMECOLOUR": "1, 0, 1, 1"})
 
     for x in range(254):
-        if window.poll_events():
+        window.poll_events()
+        key_states = window.get_key_states()
+        print(key_states)
+
+        if "ESCAPE" in key_states or window.get_requesting_close():
             window.close()
             break
+        
         graphics.use_shader(shader_id)
         #graphics.set_()
         graphics.fill((0, 0, (255-x)/255, 1))

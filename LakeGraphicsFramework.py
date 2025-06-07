@@ -174,6 +174,7 @@ class Window:
         log.info(f"Window creation passed. Variables: {self.__dict__}")
 
         # Set variables
+        self.window_requesting_close = False
         self.should_close_event = Event()
         self.lock = Lock()
         self.key_states = {}
@@ -210,12 +211,38 @@ class Window:
                 del self.key_states[unique_key_name]
 
         glfw.poll_events()
-
         log.info(self.key_states)
             
-        return self._handle_window_events()
+        self._handle_window_events()
+    
+    def get_key_states(self) -> dict:
+        """
+        [Public]
+        Get all keystates presses recieved by the GLFW window after the last poll_events(). Only contains pressed keys.
+        
+        Note:
+            poll_events() updates the keys.
+
+        Returns:
+            dict {"SOMEKEY": {"pressed": bool, "released": bool, "num_lock": bool, "caps_lock": bool, "super_key": bool, "alt": bool, "control": bool, "shift": bool}}: Key state.
+        """
+        return copy.deepcopy(self.key_states)
+    
+    def get_requesting_close(self) -> bool:
+        """
+        [Public]
+        Get whether the GLFW window is requesting to close.
+
+        Returns:
+            bool: True if the window should close, False otherwise.
+        """
+        return copy.deepcopy(self.window_requesting_close)
 
     def close(self) -> None:
+        """
+        [Public]
+        Requests to close the GLFW window.
+        """
         log.info("Window close requested.")
         
         self.should_close_event.set()
@@ -354,27 +381,26 @@ class Window:
         MOD_NUM_LOCK = 0x0020
 
         if action:
+            unique_key_states["pressed"] = True
+            unique_key_states["released"] = False
+
             unique_key_states["num_lock"] = (mods & MOD_NUM_LOCK) != 0
             unique_key_states["caps_lock"] = (mods & MOD_CAPS_LOCK) != 0
             unique_key_states["super_key"] = (mods & MOD_SUPER) != 0
             unique_key_states["alt"] = (mods & MOD_ALT) != 0
             unique_key_states["control"] = (mods & MOD_CONTROL) != 0
             unique_key_states["shift"] = (mods & MOD_SHIFT) != 0
-
-            unique_key_states["pressed"] = True
-            unique_key_states["released"] = False
         else:
             unique_key_states["released"] = True
 
     def _handle_window_events(self) -> bool:
         """
         [Private]
-        Handle GLFW events and closing the window.
+        Handle GLFW events to check if the window should close.
         """
-        if glfw.window_should_close(self.window) or "ESCAPE" in self.key_states:
-            #self.should_close_event.set()
-            return True
-        return False
+        if glfw.window_should_close(self.window):
+            self.window_requesting_close = True
+            log.info("Window event requesting close")
     
     def _close(self) -> None:
         """
