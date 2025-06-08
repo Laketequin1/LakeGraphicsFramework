@@ -52,9 +52,8 @@ def main():
     for x in range(254):
         window.poll_events()
         key_states = window.get_key_states()
-        print(key_states)
 
-        if "ESCAPE" in key_states or window.get_requesting_close():
+        if window.get_requesting_close() or "ESCAPE" in key_states:
             window.close()
             break
         

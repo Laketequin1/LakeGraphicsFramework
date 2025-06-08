@@ -211,7 +211,7 @@ class Window:
                 del self.key_states[unique_key_name]
 
         glfw.poll_events()
-        log.info(self.key_states)
+        log.info(f"Keystates: {self.key_states}")
             
         self._handle_window_events()
     
@@ -452,7 +452,6 @@ class Mesh:
     
     @staticmethod
     def load_mesh(filepath):
-    
         vertices = []
         flags = {"v": [], "vt": [], "vn": []}
         
