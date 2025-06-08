@@ -13,6 +13,7 @@ from typing import Callable, Literal
 import copy
 from safe_file_readlines import safe_file_readlines
 import sys
+from PIL import Image
 from key_handler import KEY_NAMES, KEYS, get_key_name
 
 ### Type hints ###
@@ -425,6 +426,7 @@ class Mesh:
         self.vertices = np.array(self.vertices, dtype=np.float32)
         
         # Vertex Array Object (vao) stores buffer attributes (defines how vertex data is laid out in memory, etc)
+        log.crucial(f"{gl} : {bool(gl.glGenVertexArrays)}")
         self.vao = gl.glGenVertexArrays(1)
         # Activate Vertex Array Object
         gl.glBindVertexArray(self.vao)
@@ -536,8 +538,89 @@ class Mesh:
         gl.glDeleteBuffers(1, (self.vbo, ))
 
 
+class Material:
+    def __init__(self, filepath):
+        # Allocate space where texture will be stored
+        self.texture = gl.glGenTextures(1)
+        gl.glBindTexture(gl.GL_TEXTURE_2D, self.texture)
+        
+        # S is horizontal of a texture, T is the vertical of a texture, GL_REPEAT means image will loop if S or T over/under 1. MIN_FILTER is downsizing. MAG_FILTER is enlarging.
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_WRAP_S, gl.GL_REPEAT)
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_WRAP_T, gl.GL_REPEAT)
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER, gl.GL_NEAREST)
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR)
+        
+        # Load image, then get height, and the images data
+        image = Image.open(filepath).convert("RGBA")
+        image = image.transpose(Image.FLIP_TOP_BOTTOM)
+        image_width, image_height = image.size
+        image_data = image.tobytes("raw", "RGBA")
+        
+        # Get data for image, then generate the mipmap
+        # Texture location, mipmap level, format image is stored as, width, height, border color, input image format, data format, image data
+        gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, gl.GL_RGBA, image_width, image_height, 0, gl.GL_RGBA, gl.GL_UNSIGNED_BYTE, image_data)
+        gl.glGenerateMipmap(gl.GL_TEXTURE_2D)
+        
+    def use(self, texture_layer: int = 0) -> None:
+        """
+        Bind the texture to the provided texture layer.
+        """
+        # Validate texture layer
+        validate_type('texture_layer', texture_layer, int)
+        
+        gl_texture_n = getattr(gl, f"gl.GL_TEXTURE{texture_layer}")
+
+        gl.glActiveTexture(gl_texture_n)
+        gl.glBindTexture(gl.GL_TEXTURE_2D, self.texture)
+        
+    def destroy(self):
+        # Remove allocated memory
+        gl.glDeleteTextures(1, (self.texture, ))
+
+
 class Object:
-    pass # TODO (possibly new .py file as import)
+    def __init__(self, mesh: Mesh, materials: Tuple[Material, ...], pos: Tuple[float, float, float], rotation: pyrr.quaternion, scale: Tuple[float, float, float]):                
+        self.pos = np.array(pos, dtype=np.float32)
+        self.rotation = rotation
+        self.scale = np.array(scale, dtype=np.float32)
+
+        self.mesh = mesh
+        self.materials = materials
+
+    def render(self, model_matrix_handle):
+        if self.materials:
+            self.materials[0].use(0) # TODO Multiple materials - Normal maps etc
+        
+        model_transform = pyrr.matrix44.create_identity(dtype = np.float32)
+
+        # Scale
+        model_transform = pyrr.matrix44.multiply(
+            m1 = model_transform,
+            m2 = pyrr.matrix44.create_from_scale(self.scale, dtype = np.float32)
+        )
+
+        # Rotate around origin
+        model_transform = pyrr.matrix44.multiply(
+            m1 = model_transform,
+            m2 = pyrr.matrix44.create_from_quaternion(self.rotation, dtype = np.float32)
+        )
+
+        # Translate
+        model_transform = pyrr.matrix44.multiply(
+            m1 = model_transform,
+            m2 = pyrr.matrix44.create_from_translation(self.pos, dtype = np.float32)
+        )
+        
+        # Complete transform
+        gl.glUniformMatrix4fv(model_matrix_handle, 1, gl.GL_FALSE, model_transform)
+        gl.glBindVertexArray(self.mesh.vao)
+        
+        gl.glDrawArrays(gl.GL_TRIANGLES, 0, self.mesh.vertex_count)
+    
+    #def destroy(self):
+    #    self.mesh.destroy()
+    #    
+    #    self.material.destroy()
 
 
 class Shader:
@@ -568,8 +651,8 @@ class Shader:
         self.shader = self._create_shader(vertex_path, fragment_path, compile_time_config)
 
         # Get shader handles
-        self.uniform_handles = self._get_uniform_handles(self.shader, model_name, view_name, projection_name, texture_name, color_name)
-        self.custom_uniform_handles = self._get_custom_uniform_handles(self.shader, custom_uniform_names)
+        self.uniform_handles = self._source_uniform_handles(self.shader, model_name, view_name, projection_name, texture_name, color_name)
+        self.custom_uniform_handles = self._source_custom_uniform_handles(self.shader, custom_uniform_names)
 
         self.use()
 
@@ -631,7 +714,7 @@ class Shader:
         return file_src
     
     @staticmethod
-    def _get_uniform_handles(shader: gls.ShaderProgram, model_name: str | None, view_name: str, projection_name: str, texture_name: str, color_name: str) -> dict:
+    def _source_uniform_handles(shader: gls.ShaderProgram, model_name: str | None, view_name: str, projection_name: str, texture_name: str, color_name: str) -> dict:
         """
         [Private]
         Retrieves the locations of the specified uniforms in the provided shader program.
@@ -661,7 +744,7 @@ class Shader:
         return uniform_handles
     
     @staticmethod
-    def _get_custom_uniform_handles(shader: gls.ShaderProgram, uniforms: dict) -> dict:
+    def _source_custom_uniform_handles(shader: gls.ShaderProgram, uniforms: dict) -> dict:
         """
         [Private]
         Retrieves the locations of custom uniforms specified in the provided dictionary for the given shader program.
@@ -705,6 +788,36 @@ class Shader:
         """
         projection_transform = pyrr.matrix44.create_perspective_projection(fovy = fovy, aspect = aspect, near = near, far = far, dtype = np.float32)
         gl.glUniformMatrix4fv(projection_handle, 1, gl.GL_FALSE, projection_transform)
+
+    def get_uniform_handles(self) -> dict:
+        """
+        Returns a map of all uniforms to their handle locations for the given shader program.
+
+        Returns:
+            dict: A dictionary mapping uniform handle names to their respective locations in the shader.
+        """
+        uniform_handles = self.custom_uniform_handles
+        uniform_handles.update(self.uniform_handles)
+
+        return uniform_handles
+    
+    def get_uniform_handle(self, handle_name) -> dict:
+        """
+        Returns a map of a specified uniform handle name to its locations for the given shader program.
+
+        Parameters:
+            handle_name (dict): The name of the handle.
+
+        Returns:
+            dict: A dictionary mapping uniform handle names to their respective locations in the shader.
+        """
+        uniform_handles = self.get_uniform_handles()
+
+        if handle_name not in uniform_handles:
+            log.error(f"Handle name '{handle_name}' not in uniform_handles '{uniform_handles}'.")
+            return None
+
+        return uniform_handles[handle_name]
     
     def use(self) -> None:
         """
@@ -824,6 +937,9 @@ class GraphicsEngine:
         self.pending_shader_creations = []
         self.new_shader_creations = []
 
+        self.pending_object_creations = []
+        self.new_object_creations = []
+
         # Draw lists
         self.pending_draw_instructions = []
         self.active_draw_instructions = []
@@ -907,6 +1023,29 @@ class GraphicsEngine:
 
         self.pending_shader_creations.append((shader_id, vertex_path, fragment_path, fovy, aspect, near, far, model_name, view_name, projection_name, texture_name, color_name, custom_uniform_names, compile_time_config))
         return shader_id
+    
+    def create_object(self, mesh_path: str, material_paths: list[str, ], pos: Tuple[float, float, float] = np.zeros(3), rotation: pyrr.quaternion = pyrr.quaternion.create(), scale: Tuple[float, float, float] = np.ones(3)):
+        """
+        Create and return a new object.
+
+        Parameters:
+            mesh_path (str): The file path to the vertex shader source.
+            material_paths (str): The file path to the fragment shader source.
+            pos
+            rotation
+            scale
+
+        Returns:
+            int: The id of the created shader object.
+        """
+        # Validate parameters
+        validate_types([('mesh_path', mesh_path, str),
+                        ('material_paths', material_paths, list)])
+        
+        mesh = Mesh(mesh_path)
+        materials = [Material(material_path) for material_path in material_paths]
+
+        return Object(mesh, materials, pos, rotation, scale) #FIX
 
     def clear(self) -> None:
         """
@@ -968,6 +1107,18 @@ class GraphicsEngine:
         validate_type("skybox_color", skybox_color, ColorRGBA)
 
         self.pending_skybox_color = skybox_color
+
+    def render_object(self, object: Object) -> None:
+        """
+        Renders the passed object in the window.
+
+        Parameters:
+            object (Object): The object to be rendered.
+        """
+        validate_type("object", object, Object)
+
+        instruction_args = (object)
+        self._add_draw_instruction(self._render_object, instruction_args)
     
     def update(self, preserve_draw_instructions: bool = False) -> None:
         """
@@ -1028,6 +1179,30 @@ class GraphicsEngine:
             shader_id, vertex_path, fragment_path, fovy, aspect, near, far, model_name, view_name, projection_name, texture_name, color_name, custom_uniform_names, compile_time_config = new_shader
             self.shaders[shader_id] = Shader(vertex_path, fragment_path, fovy, aspect, near, far, model_name, view_name, projection_name, texture_name, color_name, custom_uniform_names, compile_time_config)
 
+    def create_objects(self, mesh_path: str, material_paths: list[str, ], pos: Tuple[float, float, float] = np.zeros(3), rotation: pyrr.quaternion = pyrr.quaternion.create(), scale: Tuple[float, float, float] = np.ones(3)):
+        """
+        Create and return a new object.
+
+        Parameters:
+            mesh_path (str): The file path to the vertex shader source.
+            material_paths (str): The file path to the fragment shader source.
+            pos
+            rotation
+            scale
+
+        Returns:
+            int: The id of the created shader object.
+        """
+        #TODO
+        # Validate parameters
+        validate_types([('mesh_path', mesh_path, str),
+                        ('material_paths', material_paths, list)])
+        
+        mesh = Mesh(mesh_path)
+        materials = [Material(material_path) for material_path in material_paths]
+
+        return Object(mesh, materials, pos, rotation, scale) #FIX
+
     def _use_shader(self, shader_id: int) -> None:
         """
         [Private]
@@ -1076,7 +1251,7 @@ class GraphicsEngine:
         """
         pass
 
-    def _set_view(self, pos: Coordinate, rotation: ToDecide) -> None:
+    def _set_view(self, pos: Coordinate, rotation: ToDecide) -> None: #TODO
         """
         [Private]
         Sets the view transformation matrix for the currently active shader.
@@ -1114,6 +1289,15 @@ class GraphicsEngine:
         Clears the screen by resetting the color and depth buffers.
         """
         gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
+
+    def _render_object(self, object: Object) -> None:
+        """
+        Renders the passed object in the window.
+
+        Parameters:
+            object (Object): The object to be rendered.
+        """
+        object.render(self.shaders[self.active_shader_id].get_uniform_handle("model"))
 
     def _complete_draw_instructions(self, draw_instructions) -> None:
         """

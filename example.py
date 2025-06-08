@@ -49,6 +49,8 @@ def main():
     graphics = window.graphics_engine
     shader_id = graphics.create_shader("shaders/" + "example.vert", "shaders/" + "example.frag", 100, None, 0.1, 200, compile_time_config={"SOMECOLOUR": "1, 0, 1, 1"})
 
+    #test_object = graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"])
+
     for x in range(254):
         window.poll_events()
         key_states = window.get_key_states()
