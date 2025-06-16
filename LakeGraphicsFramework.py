@@ -418,6 +418,8 @@ class Window:
 
 class Mesh:
     def __init__(self, path) -> None:
+        log.info(f"Creating mesh for {path}")
+
         # x, y, z, s, t, nx, ny, nz
         self.vertices = self.load_mesh(path)
         
@@ -426,7 +428,6 @@ class Mesh:
         self.vertices = np.array(self.vertices, dtype=np.float32)
         
         # Vertex Array Object (vao) stores buffer attributes (defines how vertex data is laid out in memory, etc)
-        log.crucial(f"{gl} : {bool(gl.glGenVertexArrays)}")
         self.vao = gl.glGenVertexArrays(1)
         # Activate Vertex Array Object
         gl.glBindVertexArray(self.vao)
@@ -451,6 +452,8 @@ class Mesh:
         gl.glEnableVertexAttribArray(2)
         # Location, number of floats, format (float), gl.GL_FALSE, stride (total length of vertex, 4 bytes times number of floats), ctypes of starting position in bytes (void pointer expected)
         gl.glVertexAttribPointer(2, 3, gl.GL_FLOAT, gl.GL_FALSE, 32, ctypes.c_void_p(20))
+
+        log.info(f"Created mesh for {path}")
     
     @staticmethod
     def load_mesh(filepath):
@@ -540,6 +543,7 @@ class Mesh:
 
 class Material:
     def __init__(self, filepath):
+        log.info(f"Creating material for {filepath}")
         # Allocate space where texture will be stored
         self.texture = gl.glGenTextures(1)
         gl.glBindTexture(gl.GL_TEXTURE_2D, self.texture)
@@ -560,18 +564,23 @@ class Material:
         # Texture location, mipmap level, format image is stored as, width, height, border color, input image format, data format, image data
         gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, gl.GL_RGBA, image_width, image_height, 0, gl.GL_RGBA, gl.GL_UNSIGNED_BYTE, image_data)
         gl.glGenerateMipmap(gl.GL_TEXTURE_2D)
+
+        log.info(f"Created material for {filepath}")
         
     def use(self, texture_layer: int = 0) -> None:
         """
         Bind the texture to the provided texture layer.
         """
+        log.info(f"Binding texture {texture_layer}.")
         # Validate texture layer
         validate_type('texture_layer', texture_layer, int)
         
-        gl_texture_n = getattr(gl, f"gl.GL_TEXTURE{texture_layer}")
+        gl_texture_n = getattr(gl, f"GL_TEXTURE{texture_layer}")
 
         gl.glActiveTexture(gl_texture_n)
         gl.glBindTexture(gl.GL_TEXTURE_2D, self.texture)
+
+        log.info(f"Binded texture {texture_layer}.")
         
     def destroy(self):
         # Remove allocated memory
@@ -579,7 +588,7 @@ class Material:
 
 
 class Object:
-    def __init__(self, mesh: Mesh, materials: Tuple[Material, ...], pos: Tuple[float, float, float], rotation: pyrr.quaternion, scale: Tuple[float, float, float]):                
+    def __init__(self, mesh: Mesh, materials: Tuple[Material, ...], pos: Tuple[float, float, float], rotation: pyrr.Quaternion, scale: Tuple[float, float, float]):                
         self.pos = np.array(pos, dtype=np.float32)
         self.rotation = rotation
         self.scale = np.array(scale, dtype=np.float32)
@@ -587,7 +596,11 @@ class Object:
         self.mesh = mesh
         self.materials = materials
 
+        log.info("Object Created")
+
     def render(self, model_matrix_handle):
+        log.info("Rendering object.")
+
         if self.materials:
             self.materials[0].use(0) # TODO Multiple materials - Normal maps etc
         
@@ -616,6 +629,8 @@ class Object:
         gl.glBindVertexArray(self.mesh.vao)
         
         gl.glDrawArrays(gl.GL_TRIANGLES, 0, self.mesh.vertex_count)
+
+        log.info("Rendered object.")
     
     #def destroy(self):
     #    self.mesh.destroy()
@@ -922,6 +937,8 @@ class GraphicsEngine:
         self.shaders = {}
         self.active_shader_id = None
 
+        self.objects = {}
+
         self._init_opengl(skybox_color)
 
         # Initilize shader
@@ -1024,28 +1041,32 @@ class GraphicsEngine:
         self.pending_shader_creations.append((shader_id, vertex_path, fragment_path, fovy, aspect, near, far, model_name, view_name, projection_name, texture_name, color_name, custom_uniform_names, compile_time_config))
         return shader_id
     
-    def create_object(self, mesh_path: str, material_paths: list[str, ], pos: Tuple[float, float, float] = np.zeros(3), rotation: pyrr.quaternion = pyrr.quaternion.create(), scale: Tuple[float, float, float] = np.ones(3)):
+    def create_object(self, mesh_path: str, material_paths: list[str, ], pos: Tuple[float, float, float] = np.zeros(3), rotation: pyrr.Quaternion = pyrr.quaternion.create(), scale: Tuple[float, float, float] = np.ones(3)):
         """
         Create and return a new object.
 
         Parameters:
             mesh_path (str): The file path to the vertex shader source.
-            material_paths (str): The file path to the fragment shader source.
-            pos
-            rotation
-            scale
+            material_paths (list): The file path to the fragment shader source.
+            pos (Tuple[float, float, float]): Object world position.
+            rotation (pyrr.Quaternion): World rotation in quaternions.
+            scale (Tuple[float, float, float]): The scale/stretch for x y and z.
 
         Returns:
-            int: The id of the created shader object.
+            int: The id of the created object.
         """
-        # Validate parameters
         validate_types([('mesh_path', mesh_path, str),
                         ('material_paths', material_paths, list)])
-        
-        mesh = Mesh(mesh_path)
-        materials = [Material(material_path) for material_path in material_paths]
+                        #('pos', pos, Tuple),
+                        #('rotation', rotation, pyrr.Quaternion),
+                        #('scale', scale, Tuple)
 
-        return Object(mesh, materials, pos, rotation, scale) #FIX
+        log.info(f"Object creation passed variable validation.")
+
+        object_id = len(self.objects)
+
+        self.pending_object_creations.append((object_id, mesh_path, material_paths, pos, rotation, scale))
+        return object_id
 
     def clear(self) -> None:
         """
@@ -1108,16 +1129,16 @@ class GraphicsEngine:
 
         self.pending_skybox_color = skybox_color
 
-    def render_object(self, object: Object) -> None:
+    def render_object(self, object_id: int) -> None:
         """
-        Renders the passed object in the window.
+        Renders the passed object id in the window.
 
         Parameters:
-            object (Object): The object to be rendered.
+            object_id (int): The id of the object to be rendered.
         """
-        validate_type("object", object, Object)
+        validate_type("object_id", object_id, int)
 
-        instruction_args = (object)
+        instruction_args = (object_id, )
         self._add_draw_instruction(self._render_object, instruction_args)
     
     def update(self, preserve_draw_instructions: bool = False) -> None:
@@ -1130,8 +1151,12 @@ class GraphicsEngine:
         """
         with self.lock:
             if len(self.pending_shader_creations) > 0:
-                self.new_shader_creations.append(*self.pending_shader_creations)
+                self.new_shader_creations.extend(self.pending_shader_creations)
                 self.pending_shader_creations = []
+
+            if len(self.pending_object_creations) > 0:
+                self.new_object_creations.extend(self.pending_object_creations)
+                self.pending_object_creations = []
             
             if self.pending_skybox_color is not None:
                 self.new_skybox_color = self.pending_skybox_color
@@ -1151,15 +1176,14 @@ class GraphicsEngine:
             shader.destroy()
 
     # Private functions #
-    def _create_shaders(self, new_shader_creations: list[tuple[int, str, str, float, float, float, float, str, str, str, str, str, dict, dict]]) -> None:
+    def _create_shaders(self, new_shader_creations: list[tuple[int, str, str, float, float, float, float, str, str, str, str, str, dict, dict], ]) -> None:
         """
         [Private]
         Creates and stores new shaders based on the provided shader creation data.
         Processes a list of shader creation instructions and adds each shader to the engine's shader collection.
 
         Parameters:
-            new_shader_creations (list): A list of tuples containing the shader creation details.
-                Each tuple contains the following:
+            new_shader_creations (list): A list of tuples containing the shader creation details:
                 - shader_id (int): The id of the shader.
                 - vertex_path (str): The path to the vertex shader file.
                 - fragment_path (str): The path to the fragment shader file.
@@ -1179,29 +1203,28 @@ class GraphicsEngine:
             shader_id, vertex_path, fragment_path, fovy, aspect, near, far, model_name, view_name, projection_name, texture_name, color_name, custom_uniform_names, compile_time_config = new_shader
             self.shaders[shader_id] = Shader(vertex_path, fragment_path, fovy, aspect, near, far, model_name, view_name, projection_name, texture_name, color_name, custom_uniform_names, compile_time_config)
 
-    def create_objects(self, mesh_path: str, material_paths: list[str, ], pos: Tuple[float, float, float] = np.zeros(3), rotation: pyrr.quaternion = pyrr.quaternion.create(), scale: Tuple[float, float, float] = np.ones(3)):
+    def _create_objects(self, new_object_creations: list[tuple[int, str, list, Tuple[float, float, float], pyrr.Quaternion, Tuple[float, float, float]], ]): #mesh_path: str, material_paths: list[str, ], pos: Tuple[float, float, float] = np.zeros(3), rotation: pyrr.Quaternion = pyrr.quaternion.create(), scale: Tuple[float, float, float] = np.ones(3)):
         """
-        Create and return a new object.
+        [Private]
+        Create a new object.
 
         Parameters:
-            mesh_path (str): The file path to the vertex shader source.
-            material_paths (str): The file path to the fragment shader source.
-            pos
-            rotation
-            scale
+            new_object_creations (list): A list of tuples containing the object creation details:
+                - object_id (int): The id of the object.
+                - mesh_path (str): The file path to the vertex shader source.
+                - material_paths (list): The file path to the fragment shader source.
+                - pos (Tuple[float, float, float]): Object world position.
+                - rotation (pyrr.Quaternion): World rotation in quaternions.
+                - scale (Tuple[float, float, float]): The scale/stretch for x y and z.
+        """      
 
-        Returns:
-            int: The id of the created shader object.
-        """
-        #TODO
-        # Validate parameters
-        validate_types([('mesh_path', mesh_path, str),
-                        ('material_paths', material_paths, list)])
-        
-        mesh = Mesh(mesh_path)
-        materials = [Material(material_path) for material_path in material_paths]
+        for new_object in new_object_creations:
+            object_id, mesh_path, material_paths, pos, rotation, scale = new_object
 
-        return Object(mesh, materials, pos, rotation, scale) #FIX
+            mesh = Mesh(mesh_path)
+            materials = [Material(material_path) for material_path in material_paths]
+
+            self.objects[object_id] = Object(mesh, materials, pos, rotation, scale)
 
     def _use_shader(self, shader_id: int) -> None:
         """
@@ -1290,14 +1313,15 @@ class GraphicsEngine:
         """
         gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
 
-    def _render_object(self, object: Object) -> None:
+    def _render_object(self, object_id: int) -> None:
         """
-        Renders the passed object in the window.
+        [Private]
+        Renders the passed object id in the window.
 
         Parameters:
-            object (Object): The object to be rendered.
+            object_id (int): The id of the object to be rendered.
         """
-        object.render(self.shaders[self.active_shader_id].get_uniform_handle("model"))
+        self.objects[object_id].render(self.shaders[self.active_shader_id].get_uniform_handle("model"))
 
     def _complete_draw_instructions(self, draw_instructions) -> None:
         """
@@ -1328,12 +1352,15 @@ class GraphicsEngine:
         with self.lock:
             # Get render instructions
             new_shader_creations = copy.deepcopy(self.new_shader_creations)
+            new_object_creations = copy.deepcopy(self.new_object_creations)
             active_draw_instructions = copy.copy(self.active_draw_instructions)
 
             # Reset one-time functions
             self.new_shader_creations = []
+            self.new_object_creations = []
 
         self._create_shaders(new_shader_creations)
+        self._create_objects(new_object_creations)
 
         self._clear_screen()
         self._use_shader(self.default_shader_id)
