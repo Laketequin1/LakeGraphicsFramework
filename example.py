@@ -52,12 +52,10 @@ def main():
     graphics = window.graphics_engine
     shader_id = graphics.create_shader(shader_vert_path, shader_frag_path, 100, None, 0.1, 200, texture_name="imageTexture", color_name=None, compile_time_config={"SOMECOLOUR": "1, 0, 0.5, 0.5"})
 
-    test_object1 = graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [6, 0, 0])
-    test_object2 = graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [0, 0, 6])
-    test_object3 = graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [-6, 0, 0])
-    test_object4 = graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [0, 0, -6])
-    test_object5 = graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [0, 6, 0])
-    test_object6 = graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [0, -6, 0])
+    test_objects = [
+        graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [5, 2, 0]),
+        graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [5, -2, 0]),
+    ]
 
     for x in range(254):
         window.poll_events()
@@ -72,12 +70,8 @@ def main():
         #graphics.set_()
         graphics.fill((0, 0, (255-x)/255, 1))
         #graphics.set_skybox_color((x/255, x/1000, x/1000, 1))
-        graphics.render_object(test_object1)
-        graphics.render_object(test_object2)
-        graphics.render_object(test_object3)
-        graphics.render_object(test_object4)
-        graphics.render_object(test_object5)
-        graphics.render_object(test_object6)
+        for test_object in test_objects:
+            graphics.render_object(test_object)
         graphics.update()
         time.sleep(1)
 
