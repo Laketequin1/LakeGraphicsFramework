@@ -4,6 +4,7 @@ import numpy as np
 import pyrr
 import atexit
 import ctypes
+import uuid
 import OpenGL.GL as gl
 import OpenGL.GL.shaders as gls
 from variable_type_validation import *
@@ -598,10 +599,12 @@ class Object:
         self.mesh = mesh
         self.materials = materials
 
-        log.info("Object Created")
+        self.id = uuid.uuid4()
+
+        log.info(f"Created object with id {self.id}")
 
     def render(self, model_matrix_handle):
-        log.info("Rendering object.")
+        log.info(f"Rendering object {self.id}.")
 
         if self.materials:
             self.materials[0].use(0) # TODO Multiple materials - Normal maps etc
@@ -632,12 +635,12 @@ class Object:
         gl.glBindVertexArray(self.mesh.vao)
         
         gl.glDrawArrays(gl.GL_TRIANGLES, 0, self.mesh.vertex_count)
-        log.info("Rendered object.")
+        log.info(f"Rendered object {self.id}.")
     
     def destroy(self): # TO ADD CALL!!
         self.mesh.destroy()
         for material in self.materials:
-            self.material.destroy()
+            material.destroy()
 
 
 class Shader:
@@ -662,7 +665,9 @@ class Shader:
             custom_uniform_names (dict): Optional custom uniform names to be handled (default is empty dictionary).
             compile_time_config (dict): Optional configuration settings for shader compilation (default is empty dictionary).
         """
-        log.info(f"Creating shader")
+        self.id = uuid.uuid4()
+
+        log.info(f"Creating a shader with id {self.id}")
 
         # Create shader
         self.shader = self._create_shader(vertex_path, fragment_path, compile_time_config)
@@ -678,7 +683,7 @@ class Shader:
         if "projection" in self.uniform_handles:
             self._init_perspective_projection(self.uniform_handles["projection"], fovy, aspect, near, far)
 
-        log.info(f"Shader creation passed. Variables: {self.__dict__}")
+        log.info(f"Shader {self.id} creation passed. Variables: {self.__dict__}")
 
     def _create_shader(self, vertex_path: str, fragment_path: str, compile_time_config: dict) -> gls.ShaderProgram:
         """
@@ -693,6 +698,8 @@ class Shader:
         Returns:
             gls.ShaderProgram: The compiled shader program.
         """
+        log.info(f"Compiling shaders for {self.id}. Vertex path: '{vertex_path}', Frag path: {fragment_path}")
+        
         vertex_src_lines = safe_file_readlines(vertex_path)
         fragment_src_lines = safe_file_readlines(fragment_path)
 
@@ -705,13 +712,12 @@ class Shader:
                 gls.compileShader(fragment_program, gl.GL_FRAGMENT_SHADER)
             )
         except Exception as e:
-            log.error(f"Failed to compile shader.")
+            log.error(f"Failed to compile shader {self.id}.")
             raise e
         
         return shader
     
-    @staticmethod
-    def _update_file_config(file_src_lines: list[str], compile_time_config: dict, shader_path: str) -> str:
+    def _update_file_config(self, file_src_lines: list[str], compile_time_config: dict, shader_path: str) -> str:
         """
         [Private]
         Updates the shader source code by replacing placeholders with values from the compile-time configuration.
@@ -735,14 +741,13 @@ class Shader:
                 line_modifications_counter += on_line_occurances
 
             if line_modifications_counter == 0:
-                log.warn(f"Placeholder text value '{placeholder}' not found in the shader file '{shader_path}'.")
+                log.warn(f"Placeholder text value '{placeholder}' not found in the shader file '{shader_path}' of {self.id}.")
             else:
-                log.info(f"Placeholder text value '{placeholder}' occured {line_modifications_counter} times in the shader file '{shader_path}'.")
+                log.info(f"Placeholder text value '{placeholder}' occured {line_modifications_counter} times in the shader file '{shader_path}' of {self.id}.")
 
         return file_src_lines
     
-    @staticmethod
-    def _source_uniform_handles(shader: gls.ShaderProgram, model_name: str | None, view_name: str, projection_name: str, texture_name: str, color_name: str) -> dict:
+    def _source_uniform_handles(self, shader: gls.ShaderProgram, model_name: str | None, view_name: str, projection_name: str, texture_name: str, color_name: str) -> dict:
         """
         [Private]
         Retrieves the locations of the specified uniforms in the provided shader program.
@@ -769,16 +774,15 @@ class Shader:
 
         uniform_handles = {uniform_handle_name: gl.glGetUniformLocation(shader, uniform_name) for uniform_handle_name, uniform_name in uniforms.items() if uniform_name is not None}
 
-        log.info(f"Given uniform handles: {uniform_handles}")
+        log.info(f"Given uniform handles for {self.id}: {uniform_handles}")
 
         for key, value in uniform_handles.items():
             if value == -1:
-                log.error(f"Uniform handle not found in created shader: {key}")
+                log.error(f"Uniform handle not found in created shader {self.id}: {key}")
 
         return uniform_handles
     
-    @staticmethod
-    def _source_custom_uniform_handles(shader: gls.ShaderProgram, uniforms: dict) -> dict:
+    def _source_custom_uniform_handles(self, shader: gls.ShaderProgram, uniforms: dict) -> dict:
         """
         [Private]
         Retrieves the locations of custom uniforms specified in the provided dictionary for the given shader program.
@@ -792,11 +796,11 @@ class Shader:
         """
         custom_uniform_handles = {uniform_handle_name: gl.glGetUniformLocation(shader, uniform_name) for uniform_handle_name, uniform_name in uniforms.items()}
 
-        log.info(f"Given uniform handles: {custom_uniform_handles}")
+        log.info(f"Given uniform handles for {self.id}: {custom_uniform_handles}")
 
         for key, value in custom_uniform_handles.items():
             if value == -1:
-                log.error(f"Custom uniform handle not found in created shader: {key}")
+                log.error(f"Custom uniform handle not found in created shader {self.id}: {key}")
 
         return custom_uniform_handles
     
@@ -810,12 +814,12 @@ class Shader:
         """
         if "texture" in handles:
             if handles["texture"] == -1:
-                log.error("Texture handle promised, however was not found in shader. Can't load texture.")
+                log.error(f"Texture handle promised, however was not found in shader {self.id}. Can't load texture.")
 
             gl.glUniform1i(handles["texture"], 0)
-            log.info("Texture loaded")
+            log.info("Texture loaded for {self.id}")
         else:
-            log.info(f"No texture handle for this shader.")
+            log.info(f"No texture handle for {self.id}")
 
     @staticmethod
     def _init_perspective_projection(projection_handle, fovy: float, aspect: float, near: float, far: float) -> None:
@@ -858,7 +862,7 @@ class Shader:
         uniform_handles = self.get_uniform_handles()
 
         if handle_name not in uniform_handles:
-            log.error(f"Handle name '{handle_name}' not in uniform_handles '{uniform_handles}'.")
+            log.error(f"Handle name '{handle_name}' not in uniform_handles '{uniform_handles}' of {self.id}.")
             return None
 
         return uniform_handles[handle_name]
@@ -929,8 +933,9 @@ class Shader:
             "glUniformMatrix4x3fv"
         ]
         """
+        log.warn("Check this later, the type thing is weird, should it be a string or the funct??")
         if not hasattr(gl, gl_uniform_func_name):
-            log.error(f"gl_uniform_func_name was not in literal type GLUniformFunction, instead: '{gl_uniform_func_name}'")
+            log.error(f"gl_uniform_func_name was not a literal GLUniformFunction type, '{gl_uniform_func_name}' is of type {type(gl_uniform_func_name)} in {self.id}")
 
         gl_uniform_func = getattr(gl, gl_uniform_func_name)
 
@@ -942,6 +947,7 @@ class Shader:
         Destroys the shader program and frees associated resources.
         """
         gl.glDeleteProgram(self.shader)
+        log.info(f"Destroyed shader for {self.id}")
 
 
 class GraphicsEngine:
@@ -1072,7 +1078,7 @@ class GraphicsEngine:
     
     def create_object(self, mesh_path: str, material_paths: list[str, ], pos: Tuple[float, float, float] = np.zeros(3), rotation: pyrr.Quaternion = pyrr.quaternion.create(), scale: Tuple[float, float, float] = np.ones(3)):
         """
-        Create and return a new object.
+        Create and return a new object id.
 
         Parameters:
             mesh_path (str): The file path to the vertex shader source.
@@ -1092,7 +1098,8 @@ class GraphicsEngine:
 
         log.info(f"Object creation passed variable validation.")
 
-        object_id = len(self.objects)
+        log.warn(f"Possible multithread issue here on this line")
+        object_id = len(self.objects) + len(self.pending_object_creations)
 
         self.pending_object_creations.append((object_id, mesh_path, material_paths, pos, rotation, scale))
         return object_id

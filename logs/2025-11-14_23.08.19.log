@@ -1,0 +1,522 @@
+Logfile created with verbose level LOG_ONLY on 14/11/2025 at 23:08:19. Have fun <3
+
+[23:08:19] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[23:08:19] INFO    : Imported settings: {'_comment0': 'DEBUG             | Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]', 'verbose_type': 'INFO', '_comment1': 'SCREEN RESOLUTION | window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution; windowed false will overwrite fullscreen to true', 'window_resolution': [200, 500], 'fullscreen': True, 'windowed': False, '_comment2': 'SCREEN FPS        | setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps', 'max_fps': 0, 'vsync': True, '_comment3': 'MOUSE AND CURSOR  | raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)', 'raw_mouse_input': True, 'mouse_sensitivity': 1, 'hide_cursor': True, 'center_cursor_on_creation': True, '_comment4': "KEY BINDS         | Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)", 'key_binds': {'jump': 'SPACE', 'forward': 'W', 'back': 'S', 'left': 'A', 'right': 'D'}}
+[23:08:19] INFO    : Window variable validation passed. Variables: {'size': [200, 500], 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor_on_creation': True, 'hide_cursor': True}
+[23:08:19] INFO    : Window fullscreen.
+[23:08:20] INFO    : Window creation passed. Variables: {'size': Size(width=1920, height=1080), 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor_on_creation': True, 'hide_cursor': True, 'monitor': <glfw.LP__GLFWmonitor object at 0x00000266A1F1C5D0>, 'video_mode': GLFWvidmode(size=Size(width=1920, height=1080), bits=Bits(red=8, green=8, blue=8), refresh_rate=75), 'display_size': Size(width=1920, height=1080), 'aspect_ratio': 1.7777777777777777, 'window': <glfw.LP__GLFWwindow object at 0x00000266A1F1C6D0>}
+[23:08:20] INFO    : Setting up Graphics Engine
+[23:08:20] INFO    : Creating a shader with id 4fb984c7-7e39-496f-9911-22b62d3ef351
+[23:08:20] INFO    : Compiling shaders for 4fb984c7-7e39-496f-9911-22b62d3ef351. Vertex path: 'shaders/default.vert', Frag path: shaders/default.frag
+[23:08:20] INFO    : Given uniform handles for 4fb984c7-7e39-496f-9911-22b62d3ef351: {'model': 0, 'view': 3, 'projection': 2, 'color': 1}
+[23:08:20] INFO    : Given uniform handles for 4fb984c7-7e39-496f-9911-22b62d3ef351: {}
+[23:08:20] INFO    : No texture handle for 4fb984c7-7e39-496f-9911-22b62d3ef351
+[23:08:20] INFO    : Shader 4fb984c7-7e39-496f-9911-22b62d3ef351 creation passed. Variables: {'id': UUID('4fb984c7-7e39-496f-9911-22b62d3ef351'), 'shader': 3, 'uniform_handles': {'model': 0, 'view': 3, 'projection': 2, 'color': 1}, 'custom_uniform_handles': {}}
+[23:08:20] INFO    : Shader creation passed variable validation.
+[23:08:20] INFO    : Object creation passed variable validation.
+[23:08:20] WARNING : Possible multithread issue here on this line
+[23:08:20] INFO    : Object creation passed variable validation.
+[23:08:20] WARNING : Possible multithread issue here on this line
+[23:08:20] INFO    : Keystates: {}
+[23:08:20] INFO    : Creating a shader with id 44d4f1bf-3ae1-4bdd-9d06-8fcb9bab81a5
+[23:08:20] INFO    : Compiling shaders for 44d4f1bf-3ae1-4bdd-9d06-8fcb9bab81a5. Vertex path: 'shaders/texture.vert', Frag path: shaders/texture.frag
+[23:08:20] WARNING : Placeholder text value 'SOMECOLOUR' not found in the shader file 'shaders/texture.vert' of 44d4f1bf-3ae1-4bdd-9d06-8fcb9bab81a5.
+[23:08:20] WARNING : Placeholder text value 'SOMECOLOUR' not found in the shader file 'shaders/texture.frag' of 44d4f1bf-3ae1-4bdd-9d06-8fcb9bab81a5.
+[23:08:20] INFO    : Given uniform handles for 44d4f1bf-3ae1-4bdd-9d06-8fcb9bab81a5: {'model': 1, 'view': 3, 'projection': 2, 'texture': 0}
+[23:08:20] INFO    : Given uniform handles for 44d4f1bf-3ae1-4bdd-9d06-8fcb9bab81a5: {}
+[23:08:20] INFO    : Texture loaded for {self.id}
+[23:08:20] INFO    : Shader 44d4f1bf-3ae1-4bdd-9d06-8fcb9bab81a5 creation passed. Variables: {'id': UUID('44d4f1bf-3ae1-4bdd-9d06-8fcb9bab81a5'), 'shader': 6, 'uniform_handles': {'model': 1, 'view': 3, 'projection': 2, 'texture': 0}, 'custom_uniform_handles': {}}
+[23:08:20] INFO    : Creating mesh for example_data/cube.obj
+[23:08:20] INFO    : Created mesh for example_data/cube.obj
+[23:08:20] INFO    : Creating material for example_data/wood.jpeg
+[23:08:20] INFO    : Created material for example_data/wood.jpeg
+[23:08:20] INFO    : Created object with id a9426065-1ffd-43d5-8a15-fe9245e520b3
+[23:08:20] INFO    : Creating mesh for example_data/cube.obj
+[23:08:20] INFO    : Created mesh for example_data/cube.obj
+[23:08:20] INFO    : Creating material for example_data/wood.jpeg
+[23:08:20] INFO    : Created material for example_data/wood.jpeg
+[23:08:20] INFO    : Created object with id dfc8d228-721f-405c-846a-3fd3eb4da695
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] WARNING : TODO view validation
+[23:08:20] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:20] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:20] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:20] INFO    : Binding texture 0.
+[23:08:20] INFO    : Binded texture 0.
+[23:08:20] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] WARNING : TODO view validation
+[23:08:21] INFO    : Rendering object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] INFO    : ('ESCAPE', 'KEYDOWN', 0)
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : ('ESCAPE', 'KEYUP', 0)
+[23:08:21] INFO    : Rendered object a9426065-1ffd-43d5-8a15-fe9245e520b3.
+[23:08:21] INFO    : Keystates: {'ESCAPE': {'pressed': True, 'released': True, 'num_lock': False, 'caps_lock': False, 'super_key': False, 'alt': False, 'control': False, 'shift': False}}
+[23:08:21] INFO    : Rendering object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Window close requested.
+[23:08:21] INFO    : Binding texture 0.
+[23:08:21] CRUCIAL : Exit main thread
+[23:08:21] INFO    : Binded texture 0.
+[23:08:21] WARNING : TODO Multiple materials - Normal maps etc
+[23:08:21] INFO    : Rendered object dfc8d228-721f-405c-846a-3fd3eb4da695.
+[23:08:21] INFO    : Closing window...
+[23:08:21] INFO    : Destroying shaders in GraphicsEngine.
+[23:08:21] INFO    : Destroyed shader for 4fb984c7-7e39-496f-9911-22b62d3ef351
+[23:08:21] INFO    : Destroyed shader for 44d4f1bf-3ae1-4bdd-9d06-8fcb9bab81a5
+[23:08:21] INFO    : Window closed.
+[23:08:21] INFO    : Program terminating
