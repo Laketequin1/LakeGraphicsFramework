@@ -40,6 +40,9 @@ def main():
     settings = read_json_data(JSON_SETTINGS_FILEPATH)
     log.set_verbose_type(settings["verbose_type"])
     log.info(f"Imported settings: {settings}")
+
+    shader_vert_path = "shaders/" + "texture.vert"
+    shader_frag_path = "shaders/" + "texture.frag"
     
     # Create window
     window = lgf.Window(settings["window_resolution"], CAPTION, settings["fullscreen"], settings["windowed"], settings["vsync"], settings["max_fps"], settings["raw_mouse_input"], settings["center_cursor_on_creation"], settings["hide_cursor"])
@@ -47,7 +50,7 @@ def main():
     window.start()
     
     graphics = window.graphics_engine
-    shader_id = graphics.create_shader("shaders/" + "texture.vert", "shaders/" + "texture.frag", 100, None, 0.1, 200, compile_time_config={"SOMECOLOUR": "1, 0, 0.5, 0.5"})
+    shader_id = graphics.create_shader(shader_vert_path, shader_frag_path, 100, None, 0.1, 200, texture_name="imageTexture", color_name=None, compile_time_config={"SOMECOLOUR": "1, 0, 0.5, 0.5"})
 
     test_object1 = graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [6, 0, 0])
     test_object2 = graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [0, 0, 6])
@@ -55,7 +58,6 @@ def main():
     test_object4 = graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [0, 0, -6])
     test_object5 = graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [0, 6, 0])
     test_object6 = graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [0, -6, 0])
-
 
     for x in range(254):
         window.poll_events()
@@ -66,6 +68,7 @@ def main():
             break
         
         graphics.use_shader(shader_id)
+        graphics.set_view()
         #graphics.set_()
         graphics.fill((0, 0, (255-x)/255, 1))
         #graphics.set_skybox_color((x/255, x/1000, x/1000, 1))

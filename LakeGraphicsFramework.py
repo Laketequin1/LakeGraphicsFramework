@@ -678,7 +678,7 @@ class Shader:
 
         log.info(f"Shader creation passed. Variables: {self.__dict__}")
 
-    def _create_shader(self, vertex_path, fragment_path, compile_time_config) -> gls.ShaderProgram:
+    def _create_shader(self, vertex_path: str, fragment_path: str, compile_time_config: dict) -> gls.ShaderProgram:
         """
         [Private]
         Creates and compiles a shader program from the given vertex and fragment shader file paths.
@@ -691,11 +691,11 @@ class Shader:
         Returns:
             gls.ShaderProgram: The compiled shader program.
         """
-        vertex_src = safe_file_readlines(vertex_path)
-        fragment_src = safe_file_readlines(fragment_path)
+        vertex_src_lines = safe_file_readlines(vertex_path)
+        fragment_src_lines = safe_file_readlines(fragment_path)
 
-        vertex_program = self._update_file_config(vertex_src, compile_time_config)
-        fragment_program = self._update_file_config(fragment_src, compile_time_config)
+        vertex_program = self._update_file_config(vertex_src_lines, compile_time_config, vertex_path)
+        fragment_program = self._update_file_config(fragment_src_lines, compile_time_config, fragment_path)
         
         try:
             shader = gls.compileProgram(
@@ -709,24 +709,35 @@ class Shader:
         return shader
     
     @staticmethod
-    def _update_file_config(file_src: str, compile_time_config: dict) -> str:
+    def _update_file_config(file_src_lines: list[str], compile_time_config: dict, shader_path: str) -> str:
         """
         [Private]
         Updates the shader source code by replacing placeholders with values from the compile-time configuration.
         E.G. Initializing constants in the shader.
 
         Parameters:
-            file_src (str): The source code of the shader.
+            file_src_lines (list[str]): The source code of the shader, with readlines.
             compile_time_config (dict): A dictionary containing placeholders and their replacement values.
 
         Returns:
             str: The updated shader source code with placeholders replaced.
         """
         for placeholder, value in compile_time_config.items():
-            for i in range(len(file_src)):
-                file_src[i] = file_src[i].replace(placeholder, value)
+            line_modifications_counter = 0
 
-        return file_src
+            for i in range(len(file_src_lines)):
+                on_line_occurances = file_src_lines[i].count(placeholder)
+                if on_line_occurances == 0:
+                    continue
+                file_src_lines[i] = file_src_lines[i].replace(placeholder, value)
+                line_modifications_counter += on_line_occurances
+
+            if line_modifications_counter == 0:
+                log.warn(f"Placeholder text value '{placeholder}' not found in the shader file '{shader_path}'.")
+            else:
+                log.info(f"Placeholder text value '{placeholder}' occured {line_modifications_counter} times in the shader file '{shader_path}'.")
+
+        return file_src_lines
     
     @staticmethod
     def _source_uniform_handles(shader: gls.ShaderProgram, model_name: str | None, view_name: str, projection_name: str, texture_name: str, color_name: str) -> dict:
@@ -756,6 +767,12 @@ class Shader:
 
         uniform_handles = {uniform_handle_name: gl.glGetUniformLocation(shader, uniform_name) for uniform_handle_name, uniform_name in uniforms.items() if uniform_name is not None}
 
+        log.info(f"Given uniform handles: {uniform_handles}")
+
+        for key, value in uniform_handles.items():
+            if value == -1:
+                log.error(f"Uniform handle not found in created shader: {key}")
+
         return uniform_handles
     
     @staticmethod
@@ -773,6 +790,12 @@ class Shader:
         """
         custom_uniform_handles = {uniform_handle_name: gl.glGetUniformLocation(shader, uniform_name) for uniform_handle_name, uniform_name in uniforms.items()}
 
+        log.info(f"Given uniform handles: {custom_uniform_handles}")
+
+        for key, value in custom_uniform_handles.items():
+            if value == -1:
+                log.error(f"Custom uniform handle not found in created shader: {key}")
+
         return custom_uniform_handles
     
     def _init_handles(self, handles) -> None:
@@ -784,7 +807,11 @@ class Shader:
             handles (dict): A dictionary of uniform handles to initialize.
         """
         if "texture" in handles:
+            if handles["texture"] == -1:
+                log.error("Texture handle promised, however was not found in shader. Can't load texture.")
+
             gl.glUniform1i(handles["texture"], 0)
+            log.info("Texture loaded")
         else:
             log.info(f"No texture handle for this shader.")
 
@@ -1106,14 +1133,14 @@ class GraphicsEngine:
         instruction_args = (shader_id,)
         self._add_draw_instruction(self._use_shader, instruction_args)
 
-    def set_view(self, pos: Coordinate = None, rotation: ToDecide = None) -> None:
+    def set_view(self, pos: Coordinate = None, rotation: pyrr.Quaternion = None) -> None:
         """
-        Set camera position and rotation relative to world
+        Set camera position and rotation relative to world.
 
-        To finish
+        TODO
         """
-        validate_type("pos", pos, Coordinate)
-        #validate_type("rotation", rotation, ToDecide) TODO
+        #validate_type("pos", pos, Coordinate)
+        #validate_type("rotation", rotation, pyrr.Quaternion)
 
         instruction_args = (pos, rotation)
         self._add_draw_instruction(self._set_view, instruction_args)
