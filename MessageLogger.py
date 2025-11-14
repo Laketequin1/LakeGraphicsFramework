@@ -248,7 +248,9 @@ class MessageLogger:
         """
         message_time = datetime.now().strftime("%H:%M:%S")
         padded_prefix = prefix.ljust(cls.PREFIX_SPACE_PADDING)
-        formatted_message = f"[{message_time}] {padded_prefix} : {str(message)}"        
+        new_line_occurances = message.count("\n")
+        adjusted_message = str(message).replace("\n", "\n" + " "*(1+8+2+cls.PREFIX_SPACE_PADDING) + " : ", new_line_occurances) # Padding for new lines in same message
+        formatted_message = f"[{message_time}] {padded_prefix} : {str(adjusted_message)}"        
         return formatted_message
 
     @classmethod
