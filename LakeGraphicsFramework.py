@@ -539,6 +539,7 @@ class Mesh:
         # Remove allocated memory
         gl.glDeleteVertexArrays(1, (self.vao, ))
         gl.glDeleteBuffers(1, (self.vbo, ))
+        log.info("Destroyed mesh")
 
 
 class Material:
@@ -585,6 +586,7 @@ class Material:
     def destroy(self):
         # Remove allocated memory
         gl.glDeleteTextures(1, (self.texture, ))
+        log.info("Destroyed material")
 
 
 class Object:
@@ -603,6 +605,7 @@ class Object:
 
         if self.materials:
             self.materials[0].use(0) # TODO Multiple materials - Normal maps etc
+            log.warn("TODO Multiple materials - Normal maps etc")
         
         model_transform = pyrr.matrix44.create_identity(dtype = np.float32)
 
@@ -629,13 +632,12 @@ class Object:
         gl.glBindVertexArray(self.mesh.vao)
         
         gl.glDrawArrays(gl.GL_TRIANGLES, 0, self.mesh.vertex_count)
-
         log.info("Rendered object.")
     
-    #def destroy(self):
-    #    self.mesh.destroy()
-    #    
-    #    self.material.destroy()
+    def destroy(self): # TO ADD CALL!!
+        self.mesh.destroy()
+        for material in self.materials:
+            self.material.destroy()
 
 
 class Shader:

@@ -54,7 +54,7 @@ def main():
 
     test_objects = [
         graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [5, 2, 0]),
-        graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [5, -2, 0]),
+        #graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [5, -2, 0]),
     ]
 
     for x in range(254):
