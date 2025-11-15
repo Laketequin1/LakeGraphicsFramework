@@ -12,6 +12,9 @@ import LakeGraphicsFramework as lgf
 JSON_SETTINGS_FILEPATH = "settings/settings.json"
 CAPTION = "Into Havoc"
 
+SHADER_VERT_PATH = "shaders/" + "texture.vert"
+SHADER_FRAG_PATH = "shaders/" + "texture.frag"
+
 """
 ### Exit Handling ###
 def exit_handler() -> None:
@@ -40,9 +43,6 @@ def main():
     settings = read_json_data(JSON_SETTINGS_FILEPATH)
     log.set_verbose_type(settings["verbose_type"])
     log.info(f"Imported settings: {settings}")
-
-    shader_vert_path = "shaders/" + "texture.vert"
-    shader_frag_path = "shaders/" + "texture.frag"
     
     # Create window
     window = lgf.Window(settings["window_resolution"], CAPTION, settings["fullscreen"], settings["windowed"], settings["vsync"], settings["max_fps"], settings["raw_mouse_input"], settings["center_cursor_on_creation"], settings["hide_cursor"])
@@ -50,12 +50,14 @@ def main():
     window.start()
     
     graphics = window.graphics_engine
-    shader_id = graphics.create_shader(shader_vert_path, shader_frag_path, 100, None, 0.1, 200, texture_name="imageTexture", color_name=None, compile_time_config={"SOMECOLOUR": "1, 0, 0.5, 0.5"})
+    shader_id = graphics.create_shader(SHADER_VERT_PATH, SHADER_FRAG_PATH, 100, None, 0.1, 200, texture_name="imageTexture", color_name=None, compile_time_config={"SOMECOLOUR": "1, 0, 0.5, 0.5"})
 
     test_objects = [
         graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [5, 2, 0]),
         graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [5, -2, 0]),
     ]
+
+    onee = 0
 
     for x in range(254):
         window.poll_events()
@@ -73,7 +75,14 @@ def main():
         for test_object in test_objects:
             graphics.render_object(test_object)
         graphics.update()
-        time.sleep(1)
+        time.sleep(0.1)
+        if onee == 0:
+            time.sleep(1)
+            onee = 1
+        for test_object in test_objects:
+            graphics.objects[test_object].pos[0] += 0.2
+
+    window.close()
 
     log.crucial("Exit main thread")
     sys.exit(0)
