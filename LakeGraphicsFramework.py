@@ -886,7 +886,7 @@ class Shader:
         Sets the model uniform in the shader.
         """
         log.dev("TODO model validation and etc")
-        gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform)
+        gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, self._view_transform_TOFIX)
 
     def set_custom_handle(self, gl_uniform_func_name: GLUniformFunction, handle_name: str, args: tuple) -> None:
         """
