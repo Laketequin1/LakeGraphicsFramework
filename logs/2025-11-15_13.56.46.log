@@ -1,0 +1,1298 @@
+Logfile created with verbose level LOG_ONLY on 15/11/2025 at 13:56:47. Have fun <3
+
+[13:56:47] INFO    : MessageLogger verbose type updated from LOG_ONLY to INFO
+[13:56:47] INFO    : Imported settings: {'_comment0': 'DEBUG             | Supported levels: [NONE, LOG_ONLY, ERROR, WARNING, CRUCIAL, INFO]', 'verbose_type': 'INFO', '_comment1': 'SCREEN RESOLUTION | window_resolution irrelevant unless fullscreen is true; fullscreen overwride window_resolution to monitor resolution; windowed false will overwrite fullscreen to true', 'window_resolution': [200, 500], 'fullscreen': True, 'windowed': False, '_comment2': 'SCREEN FPS        | setting max_fps to 0 disables the fps cap; vsync will overwride max_fps to match window fps to monitor fps', 'max_fps': 0, 'vsync': True, '_comment3': 'MOUSE AND CURSOR  | raw_mouse_input will enable raw mouse movement (bypass windows mouse acceleration)', 'raw_mouse_input': True, 'mouse_sensitivity': 1, 'hide_cursor': True, 'center_cursor_on_creation': True, '_comment4': "KEY BINDS         | Avalable keys: https://www.glfw.org/docs/3.3/group__keys.html (Remove the 'GLFW_KEY_' prefix)", 'key_binds': {'jump': 'SPACE', 'forward': 'W', 'back': 'S', 'left': 'A', 'right': 'D'}}
+[13:56:47] INFO    : Window variable validation passed. Variables: {'size': [200, 500], 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor_on_creation': True, 'hide_cursor': True}
+[13:56:47] INFO    : Window fullscreen.
+[13:56:48] INFO    : Window creation passed. Variables: {'size': Size(width=1920, height=1080), 'caption': 'Into Havoc', 'fullscreen': True, 'windowed': False, 'vsync': True, 'max_fps': 0, 'raw_mouse_input': True, 'center_cursor_on_creation': True, 'hide_cursor': True, 'monitor': <glfw.LP__GLFWmonitor object at 0x000001D74AD74750>, 'video_mode': GLFWvidmode(size=Size(width=1920, height=1080), bits=Bits(red=8, green=8, blue=8), refresh_rate=75), 'display_size': Size(width=1920, height=1080), 'aspect_ratio': 1.7777777777777777, 'window': <glfw.LP__GLFWwindow object at 0x000001D74AD74850>}
+[13:56:48] INFO    : Setting up Graphics Engine
+[13:56:48] INFO    : Creating a shader with id 56cf0229-efc1-45e4-970d-34d6180fb9ae
+[13:56:48] INFO    : Compiling shaders for 56cf0229-efc1-45e4-970d-34d6180fb9ae. Vertex path: 'shaders/default.vert', Frag path: shaders/default.frag
+[13:56:48] INFO    : Given uniform handles for 56cf0229-efc1-45e4-970d-34d6180fb9ae: {'model': 0, 'view': 3, 'projection': 2, 'color': 1}
+[13:56:48] INFO    : Given uniform handles for 56cf0229-efc1-45e4-970d-34d6180fb9ae: {}
+[13:56:48] INFO    : No texture handle for 56cf0229-efc1-45e4-970d-34d6180fb9ae
+[13:56:48] INFO    : Shader 56cf0229-efc1-45e4-970d-34d6180fb9ae creation passed. Variables: {'id': UUID('56cf0229-efc1-45e4-970d-34d6180fb9ae'), 'shader': 3, 'uniform_handles': {'model': 0, 'view': 3, 'projection': 2, 'color': 1}, 'custom_uniform_handles': {}}
+[13:56:48] INFO    : Shader creation passed variable validation.
+[13:56:48] INFO    : Object creation passed variable validation.
+[13:56:48] WARNING : Possible multithread issue here on this line
+[13:56:48] INFO    : Object creation passed variable validation.
+[13:56:48] WARNING : Possible multithread issue here on this line
+[13:56:48] INFO    : Keystates: {}
+[13:56:48] INFO    : Creating a shader with id 929af084-9b4c-4daa-9b9e-4b045a31f749
+[13:56:48] INFO    : Compiling shaders for 929af084-9b4c-4daa-9b9e-4b045a31f749. Vertex path: 'shaders/texture.vert', Frag path: shaders/texture.frag
+[13:56:48] WARNING : Placeholder text value 'SOMECOLOUR' not found in the shader file 'shaders/texture.vert' of 929af084-9b4c-4daa-9b9e-4b045a31f749.
+[13:56:48] WARNING : Placeholder text value 'SOMECOLOUR' not found in the shader file 'shaders/texture.frag' of 929af084-9b4c-4daa-9b9e-4b045a31f749.
+[13:56:48] INFO    : Given uniform handles for 929af084-9b4c-4daa-9b9e-4b045a31f749: {'model': 1, 'view': 3, 'projection': 2, 'texture': 0}
+[13:56:48] INFO    : Given uniform handles for 929af084-9b4c-4daa-9b9e-4b045a31f749: {}
+[13:56:48] INFO    : Texture loaded for {self.id}
+[13:56:48] INFO    : Shader 929af084-9b4c-4daa-9b9e-4b045a31f749 creation passed. Variables: {'id': UUID('929af084-9b4c-4daa-9b9e-4b045a31f749'), 'shader': 6, 'uniform_handles': {'model': 1, 'view': 3, 'projection': 2, 'texture': 0}, 'custom_uniform_handles': {}}
+[13:56:48] INFO    : Creating mesh for example_data/cube.obj
+[13:56:48] INFO    : Created mesh for example_data/cube.obj
+[13:56:48] INFO    : Creating material for example_data/wood.jpeg
+[13:56:48] INFO    : Created material for example_data/wood.jpeg
+[13:56:48] INFO    : Created object with id 71567265-dfae-41b4-a3e5-913a1ab84572
+[13:56:48] INFO    : Creating mesh for example_data/cube.obj
+[13:56:48] INFO    : Created mesh for example_data/cube.obj
+[13:56:48] INFO    : Creating material for example_data/wood.jpeg
+[13:56:48] INFO    : Created material for example_data/wood.jpeg
+[13:56:48] INFO    : Created object with id 3da11533-8151-4333-a213-9973c3a5c590
+[13:56:48] DEV     : rotation variable type undecided in _set_view
+[13:56:48] DEV     : TODO view validation
+[13:56:48] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:48] INFO    : Binding texture 0.
+[13:56:48] INFO    : Binded texture 0.
+[13:56:48] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:48] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:48] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:48] INFO    : Binding texture 0.
+[13:56:48] INFO    : Binded texture 0.
+[13:56:48] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:48] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:48] DEV     : rotation variable type undecided in _set_view
+[13:56:48] DEV     : TODO view validation
+[13:56:48] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:48] INFO    : Binding texture 0.
+[13:56:48] INFO    : Binded texture 0.
+[13:56:48] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:48] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:48] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:48] INFO    : Binding texture 0.
+[13:56:48] INFO    : Binded texture 0.
+[13:56:48] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:48] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:48] DEV     : rotation variable type undecided in _set_view
+[13:56:48] DEV     : TODO view validation
+[13:56:48] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:48] INFO    : Binding texture 0.
+[13:56:48] INFO    : Binded texture 0.
+[13:56:48] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:48] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:48] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:48] INFO    : Binding texture 0.
+[13:56:48] INFO    : Binded texture 0.
+[13:56:48] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:48] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:48] DEV     : rotation variable type undecided in _set_view
+[13:56:48] DEV     : TODO view validation
+[13:56:48] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:48] INFO    : Binding texture 0.
+[13:56:48] INFO    : Binded texture 0.
+[13:56:48] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] INFO    : Keystates: {}
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:49] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:49] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] INFO    : Binding texture 0.
+[13:56:49] INFO    : Binded texture 0.
+[13:56:49] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:49] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:49] DEV     : rotation variable type undecided in _set_view
+[13:56:49] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] DEV     : rotation variable type undecided in _set_view
+[13:56:50] DEV     : TODO view validation
+[13:56:50] INFO    : Rendering object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Rendered object 71567265-dfae-41b4-a3e5-913a1ab84572.
+[13:56:50] INFO    : ('ESCAPE', 'KEYDOWN', 0)
+[13:56:50] INFO    : Rendering object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : ('ESCAPE', 'KEYUP', 0)
+[13:56:50] INFO    : Binding texture 0.
+[13:56:50] INFO    : Binded texture 0.
+[13:56:50] DEV     : TODO Multiple materials - Normal maps etc
+[13:56:50] INFO    : Keystates: {'ESCAPE': {'pressed': True, 'released': True, 'num_lock': False, 'caps_lock': False, 'super_key': False, 'alt': False, 'control': False, 'shift': False}}
+[13:56:50] INFO    : Rendered object 3da11533-8151-4333-a213-9973c3a5c590.
+[13:56:50] INFO    : Window close requested.
+[13:56:50] CRUCIAL : Exit main thread
+[13:56:50] INFO    : Closing window...
+[13:56:50] INFO    : Destroying shaders in GraphicsEngine.
+[13:56:50] INFO    : Destroyed shader for 56cf0229-efc1-45e4-970d-34d6180fb9ae
+[13:56:50] INFO    : Destroyed shader for 929af084-9b4c-4daa-9b9e-4b045a31f749
+[13:56:50] INFO    : Window closed.
+[13:56:50] INFO    : Program terminating

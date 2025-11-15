@@ -11,10 +11,11 @@ class MessageLogger:
     When initialized, a verbose level is set. Supported levels include:
     - NONE:     0 - Completely ignores all logs.
     - LOG_ONLY: 1 - Saves all logs to a file without printing to terminal.
-    - ERROR:    2 - Prints only error messages.                 (logs all to file)
-    - WARNING:  3 - Prints warnings and errors.                 (logs all to file)
-    - CRUCIAL:  4 - Prints warnings, errors, and crucial info.  (logs all to file)
-    - INFO:     5 - Prints all message levels.                  (logs all to file)
+    - ERROR:    2 - Prints only error messages.                     (logs all to file)
+    - WARNING:  3 - Prints warnings and errors.                     (logs all to file)
+    - CRUCIAL:  4 - Prints warnings, errors, and crucial info.      (logs all to file)
+    - INFO:     5 - Prints all message levels.                      (logs all to file)
+    - DEV:      6 - Prints all message levels and developer notes.  (logs all to file)
 
     Logs messages to a timestamped log file under the "logs/" folder.
     """
@@ -29,16 +30,18 @@ class MessageLogger:
                     "ERROR":    2,  # Only print errors
                     "WARNING":  3,  # Only print warnings and errors
                     "CRUCIAL":  4,  # Only print warnings, errors, and crucial info
-                    "INFO":     5   # Print all
+                    "INFO":     5,  # Print all
+                    "DEV":      5   # Print all and developer notes
                   }
     VERBOSE_KEYS = tuple(VERBOSE_MAP.keys())
-    VerboseLiteral = Literal["NONE", "LOG_ONLY", "ERROR", "WARNING", "CRUCIAL", "INFO"]
+    VerboseLiteral = Literal["NONE", "LOG_ONLY", "ERROR", "WARNING", "CRUCIAL", "INFO", "DEV"]
     
     TEXT_STYLES = {
                     "ERROR":   "\033[31m",  # Red
                     "WARNING": "\033[33m",  # Yellow
                     "CRUCIAL": "\033[97m",  # White
                     "INFO":    "\033[90m",  # Light Grey
+                    "DEV":     "\033[32m",  # Green
                     "CLEAR":   "\033[0m"    # Reset
                   }
     
@@ -60,10 +63,11 @@ class MessageLogger:
             verbose_type (str): The verbosity level for logging. Must be one of the supported levels:
                                 - NONE:     0 - Completely ignores all logs.
                                 - LOG_ONLY: 1 - Saves all logs to a file without printing to terminal.
-                                - ERROR:    2 - Prints only error messages.                 (logs all to file)
-                                - WARNING:  3 - Prints warnings and errors.                 (logs all to file)
-                                - CRUCIAL:  4 - Prints warnings, errors, and crucial info.  (logs all to file)
-                                - INFO:     5 - Prints all message levels.                  (logs all to file)
+                                - ERROR:    2 - Prints only error messages.                      (logs all to file)
+                                - WARNING:  3 - Prints warnings and errors.                      (logs all to file)
+                                - CRUCIAL:  4 - Prints warnings, errors, and crucial info.       (logs all to file)
+                                - INFO:     5 - Prints all message levels.                       (logs all to file)
+                                - DEV:      6 - Prints all message levels plus developer notes.  (logs all to file)
         """
         cls.set_verbose_type(verbose_type)
 
@@ -164,6 +168,21 @@ class MessageLogger:
         cls._log("INFO", str(message))
 
     @classmethod
+    def dev(cls, message: str) -> None:
+        """
+        Logs a developer note message to the file and prints it to the terminal based on the verbose level.
+
+        Parameters:
+            message (str): The warning message to be logged and/or printed.
+        """
+        if cls.THROW_ERROR_IF_NOT_INITIATED:
+            cls._check_init_completed()
+        elif not cls.check_init_completed():
+            return
+        
+        cls._log("DEV", str(message))
+
+    @classmethod
     def set_verbose_type(cls, verbose_type: VerboseLiteral) -> None:
         """
         Updates the verbose level.
@@ -173,10 +192,11 @@ class MessageLogger:
             verbose_type (str): The verbosity level for logging. Must be one of the supported levels:
                                 - NONE:     0 - Completely ignores all logs.
                                 - LOG_ONLY: 1 - Saves all logs to a file without printing to terminal.
-                                - ERROR:    2 - Prints only error messages.                 (logs all to file)
-                                - WARNING:  3 - Prints warnings and errors.                 (logs all to file)
-                                - CRUCIAL:  4 - Prints warnings, errors, and crucial info.  (logs all to file)
-                                - INFO:     5 - Prints all message levels.                  (logs all to file)
+                                - ERROR:    2 - Prints only error messages.                      (logs all to file)
+                                - WARNING:  3 - Prints warnings and errors.                      (logs all to file)
+                                - CRUCIAL:  4 - Prints warnings, errors, and crucial info.       (logs all to file)
+                                - INFO:     5 - Prints all message levels.                       (logs all to file)
+                                - DEV:      6 - Prints all message levels plus developer notes.  (logs all to file)
         """
         cls.verbose_type = str(verbose_type).replace("\n", "").replace("\r", "").strip().upper()
 
@@ -199,7 +219,7 @@ class MessageLogger:
         Handles the actual logging of messages, including formatting, saving to the file, and printing to the terminal - based on verbose settings.
 
         Parameters:
-            verbose_type (str): The type of message being logged (e.g., "ERROR", "WARNING", "INFO").
+            verbose_type (str): The type of message being logged (e.g. "ERROR", "WARNING", "INFO", ...).
             message (str): The content of the message to be logged and/or printed.
         """
         if cls.verbose_level < cls.VERBOSE_MAP["LOG_ONLY"]:
@@ -224,7 +244,7 @@ class MessageLogger:
         Applies ANSI styling to a message for formatted terminal output.
 
         Parameters:
-            style (str): The style to be applied from TEXT_STYLES (e.g., "ERROR", "WARNING", "INFO").
+            style (str): The style to be applied from TEXT_STYLES (e.g. "ERROR", "WARNING", "INFO", ...).
             message (str): The message to be styled.
 
         Returns:
@@ -277,7 +297,7 @@ class MessageLogger:
 ### Example code ###
 def main():
     # Initialize the logger with a specific verbosity level
-    verbose_level = "INFO"  # Can be "NONE", "LOG_ONLY", "ERROR", "WARNING", "CRUCIAL", or "INFO"
+    verbose_level = "DEV"  # Can be "NONE", "LOG_ONLY", "ERROR", "WARNING", "CRUCIAL", "INFO", or "DEV"
     
     # Initialize the MessageLogger with the specified verbose level
     MessageLogger.init(verbose_level)
@@ -287,15 +307,17 @@ def main():
     MessageLogger.warn("This is a warning message.")
     MessageLogger.crucial("This is a crucial message.")
     MessageLogger.info("This is an info message.")
+    MessageLogger.dev("This is an developer note.")
     
     # If you want to test other verbose levels, you can change the level and log more messages
     MessageLogger.set_verbose_type("WARNING")
     MessageLogger.info("This info message should not be printed, but will appear in the log file.")
-    MessageLogger.error("This error message should still appear in the terminal.")
+    MessageLogger.warn("This warning message should still be printed.")
+    MessageLogger.error("This error message should still be printed.")
 
     # Nothing gets logged, nothing written to file.
     MessageLogger.set_verbose_type("NONE")
-    MessageLogger.error("This error won't appear anywhere :)")
+    MessageLogger.error("This error won't print and won't write to the log file :)")
 
 # Entry point
 if __name__ == "__main__":

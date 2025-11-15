@@ -19,7 +19,7 @@ from key_handler import KEY_NAMES, KEYS, get_key_name
 
 ### Type hints ###
 ColorRGBA = Tuple[float, float, float, float]
-ToDecide = Any # TODO
+ToDecide = Any # Variables with unknown types
 GLUniformFunction = Literal[
     "glUniform1f",
     "glUniform2f",
@@ -608,7 +608,7 @@ class Object:
 
         if self.materials:
             self.materials[0].use(0) # TODO Multiple materials - Normal maps etc
-            log.warn("TODO Multiple materials - Normal maps etc")
+            log.dev("TODO Multiple materials - Normal maps etc")
         
         model_transform = pyrr.matrix44.create_identity(dtype = np.float32)
 
@@ -878,14 +878,14 @@ class Shader:
         """
         Sets the view matrix uniform in the shader.
         """
-        log.warn("TODO view validation")
+        log.dev("TODO view validation")
         gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform)
 
     def set_model(self, model) -> None:
         """
         Sets the model uniform in the shader.
         """
-        log.warn("TODO model validation")
+        log.dev("TODO model validation and etc")
         gl.glUniformMatrix4fv(self.uniform_handles["view"], 1, gl.GL_FALSE, view_transform)
 
     def set_custom_handle(self, gl_uniform_func_name: GLUniformFunction, handle_name: str, args: tuple) -> None:
@@ -933,7 +933,7 @@ class Shader:
             "glUniformMatrix4x3fv"
         ]
         """
-        log.warn("Check this later, the type thing is weird, should it be a string or the funct??")
+        log.dev("Check this later, the type thing is weird, should it be a string or the funct??")
         if not hasattr(gl, gl_uniform_func_name):
             log.error(f"gl_uniform_func_name was not a literal GLUniformFunction type, '{gl_uniform_func_name}' is of type {type(gl_uniform_func_name)} in {self.id}")
 
@@ -1320,6 +1320,8 @@ class GraphicsEngine:
             pos (Coordinate): The position of the camera (currently unused).
             rotation (ToDecide): The rotation of the camera (currently unused).
         """
+        log.dev("rotation variable type undecided in _set_view")
+
         view_transform = pyrr.matrix44.create_look_at(
             eye = np.zeros(3, dtype = np.float32),
             target = np.array([1, 0, 0], dtype = np.float32),
@@ -1339,6 +1341,7 @@ class GraphicsEngine:
             pos (Coordinate): The position of the camera (currently unused).
             rotation (ToDecide): The rotation of the camera (currently unused).
         """
+        log.dev("rotation variable type undecided in _set_global_view")
         pass
 
     @staticmethod
