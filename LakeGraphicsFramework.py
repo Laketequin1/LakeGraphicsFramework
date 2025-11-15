@@ -1096,6 +1096,8 @@ class GraphicsEngine:
                         #('rotation', rotation, pyrr.Quaternion),
                         #('scale', scale, Tuple)
 
+        log.dev("Todo type validation for pos, rotation, scale.")
+
         log.info(f"Object creation passed variable validation.")
 
         log.warn(f"Possible multithread issue here on this line")
@@ -1165,6 +1167,19 @@ class GraphicsEngine:
 
         self.pending_skybox_color = skybox_color
 
+    def modify_object_pos(self, object_id: int, new_pos: Tuple[float, float, float]) -> None:
+        """
+        Modifys the objects position.
+
+        Parameters:
+            object_id (int): The id of the object to be rendered.
+            new_pos (Tuple[float, float, float]): The new object position in world space.
+        """
+        validate_type("object_id", object_id, int)
+
+        instruction_args = (object_id, new_pos)
+        self._add_draw_instruction(self._modify_object_pos, instruction_args)
+
     def render_object(self, object_id: int) -> None:
         """
         Renders the passed object id in the window.
@@ -1173,6 +1188,8 @@ class GraphicsEngine:
             object_id (int): The id of the object to be rendered.
         """
         validate_type("object_id", object_id, int)
+
+        log.dev("TODO check object_id is valid and exists")
 
         instruction_args = (object_id, )
         self._add_draw_instruction(self._render_object, instruction_args)
@@ -1351,6 +1368,17 @@ class GraphicsEngine:
         Clears the screen by resetting the color and depth buffers.
         """
         gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
+        
+    def _modify_object_pos(self, object_id: int, new_pos: Tuple[float, float, float]) -> None:
+        """
+        [Private]
+        Modifys the objects position.
+
+        Parameters:
+            object_id (int): The id of the object to be rendered.
+            new_pos (Tuple[float, float, float]): The new object position in world space.
+        """
+        self.objects[object_id].pos = new_pos
 
     def _render_object(self, object_id: int) -> None:
         """

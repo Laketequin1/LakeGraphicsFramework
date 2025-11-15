@@ -52,12 +52,15 @@ def main():
     graphics = window.graphics_engine
     shader_id = graphics.create_shader(SHADER_VERT_PATH, SHADER_FRAG_PATH, 100, None, 0.1, 200, texture_name="imageTexture", color_name=None, compile_time_config={"SOMECOLOUR": "1, 0, 0.5, 0.5"})
 
-    test_objects = [
-        graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [5, 2, 0]),
-        graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], [5, -2, 0]),
+    test_objects_pos = [
+        [5, 2, 0],
+        [5, -2, 0]
     ]
 
-    onee = 0
+    test_objects = [
+        graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], test_objects_pos[0]),
+        graphics.create_object("example_data/" + "cube.obj", ["example_data/" + "wood.jpeg"], test_objects_pos[1]),
+    ]
 
     for x in range(254):
         window.poll_events()
@@ -72,15 +75,13 @@ def main():
         #graphics.set_()
         graphics.fill((0, 0, (255-x)/255, 1))
         #graphics.set_skybox_color((x/255, x/1000, x/1000, 1))
-        for test_object in test_objects:
+        for i, test_object in enumerate(test_objects):
             graphics.render_object(test_object)
+            test_objects_pos[i][0] += 0.04
+            graphics.modify_object_pos(test_object, test_objects_pos[i])
+
         graphics.update()
-        time.sleep(0.1)
-        if onee == 0:
-            time.sleep(1)
-            onee = 1
-        for test_object in test_objects:
-            graphics.objects[test_object].pos[0] += 0.2
+        time.sleep(0.01)
 
     window.close()
 
