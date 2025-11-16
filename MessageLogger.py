@@ -51,7 +51,8 @@ class MessageLogger:
     THROW_ERROR_IF_NOT_INITIATED = False
 
     # Verbose unset
-    verbose_level = None
+    verbose_level = -1
+    logs: list[str] = []
     
     @classmethod
     def init(cls, verbose_type: VerboseLiteral) -> None:
@@ -70,7 +71,6 @@ class MessageLogger:
                                 - DEV:      6 - Prints all message levels plus developer notes.  (logs all to file)
         """
         cls.set_verbose_type(verbose_type)
-
         cls.logs = []
 
         date_time = datetime.now().strftime("%d/%m/%Y at %H:%M:%S")
@@ -78,7 +78,7 @@ class MessageLogger:
         cls._setup_log_file(setup_message)
 
     @classmethod
-    def _setup_log_file(cls, setup_message) -> None:
+    def _setup_log_file(cls, setup_message: str) -> None:
         """
         [Private]
         Generates the log folder if it doesn't exist. Creates a new log file and writes an initial setup message.
@@ -99,18 +99,19 @@ class MessageLogger:
         Returns:
             bool: If ClassLogger initiation has been completed.
         """
-        if cls.verbose_level is None:
+        if cls.verbose_level == -1:
             return False
         return True
 
     @classmethod
-    def error(cls, message: str, raise_exception: Exception = None) -> None:
+    def error(cls, message: str, raise_exception: Exception | None = None) -> None:
         """
         Logs an error message to the file and prints it to the terminal based on the verbose level.
-        Raises an exception.
+        Raises an exception if requested.
 
         Parameters:
             message (str): The error message to be logged and/or printed.
+            raise_exception (Exception | None): Exception to raise.
         """
         if cls.THROW_ERROR_IF_NOT_INITIATED:
             cls._check_init_completed()
@@ -204,12 +205,10 @@ class MessageLogger:
             raise ValueError(f"Verbose level '{cls.verbose_type}' is not an option. Available options are: {', '.join(cls.VERBOSE_MAP.keys())}.")
         
         previous_verbose_level = cls.verbose_level
-        if previous_verbose_level is not None: # Check this isn't the init set
-            previous_verbose_type = cls.VERBOSE_KEYS[previous_verbose_level]
-
         cls.verbose_level = cls.VERBOSE_MAP[cls.verbose_type]
 
-        if previous_verbose_level is not None: # Check this isn't the init set
+        if previous_verbose_level != -1: # Check this isn't the init set
+            previous_verbose_type = cls.VERBOSE_KEYS[previous_verbose_level]
             cls.info(f"MessageLogger verbose type updated from {previous_verbose_type} to {cls.verbose_type}")
     
     @classmethod
@@ -274,7 +273,7 @@ class MessageLogger:
         return formatted_message
 
     @classmethod
-    def _append_to_log_file(cls, message) -> None:
+    def _append_to_log_file(cls, message: str) -> None:
         """
         [Private]
         Appends a formatted message to the log file.
