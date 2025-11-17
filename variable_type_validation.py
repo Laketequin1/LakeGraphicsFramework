@@ -90,12 +90,12 @@ def _validate_coordinate(name: str, var: Any) -> None | NoReturn:
     if not isinstance(var, Sequence) or isinstance(var, AnyString):
         raise TypeError(f"Invalid type for Coordinate '{name}'. Expected {Sequence}, got {type(var)}.")
     
-    if len(var) != 2:
+    if len(var) != 2: # type: ignore
         raise TypeError(f"Invalid length for Coordinate '{name}'. Coordinate must be two numbers.")
     
     for i in [0, 1]:
         if not isinstance(var[i], Real):
-            raise TypeError(f"Invalid type for Coordinate[{i}] '{name}'. Expected {Real}, got {type(var[i])}.")
+            raise TypeError(f"Invalid type for Coordinate[{i}] '{name}'. Expected {Real}, got {type(var[i])}.") # type: ignore
 
 def _validate_size(name: str, var: Any) -> None | NoReturn:
     """
@@ -109,12 +109,12 @@ def _validate_size(name: str, var: Any) -> None | NoReturn:
     if not isinstance(var, Sequence) or isinstance(var, AnyString):
         raise TypeError(f"Invalid type for Size '{name}'. Expected {Sequence}, got {type(var)}.")
     
-    if len(var) != 2:
+    if len(var) != 2: # type: ignore
         raise TypeError(f"Invalid length for Size '{name}'. Size must be two numbers.")
     
     for i in [0, 1]:
         if not isinstance(var[i], Real):
-            raise TypeError(f"Invalid type for Size[{i}] '{name}'. Expected {Real}, got {type(var[i])}.")
+            raise TypeError(f"Invalid type for Size[{i}] '{name}'. Expected {Real}, got {type(var[i])}.") # type: ignore
     
     for i in [0, 1]:
         if var[i] < 0:
@@ -132,12 +132,12 @@ def _validate_color_rgba(name: str, var: Any) -> None | NoReturn:
     if not isinstance(var, Sequence) or isinstance(var, AnyString):
         raise TypeError(f"Invalid type for the Color '{name}'. Expected {Sequence}, got {type(var)}.")
     
-    if len(var) != 4:
+    if len(var) != 4: # type: ignore
         raise TypeError(f"Invalid length for the Color '{name}'. Color must be contain four channels: Red, Green, Blue, Alpha.")
     
     for i in range(4):
         if not isinstance(var[i], Real):
-            raise TypeError(f"Invalid type for the Color[{i}] '{name}'. Expected {Real}, got {type(var[i])}.")
+            raise TypeError(f"Invalid type for the Color[{i}] '{name}'. Expected {Real}, got {type(var[i])}.") # type: ignore
     
     for i in range(4):
         if var[i] < 0 or var[i] > 1:
@@ -150,7 +150,7 @@ def main():
     caption = "Title"
     max_fps = 100
     print_gl_errors = True
-    validate_types([('size', size, Size),
+    validate_types([('size', size, Size), # type: ignore
                     ('caption', caption, str),
                     ('max_fps', max_fps, int),
                     ('print_gl_errors', print_gl_errors, bool)]) # OK
@@ -158,8 +158,8 @@ def main():
     vsync = False
     validate_type('vsync', vsync, bool) # OK
     
-    size = (0, -20)
-    validate_types([('size', size, Size),
+    size = (0, -20) # Set to an invalid size
+    validate_types([('size', size, Size), # type: ignore
                     ('caption', caption, str),
                     ('max_fps', max_fps, int),
                     ('print_gl_errors', print_gl_errors, bool)]) # Fails type check, raises error
